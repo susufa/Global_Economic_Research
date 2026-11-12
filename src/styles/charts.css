@@ -1,0 +1,43 @@
+/* ==========================================================================
+   charts.css — 图表容器、尺寸控制、迷你条形图与可视化辅助样式
+   管理：Chart.js 画布容器尺寸、响应式高度、表格内嵌迷你条形图样式
+   ========================================================================== */
+
+.chart-box {
+  position: relative;
+  width: 100%;
+  height: 410px;
+}
+
+.chart-box-tall {
+  position: relative;
+  width: 100%;
+  height: 470px;
+}
+
+.chart-box canvas,
+.chart-box-tall canvas {
+  max-width: 100%;
+}
+
+/* 表格内嵌迷你进度条可视化 */
+.mini-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.mini-bar {
+  width: 54px;
+  height: 6px;
+  background: #E3DDD1;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.mini-bar-fill {
+  height: 100%;
+  background: var(--terracotta);
+  border-radius: 3px;
+}

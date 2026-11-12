@@ -1,0 +1,2759 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>全球宏观经济综合数据研究平台 — 房地产市场 × 综合税制体系 × 经济发展轨迹 (1985–2026)</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/styles/variables.css" />
+  <link rel="stylesheet" href="/src/styles/base.css" />
+  <link rel="stylesheet" href="/src/styles/layout.css" />
+  <link rel="stylesheet" href="/src/styles/components.css" />
+  <link rel="stylesheet" href="/src/styles/charts.css" />
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- ==================== STICKY MASTER HEADER & PLATFORM NAVIGATION ==================== -->
+  <header id="platform-top" class="sticky top-0 z-40 bg-[#F6F3EC]/95 backdrop-blur-md border-b border-[#E3DDD1] shadow-sm">
+    <div class="max-w-[1720px] mx-auto px-4 sm:px-8 pt-3 pb-2.5">
+      <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full badge-terracotta">GLOBAL MACROECONOMIC STATISTICAL YEARBOOK · 1985–2026</span>
+            <span class="px-2.5 py-0.5 text-xs font-medium rounded-full badge-sage">三大研究板块 · 57/55 国家及地区全样本</span>
+            <span class="px-2.5 py-0.5 text-xs font-medium rounded-full badge-blue">中国大陆 · 中国台湾 · 中国香港 · 中国澳门独立统计实体</span>
+            <span class="px-2.5 py-0.5 text-xs font-medium rounded-full badge-ochre">46 个交互式统计图表 · 20+ 核心数据明细表</span>
+          </div>
+          <h1 class="serif-title text-xl sm:text-2xl font-bold text-[#2C2825] tracking-tight mt-1">
+            全球宏观经济综合数据研究平台：房地产市场 × 综合税制体系 × 经济发展轨迹
+          </h1>
+          <p class="text-xs text-[#5C554E] mt-0.5">
+            全量整合三大专题统计数据库（1985–2026年长周期序列、双口径可负担性、8步税负传导模拟、三次产业结构演进、金融风险敞口与官方机构溯源）
+          </p>
+        </div>
+
+        <!-- Global Search & Methodology Trigger -->
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <div class="flex items-center gap-1.5 bg-[#FFFDF9] border border-[#E3DDD1] rounded-lg px-2.5 py-1.5">
+            <span class="text-[#857D74] font-medium">全平台检索:</span>
+            <input id="masterPlatformSearch" type="text" placeholder="同步检索国家/地区 (如: 台湾 / 日本 / 德国)..."
+              oninput="handleMasterPlatformSearch(this.value)"
+              class="text-xs bg-transparent text-[#2C2825] placeholder-[#857D74] border-none focus:outline-none w-48" />
+          </div>
+          <button id="btnOpenMethodologyModal" class="btn-outline-warm px-3 py-1.5 rounded-lg font-medium flex items-center gap-1.5">
+            <span>📐</span> <span>跨国统计口径与方法论总览</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Primary Longitudinal Section Navigation & Layer Quick-Jumps -->
+      <nav class="flex flex-wrap items-center justify-between gap-2 mt-2.5 pt-2 border-t border-[#E3DDD1]/80 text-xs">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="font-bold text-[#5C554E] uppercase tracking-wider">三大纵向研究板块:</span>
+          <a href="#section-real-estate" class="btn-warm px-3.5 py-1.5 rounded-lg font-semibold no-underline hover:no-underline">
+            第一板块：全球房地产市场 (57国 · 16图)
+          </a>
+          <a href="#section-tax-system" class="btn-outline-warm px-3.5 py-1.5 rounded-lg font-semibold no-underline hover:no-underline">
+            第二板块：全球综合税制与税负比较 (55国 · 14图)
+          </a>
+          <a href="#section-economic-trajectory" class="btn-outline-warm px-3.5 py-1.5 rounded-lg font-semibold no-underline hover:no-underline">
+            第三板块：全球经济发展轨迹 (55国 · 16图)
+          </a>
+        </div>
+        <div class="hidden 2xl:flex items-center gap-1.5 text-[11px] text-[#5C554E]">
+          <span>快速定位:</span>
+          <a href="#re-layer-1" class="px-2 py-0.5 rounded bg-[#EFECE4] hover:bg-[#F5E6E1] text-[#2C2825]">1.1 核心房价与负担</a>
+          <a href="#re-layer-2" class="px-2 py-0.5 rounded bg-[#EFECE4] hover:bg-[#F5E6E1] text-[#2C2825]">1.2 历史房价周期</a>
+          <a href="#re-layer-4" class="px-2 py-0.5 rounded bg-[#EFECE4] hover:bg-[#F5E6E1] text-[#2C2825]">1.4 地产金融风险</a>
+          <a href="#tax-layer-1" class="px-2 py-0.5 rounded bg-[#EFECE4] hover:bg-[#F5E6E1] text-[#2C2825]">2.1 综合税负总览</a>
+          <a href="#tax-layer-3" class="px-2 py-0.5 rounded bg-[#EFECE4] hover:bg-[#F5E6E1] text-[#2C2825]">2.3 8步税后购买力模拟</a>
+          <a href="#econ-layer-1" class="px-2 py-0.5 rounded bg-[#EFECE4] hover:bg-[#F5E6E1] text-[#2C2825]">3.1 40年GDP轨迹</a>
+          <a href="#econ-layer-2" class="px-2 py-0.5 rounded bg-[#EFECE4] hover:bg-[#F5E6E1] text-[#2C2825]">3.2 收入与生产率</a>
+          <a href="#econ-layer-6" class="px-2 py-0.5 rounded bg-[#EFECE4] hover:bg-[#F5E6E1] text-[#2C2825]">3.6 13维经济实力总榜</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN LONGITUDINAL RESEARCH PLATFORM CONTAINER ==================== -->
+  <main class="flex-grow max-w-[1720px] w-full mx-auto px-4 sm:px-8 py-8 space-y-16">
+
+    <!-- =========================================================================================
+         第一板块：全球房地产市场 (SECTION 1: GLOBAL REAL ESTATE MARKET)
+         ========================================================================================= -->
+    <section id="section-real-estate" class="space-y-10 scroll-mt-28">
+      <div class="major-section-banner">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="px-2.5 py-0.5 text-xs font-bold rounded badge-terracotta">第一板块 · SECTION I</span>
+              <span class="text-xs font-semibold text-[#5C554E]">覆盖 57 个国家与地区 · 1985–2026 四十年周期 · 16 张核心统计图表 · 13 张数据表</span>
+            </div>
+            <h2 class="serif-title text-2xl sm:text-3xl font-bold text-[#2C2825]">
+              第一板块：全球房地产市场 — 住房可负担性、长周期价格走势、租赁供给与金融风险
+            </h2>
+            <p class="text-xs sm:text-sm text-[#5C554E] mt-1 max-w-5xl">
+              以国际清算银行 (BIS)、OECD、Numbeo、各国央行与统计局数据为基础，按重要性由高到低依次呈现：核心房价与居民住房负担 → 1985–2026年房价周期与泡沫回撤 → 租赁市场与住房供给结构 → 房地产信贷与银行系统性风险 → 57国完整数据明细与历史案例。
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 text-xs">
+            <a href="#re-layer-1" class="btn-outline-warm px-2.5 py-1 rounded">第一层：核心房地产指标</a>
+            <a href="#re-layer-2" class="btn-outline-warm px-2.5 py-1 rounded">第二层：房价增长与历史周期</a>
+            <a href="#re-layer-3" class="btn-outline-warm px-2.5 py-1 rounded">第三层：租赁市场与住房供给</a>
+            <a href="#re-layer-4" class="btn-outline-warm px-2.5 py-1 rounded">第四层：房地产金融与系统性风险</a>
+            <a href="#re-layer-5" class="btn-outline-warm px-2.5 py-1 rounded">第五层：完整数据表与国家案例</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real Estate Global Filter Toolbar -->
+      <div class="cream-card overflow-hidden">
+          <!-- Global Filter & Control Toolbar -->
+  <section class="bg-[#EFECE4]/80 border-b border-[#E3DDD1] py-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <!-- Region Filter -->
+        <div class="flex flex-wrap items-center gap-1.5">
+          <span class="text-xs font-semibold text-[#5C554E] mr-1">区域筛选:</span>
+          <button data-region="ALL" class="region-filter-btn btn-outline-warm active px-2.5 py-1 rounded text-xs">全部 (57)</button>
+          <button data-region="Asia" class="region-filter-btn btn-outline-warm px-2.5 py-1 rounded text-xs">亚洲 (19)</button>
+          <button data-region="Europe" class="region-filter-btn btn-outline-warm px-2.5 py-1 rounded text-xs">欧洲 (20)</button>
+          <button data-region="Americas" class="region-filter-btn btn-outline-warm px-2.5 py-1 rounded text-xs">美洲 (8)</button>
+          <button data-region="Africa" class="region-filter-btn btn-outline-warm px-2.5 py-1 rounded text-xs">非洲 (8)</button>
+          <button data-region="Oceania" class="region-filter-btn btn-outline-warm px-2.5 py-1 rounded text-xs">大洋洲参照 (2)</button>
+        </div>
+
+        <!-- Price Metric & Period Controls -->
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="flex items-center gap-1 bg-[#FFFDF9] border border-[#E3DDD1] rounded-lg px-2.5 py-1">
+            <label for="globalPriceMode" class="text-xs text-[#5C554E]">价格口径:</label>
+            <select id="globalPriceMode" class="text-xs font-semibold bg-transparent text-[#2C2825] focus:outline-none">
+              <option value="real">实际房价 (剔除CPI通胀)</option>
+              <option value="nominal">名义房价 (本币未剔除通胀)</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-1 bg-[#FFFDF9] border border-[#E3DDD1] rounded-lg px-2.5 py-1">
+            <label for="globalPeriodSelect" class="text-xs text-[#5C554E]">分析周期:</label>
+            <select id="globalPeriodSelect" class="text-xs font-semibold bg-transparent text-[#2C2825] focus:outline-none">
+              <option value="1985_2026">1985–2026 (41年全周期)</option>
+              <option value="1990_2026">1990–2026 (泡沫破灭后36年)</option>
+              <option value="2000_2026">2000–2026 (新世纪金融化26年)</option>
+              <option value="2010_2026">2010–2026 (次贷危机后16年)</option>
+              <option value="2016_2026">2016–2026 (近10年周期)</option>
+              <option value="2021_2026">2021–2026 (近5年高利率转换期)</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-1 bg-[#FFFDF9] border border-[#E3DDD1] rounded-lg px-2.5 py-1">
+            <label for="globalSearchInput" class="text-xs text-[#5C554E]">搜索:</label>
+            <input id="globalSearchInput" type="text" placeholder="输入国家/地区/首都..." class="text-xs bg-transparent text-[#2C2825] placeholder-[#857D74] focus:outline-none w-32 sm:w-40" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+      </div>
+
+      <!-- 1.1 第一层：核心房地产指标 -->
+      <div id="re-layer-1" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <span class="text-xs font-bold text-[#C86D51] uppercase">第一板块 · 第一层 (Priority Layer 1)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">核心房地产指标：房价水平、房价收入比 (PIR)、住房可负担性与置业按揭模拟</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">核心指标总览 · 全国与首都房价对标 · 房价收入比 · 按揭负担模拟器</span>
+        </div>
+
+              <!-- Top Analytical KPI Summary Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="cream-card p-4">
+          <div class="flex items-center justify-between text-xs text-[#857D74] mb-1">
+            <span>40年实际房价涨幅最高 (发达/新兴)</span>
+            <span class="px-2 py-0.5 rounded badge-terracotta">1985–2026 实际</span>
+          </div>
+          <div class="serif-title text-xl font-bold text-[#2C2825]" id="kpiTopRealGrowth">中国香港 +397% / 澳大利亚 +312%</div>
+          <p class="text-xs text-[#5C554E] mt-1">
+            剔除CPI通胀后，香港(1985–2026实际+397.5%)、英国(+284.2%)、澳大利亚(+312.4%)与智利(2010–2026实际+104.5%)领跑；而日本全国实际房价仍低于1991年峰值35.8%。
+          </p>
+        </div>
+
+        <div class="cream-card p-4">
+          <div class="flex items-center justify-between text-xs text-[#857D74] mb-1">
+            <span>全球住房可负担性最严峻经济体</span>
+            <span class="px-2 py-0.5 rounded badge-ochre">房价收入比 PIR</span>
+          </div>
+          <div class="serif-title text-xl font-bold text-[#2C2825]" id="kpiWorstAffordability">尼日利亚 93.7x / 香港 30.9x</div>
+          <p class="text-xs text-[#5C554E] mt-1">
+            国际90㎡公寓口径下，尼日利亚(93.7x)、加纳(54.6x)因正规划商品房极度稀缺与高通胀居首；核心发达/新兴经济体中香港(30.9x)、菲律宾(32.1x)、越南(30.2x)、台湾(25.3x，台北34.3x/内政部中位数14.72x)负担最重。
+          </p>
+        </div>
+
+        <div class="cream-card p-4">
+          <div class="flex items-center justify-between text-xs text-[#857D74] mb-1">
+            <span>房价租金偏离度最高市场</span>
+            <span class="px-2 py-0.5 rounded badge-blue">房价租金比 PRR</span>
+          </div>
+          <div class="serif-title text-xl font-bold text-[#2C2825]" id="kpiPriceToRent">中国台湾 64.5x / 中国大陆 55.6x</div>
+          <p class="text-xs text-[#5C554E] mt-1">
+            台北与大陆一线城市毛租金回报率仅 1.4%–1.8%，房价租金比达 55–68 倍，远超国际 20–25 倍基本面区间，反映强金融资产与财富储存属性。
+          </p>
+        </div>
+
+        <div class="cream-card p-4">
+          <div class="flex items-center justify-between text-xs text-[#857D74] mb-1">
+            <span>家庭部门高杠杆预警区</span>
+            <span class="px-2 py-0.5 rounded badge-sage">居民债务/GDP</span>
+          </div>
+          <div class="serif-title text-xl font-bold text-[#2C2825]" id="kpiHouseholdDebt">瑞士 126.8% / 澳大利亚 111.8%</div>
+          <p class="text-xs text-[#5C554E] mt-1">
+            瑞士(126.8%)、澳大利亚(111.8%)、加拿大(101.4%)、韩国(100.2%，含传贳隐性杠杆)、荷兰(94.5%)居民债务占GDP比远超BIS 85%警戒线。
+          </p>
+        </div>
+      </div>
+
+              <div class="cream-card p-5 border-l-4 border-l-[#6B8E78]">
+        <h2 class="serif-title text-lg font-bold text-[#2C2825] mb-1">
+          五、住房可负担性多维透视：房价收入比、租售比、按揭月供负担与分位收入模拟
+        </h2>
+        <p class="text-xs sm:text-sm text-[#5C554E]">
+          本模块严格区分两套国际通行统计口径：<strong>① 国际标准化城市公寓口径（Numbeo / 90㎡标准公寓 / 1.5倍平均净薪资家庭可支配收入）</strong>，适合跨国横向对比高密度都会区购房难度；<strong>② 官方/家庭中位数口径（OECD / Demographia / 台湾内政部 / 美国NAR存量住宅中位数总价除以家庭中位数年收入）</strong>，反映本国典型居民家庭的实际中位负担。例如中国台湾在2026Q1内政部官方中位数口径下全台湾房价所得比为 <strong>9.47倍</strong>（台北市 <strong>14.72倍</strong>、新北市 <strong>12.63倍</strong>），而在国际90㎡公寓全口径下台湾为 <strong>25.3倍</strong>（台北市含公设换算达 <strong>34.3倍</strong>）。
+        </p>
+      </div>
+
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <!-- Chart 6: Price-to-Income Ratio Comparison -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#6B8E78]">图表 6 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国房价收入比 (PIR) 比较：全国 vs 首都/核心城市 (2026)</h3>
+            </div>
+            <select id="chart6ScopeSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1">
+              <option value="standard">国际90㎡公寓可比口径 + 首都核心城对比</option>
+              <option value="official">官方中位数住宅口径 + 首都核心城对比</option>
+            </select>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            同时展示各国全国平均水平与首都/第一核心城市房价收入比（年）。国际公认 3–5 倍为合理可负担，10 倍以上为严重负担，20 倍以上脱离工薪阶层独立购房能力。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart6PriceToIncome"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://statranker.org/economy/top-100-countries-by-cost-of-housing-vs-income-2026/" target="_blank" rel="noopener" class="underline text-[#5B7C99]">StatRanker / Numbeo 2026</a>、<a href="https://pip.moi.gov.tw/Publicize/Info/E1050" target="_blank" rel="noopener" class="underline text-[#5B7C99]">台湾内政部115Q1统计</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart6')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart6" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+                  <!-- Chart 5: House Price Growth vs Household Income Growth -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#C86D51]">图表 5 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国实际房价增长 vs 居民实际可支配收入增长对比 (2000–2026, %)</h3>
+            </div>
+            <select id="chart5ModeSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1">
+              <option value="gap">按“房价超额涨幅 (房价涨幅 - 收入涨幅)”排序</option>
+              <option value="price">按“实际房价累计涨幅”排序</option>
+            </select>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            检验“房价上涨是否超过居民收入增长”：陶土红柱高于鼠尾草绿柱越多，表明房价越脱离居民收入基本面（如加、澳、新、港、台、英、荷、瑞典）。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart5PriceVsIncome"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://www.oecd.org/en/data/indicators/housing-prices.html" target="_blank" rel="noopener" class="underline text-[#5B7C99]">OECD Price-to-Income Series</a>、<a href="https://data360.worldbank.org/en/dataset/IMF_GHW" target="_blank" rel="noopener" class="underline text-[#5B7C99]">IMF Global Housing Watch</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart5')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart5" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-5 flex flex-col">
+                    <!-- Chart 8: Rent-to-Income & Mortgage-to-Income Ratio -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#D49A45]">图表 8 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国租金收入比、按揭月供收入比与住房支出占可支配收入比 (%)</h3>
+            </div>
+            <select id="chart8MetricSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1">
+              <option value="all">三项指标同屏对比 (按揭负担 vs 租金负担 vs 综合住房支出)</option>
+              <option value="rent">仅按租金占家庭收入比例排序</option>
+              <option value="mortgage">仅按按揭月供占家庭收入比例排序</option>
+            </select>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            注：按揭月供占收入比基于80% LTV（或当地法定首付比例）及2025–2026实际按揭利率测算；超过30%为国际公认住房支出超负荷线（Housing Cost Overburden）。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart8RentAndMortgageBurden"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://worldpopulationreview.com/country-rankings/affordable-housing-by-country" target="_blank" rel="noopener" class="underline text-[#5B7C99]">World Population Review 2026</a>、<a href="https://www.oecd.org/en/data/datasets/oecd-affordable-housing-database.html" target="_blank" rel="noopener" class="underline text-[#5B7C99]">OECD HC1.2 Housing Costs</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart8')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart8" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+          </div>
+          <div class="lg:col-span-7 flex flex-col">
+                  <!-- Absolute Price Level & City Tier Disparity Analysis Block -->
+      <div class="cream-card p-5">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
+          <div>
+            <span class="text-xs font-semibold text-[#C86D51]">四、2 房价绝对水平、核心城市梯度与购买力平价 (PPP) 比较</span>
+            <h3 class="serif-title text-lg font-bold text-[#2C2825]">全国均价 vs 首都/核心经济城市均价 &amp; 美元汇率 vs PPP 购买力平价对标</h3>
+          </div>
+          <div class="flex items-center gap-2">
+            <label for="absPriceSortSelect" class="text-xs text-[#5C554E]">排序指标:</label>
+            <select id="absPriceSortSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2.5 py-1 font-medium">
+              <option value="capitalSqmUsd">首都/核心城市单价 (USD/㎡) 从高到低</option>
+              <option value="nationalSqmUsd">全国平均住宅单价 (USD/㎡) 从高到低</option>
+              <option value="capitalSqmPpp">首都核心单价 (PPP国际元/㎡) 从高到低</option>
+              <option value="cityNationalRatio">核心城市/全国均价倍数 从高到低</option>
+            </select>
+          </div>
+        </div>
+        <p class="text-xs text-[#5C554E] mb-3">
+          <strong>方法论警示：</strong>直接用名义美元汇率换算每平方米房价会产生严重误导——瑞士、挪威、美国名义美元单价高，但其当地居民名义收入也高；反之，孟加拉国、尼日利亚、越南、菲律宾、埃及按购买力平价（PPP国际元/㎡）换算后的真实购房成本远超美元汇率表面水平。此外，<strong>绝不可将一线城市房价误作全国均价</strong>：例如中国大陆全国商品住宅均价约 $1,380/㎡ (约9,900元/㎡)，而北京/上海/深圳核心区达 $9,200–$11,500/㎡（相差 6.8–8.3 倍）；美国全国中位单价约 $2,450/㎡，而纽约曼哈顿/旧金山超 $11,800/㎡。
+        </p>
+        <div class="overflow-x-auto max-h-96 custom-scrollbar border border-[#E3DDD1] rounded-lg">
+          <table class="w-full text-left data-table" id="absPriceComparisonTable">
+            <thead class="sticky top-0 z-10">
+              <tr>
+                <th>国家/地区</th>
+                <th>区域</th>
+                <th>全国均价 (USD/㎡)</th>
+                <th>全国均价 (PPP国际元/㎡)</th>
+                <th>首都/第一核心城 (USD/㎡)</th>
+                <th>主要经济城市 (USD/㎡)</th>
+                <th>核心城/全国倍数</th>
+                <th>典型住宅总价 (全国/核心城)</th>
+                <th>主要物业类型与面积口径</th>
+                <th>2026数据状态与来源</th>
+              </tr>
+            </thead>
+            <tbody id="absPriceTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+          </div>
+        </div>
+
+              <!-- Interactive Down Payment, LTV & Income Percentile Simulator -->
+      <div class="cream-card p-6 border-2 border-[#E3DDD1]">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4 pb-3 border-b border-[#EFECE4]">
+          <div>
+            <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full badge-terracotta">五、4 交互式家庭购房首付与贷款压力模拟器</span>
+            <h3 class="serif-title text-lg font-bold text-[#2C2825] mt-1">
+              不同收入分位家庭购买典型住宅的首付积攒年限、月供收入比与首次置业难度推演
+            </h3>
+          </div>
+          <span class="text-xs text-[#857D74]">选择国家后自动载入该国真实房价、收入、法定首付比例与现行按揭利率</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- Controls Column -->
+          <div class="lg:col-span-5 space-y-3.5 bg-[#F6F3EC] p-4 rounded-xl border border-[#E3DDD1]">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="simCountrySelect" class="block text-xs font-semibold text-[#5C554E] mb-1">1. 选择国家或地区</label>
+                <select id="simCountrySelect" class="w-full text-xs bg-[#FFFDF9] border border-[#E3DDD1] rounded-lg px-2.5 py-2 font-semibold text-[#2C2825]"></select>
+              </div>
+              <div>
+                <label for="simLocationSelect" class="block text-xs font-semibold text-[#5C554E] mb-1">2. 城市层级选择</label>
+                <select id="simLocationSelect" class="w-full text-xs bg-[#FFFDF9] border border-[#E3DDD1] rounded-lg px-2.5 py-2 font-semibold text-[#2C2825]">
+                  <option value="national">全国平均水平 (National Avg)</option>
+                  <option value="capital">首都/第一核心都市 (Capital/Core)</option>
+                  <option value="major">主要经济城市 (Secondary Hub)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="simIncomeGroup" class="block text-xs font-semibold text-[#5C554E] mb-1">3. 家庭收入分位群体</label>
+                <select id="simIncomeGroup" class="w-full text-xs bg-[#FFFDF9] border border-[#E3DDD1] rounded-lg px-2.5 py-2 font-semibold text-[#2C2825]">
+                  <option value="0.55">低收入家庭 (P25, 中位收入55%)</option>
+                  <option value="1.0" selected>中位标准家庭 (P50, 100%基准)</option>
+                  <option value="1.45">中高收入家庭 (P75, 中位收入145%)</option>
+                  <option value="2.1">高收入家庭 (P90, 中位收入210%)</option>
+                </select>
+              </div>
+              <div>
+                <label for="simAreaSqm" class="block text-xs font-semibold text-[#5C554E] mb-1">4. 拟购住宅面积: <span id="simAreaVal" class="text-[#C86D51]">90</span> ㎡</label>
+                <input id="simAreaSqm" type="range" min="40" max="180" step="5" value="90" class="w-full" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+              <div>
+                <label for="simDownPaymentPct" class="block text-xs font-semibold text-[#5C554E] mb-1">首付比例: <span id="simDownVal" class="text-[#C86D51]">25</span>%</label>
+                <input id="simDownPaymentPct" type="range" min="5" max="70" step="5" value="25" class="w-full" />
+                <div class="text-[11px] text-[#857D74]">对应 LTV: <span id="simLtvVal">75</span>%</div>
+              </div>
+              <div>
+                <label for="simMortgageRate" class="block text-xs font-semibold text-[#5C554E] mb-1">按揭利率: <span id="simRateVal" class="text-[#C86D51]">4.2</span>%</label>
+                <input id="simMortgageRate" type="range" min="0.5" max="28.0" step="0.1" value="4.2" class="w-full" />
+                <div class="text-[11px] text-[#857D74]">当地现行基准利率</div>
+              </div>
+              <div>
+                <label for="simLoanTerm" class="block text-xs font-semibold text-[#5C554E] mb-1">贷款期限: <span id="simTermVal" class="text-[#C86D51]">30</span>年</label>
+                <input id="simLoanTerm" type="range" min="10" max="40" step="5" value="30" class="w-full" />
+                <div class="text-[11px] text-[#857D74]">储蓄率假设: 30%</div>
+              </div>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between">
+              <button id="btnResetSimulator" class="btn-outline-warm px-3 py-1.5 rounded text-xs">恢复该国默认制度参数</button>
+              <span class="text-[11px] text-[#857D74]" id="simPolicyHint"></span>
+            </div>
+          </div>
+
+          <!-- Simulation Output Cards & Income Group Breakdown Table -->
+          <div class="lg:col-span-7 flex flex-col justify-between space-y-4">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="bg-[#F6F3EC] p-3 rounded-lg border border-[#E3DDD1]">
+                <div class="text-[11px] text-[#857D74]">拟购住宅总价 &amp; 首付</div>
+                <div class="serif-title text-base font-bold text-[#2C2825] mt-0.5" id="simOutTotalPrice">$285,000</div>
+                <div class="text-xs text-[#C86D51] font-medium mt-0.5" id="simOutDownPayment">首付: $71,250</div>
+              </div>
+              <div class="bg-[#F6F3EC] p-3 rounded-lg border border-[#E3DDD1]">
+                <div class="text-[11px] text-[#857D74]">房价收入比 &amp; 攒首付年限</div>
+                <div class="serif-title text-base font-bold text-[#2C2825] mt-0.5" id="simOutPir">11.4 倍</div>
+                <div class="text-xs text-[#5B7C99] font-medium mt-0.5" id="simOutSaveYears">30%储蓄需 9.5 年</div>
+              </div>
+              <div class="bg-[#F6F3EC] p-3 rounded-lg border border-[#E3DDD1]">
+                <div class="text-[11px] text-[#857D74]">等额本息月供 / 月收入比</div>
+                <div class="serif-title text-base font-bold text-[#2C2825] mt-0.5" id="simOutMonthlyPay">$1,048 / 月</div>
+                <div class="text-xs font-semibold mt-0.5" id="simOutPaymentToIncome">月供占收入: 50.3%</div>
+              </div>
+              <div class="bg-[#F6F3EC] p-3 rounded-lg border border-[#E3DDD1]">
+                <div class="text-[11px] text-[#857D74]">首次购房准入难度评级</div>
+                <div class="serif-title text-base font-bold mt-0.5" id="simOutDifficultyBadge">极高压力</div>
+                <div class="text-[11px] text-[#5C554E] mt-0.5" id="simOutRentVsBuy">月供为同面积租金 1.8x</div>
+              </div>
+            </div>
+
+            <!-- 4 Income Quartiles Comparison Table for the Selected Country -->
+            <div class="overflow-x-auto border border-[#E3DDD1] rounded-lg">
+              <table class="w-full text-left data-table">
+                <thead>
+                  <tr>
+                    <th>当前国家四档收入家庭对比</th>
+                    <th>家庭年可支配收入 (USD)</th>
+                    <th>房价收入比 (倍)</th>
+                    <th>攒够首付年限 (30%储蓄)</th>
+                    <th>按揭月供占月收入比</th>
+                    <th>同面积租金占月收入比</th>
+                    <th>购房准入可行性诊断</th>
+                  </tr>
+                </thead>
+                <tbody id="simIncomeTiersBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- 1.2 第二层：房价增长和历史周期 -->
+      <div id="re-layer-2" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--sage);">
+          <div>
+            <span class="text-xs font-bold text-[#6B8E78] uppercase">第一板块 · 第二层 (Priority Layer 2)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">房价增长与历史周期：1985–2026年名义/实际房价指数、累计涨幅、年均复合增速与泡沫周期</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">支持多国叠加对比 · 对数坐标切换 · 16次重大地产泡沫峰值与回撤时间轴</span>
+        </div>
+
+              <!-- Research Question Core Synthesis Card -->
+      <div class="cream-card p-5 border-l-4 border-l-[#C86D51]">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
+          <h2 class="serif-title text-lg font-bold text-[#2C2825]">
+            核心洞察：名义繁荣的货币幻觉 vs 剔除通胀后的真实财富周期 (1985–2026)
+          </h2>
+          <span class="text-xs text-[#857D74]">点击下方国家标签可在图1与图2中动态增减对比曲线</span>
+        </div>
+        <p class="text-xs sm:text-sm text-[#5C554E] mb-3">
+          过去40年全球房价演变揭示了三大结构性规律：<strong>第一，“名义暴涨”往往掩盖高通胀稀释</strong>——例如土耳其(2010–2026名义指数达 4,838.7，但剔除通胀后实际指数为 211.2)、阿根廷、尼日利亚与印度(名义 366.0 vs 实际 162.6)；<strong>第二，核心大都市与全国均值严重分化</strong>——日本东京23区公寓近年屡创新高，但日本全国实际指数(121.5)仍远低于1991年高点(189.3)；美国、英国、法国、中国大陆同样呈现一线核心区抗跌、低能级或收缩型城市长期跑输通胀的“K型分化”；<strong>第三，不同住宅类型不可混为一谈</strong>——欧美独栋住宅(Single-Family)在2020年后涨幅普遍高出市中心公寓(Apartment) 15–28个百分点，而亚洲高密度经济体则以高层公寓与公共组屋/居屋双轨制为主导。
+        </p>
+
+        <!-- Multi-country Interactive Selector Chips for Charts 1 & 2 -->
+        <div class="bg-[#F6F3EC] p-3 rounded-lg border border-[#E3DDD1]">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <span class="text-xs font-semibold text-[#2C2825]">多国家房价曲线叠加选择器 (当前已选 <span id="selectedLineCount" class="text-[#C86D51]">8</span> 国，点击可切换)：</span>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button id="btnPresetMajor" class="btn-outline-warm px-2 py-0.5 rounded text-xs">G7+中港台新韩</button>
+              <button id="btnPresetBubble" class="btn-outline-warm px-2 py-0.5 rounded text-xs">典型泡沫与调整国</button>
+              <button id="btnPresetEmerging" class="btn-outline-warm px-2 py-0.5 rounded text-xs">亚洲与拉美新兴经济体</button>
+              <button id="btnPresetEurope" class="btn-outline-warm px-2 py-0.5 rounded text-xs">欧洲核心对比</button>
+            </div>
+          </div>
+          <div id="countryChipSelector" class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto custom-scrollbar p-0.5"></div>
+        </div>
+      </div>
+
+              <!-- Charts 1 & 2: Long-term Nominal and Real House Price Index (1985-2026) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Chart 1: Nominal House Price Index -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#C86D51]">图表 1 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国名义住宅价格指数长期趋势 (1985–2026, 2010=100)</h3>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <label for="chart1Submarket" class="text-xs text-[#857D74]">细分市场:</label>
+              <select id="chart1Submarket" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1 text-[#2C2825]">
+                <option value="all">综合住宅 (All Dwellings)</option>
+                <option value="new">新建住宅 (New Dwellings)</option>
+                <option value="existing">二手存量住宅 (Existing)</option>
+                <option value="apartment">公寓市场 (Apartments)</option>
+                <option value="house">独栋住宅 (Single-Family)</option>
+              </select>
+              <label class="text-xs flex items-center gap-1 cursor-pointer ml-1">
+                <input type="checkbox" id="chart1LogScale" class="rounded text-[#C86D51]" />
+                <span class="text-[#5C554E]">对数坐标</span>
+              </label>
+            </div>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            注：反映未剔除通胀的本币名义房价走势。高通胀经济体（如土耳其、阿根廷、埃及）勾选“对数坐标”可同屏观察。2026年数据含Q1/Q2实际公布值与全年初步统计。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart1NominalTrend"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://data.bis.org/topics/RPP" target="_blank" rel="noopener" class="underline text-[#5B7C99]">BIS Residential Property Prices</a>、<a href="https://www.ceicdata.com/en/indicator/united-states/nominal-residential-property-price-index" target="_blank" rel="noopener" class="underline text-[#5B7C99]">CEIC Nominal RPPI</a>、各国统计局</span>
+            <button onclick="toggleTablePanel('tablePanelChart1')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart1" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+
+        <!-- Chart 2: Real House Price Index -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#6B8E78]">图表 2 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国实际住宅价格指数长期趋势 (剔除CPI通胀, 2010=100)</h3>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <label for="chart2BaseYear" class="text-xs text-[#857D74]">统一基期:</label>
+              <select id="chart2BaseYear" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1 text-[#2C2825]">
+                <option value="2010">2010 = 100 (BIS标准基期)</option>
+                <option value="2000">2000 = 100 (新世纪起点)</option>
+                <option value="1990">1990 = 100 (日本泡沫顶点)</option>
+                <option value="1985">1985 = 100 (广场协议起点)</option>
+              </select>
+            </div>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            注：采用各国CPI或个人消费支出平减指数剔除通胀后的真实购买力房价指数。清晰展示1991日本泡沫破裂、1997亚洲金融风暴、2008欧美次贷危机与2021后全球高利率调整。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart2RealTrend"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://www.ceicdata.com/en/indicator/real-residential-property-price-index" target="_blank" rel="noopener" class="underline text-[#5B7C99]">BIS / CEIC Real RPPI (2010=100)</a>、<a href="https://www.oecd.org/en/data/indicators/housing-prices.html" target="_blank" rel="noopener" class="underline text-[#5B7C99]">OECD Analytical House Prices</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart2')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart2" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+      </div>
+
+              <!-- Charts 3 & 4: Cumulative Growth & CAGR Comparison -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Chart 3: Cumulative House Price Growth -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#5B7C99]">图表 3 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国多阶段房价累计涨幅对比 (实际 vs 名义, %)</h3>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <select id="chart3WindowSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1 text-[#2C2825]">
+                <option value="1985_2026">1985–2026 累计涨幅 (或最早可比年)</option>
+                <option value="1990_2026">1990–2026 累计涨幅</option>
+                <option value="2000_2026">2000–2026 累计涨幅</option>
+                <option value="2010_2026">2010–2026 累计涨幅 (BIS基期至今)</option>
+                <option value="2016_2026">近10年累计涨幅 (2016–2026)</option>
+                <option value="2021_2026">近5年累计涨幅 (2021–2026)</option>
+              </select>
+            </div>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            对比所选区域国家在指定历史窗口内的实际累计涨幅与名义累计涨幅（默认按实际累计涨幅从高到低排序，展示前22个代表性经济体，可通过顶部区域筛选切换）。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart3CumulativeGrowth"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://data.bis.org/topics/RPP" target="_blank" rel="noopener" class="underline text-[#5B7C99]">BIS Property Price Statistics</a>、<a href="https://www.ceicdata.com/en/indicator/real-residential-property-price-index" target="_blank" rel="noopener" class="underline text-[#5B7C99]">CEIC Global RPPI</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart3')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart3" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+
+        <!-- Chart 4: CAGR Comparison -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#D49A45]">图表 4 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国住宅价格年均复合增长率 (CAGR) 比较 (% / 年)</h3>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <select id="chart4PeriodSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1 text-[#2C2825]">
+                <option value="long">长期全周期 CAGR (1985/起始年–2026)</option>
+                <option value="post2010">2010–2026 年均复合增长率 CAGR</option>
+                <option value="last10">近10年 (2016–2026) CAGR</option>
+              </select>
+            </div>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            注：同时呈现名义年均复合增长率(Nominal CAGR)与剔除CPI通胀后的实际年均复合增长率(Real CAGR)。多数成熟经济体长期真实房价CAGR介于 1.2%–3.5%/年之间。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart4CagrComparison"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://everstonefinance.com.au/australian-house-prices-history-40-years/" target="_blank" rel="noopener" class="underline text-[#5B7C99]">BIS Long Series Analysis</a>、<a href="https://www.oecd.org/en/data/indicators/housing-prices.html" target="_blank" rel="noopener" class="underline text-[#5B7C99]">OECD Housing Indicators</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart4')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart4" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+      </div>
+
+              <!-- Chart 16: Historical Bubble & Crisis Timeline (1985-2026) -->
+      <div class="cream-card p-5">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
+          <div>
+            <span class="text-xs font-semibold text-[#C86D51]">图表 16 / 必做核心图</span>
+            <h2 class="serif-title text-lg font-bold text-[#2C2825]">全球重要国家房地产泡沫、危机爆发与制度转折历史时间轴 (1985–2026)</h2>
+          </div>
+          <div class="flex flex-wrap items-center gap-1.5">
+            <button data-era="ALL" class="timeline-era-btn btn-outline-warm active px-2.5 py-1 rounded text-xs">全部时期 (1985–2026)</button>
+            <button data-era="1985-1999" class="timeline-era-btn btn-outline-warm px-2.5 py-1 rounded text-xs">1985–1999 日北欧泡沫与亚洲风暴</button>
+            <button data-era="2000-2012" class="timeline-era-btn btn-outline-warm px-2.5 py-1 rounded text-xs">2000–2012 欧美次贷与欧债地产危机</button>
+            <button data-era="2013-2026" class="timeline-era-btn btn-outline-warm px-2.5 py-1 rounded text-xs">2013–2026 疫情QE暴涨与高利率大分化</button>
+          </div>
+        </div>
+        <p class="text-xs text-[#857D74] mb-3">
+          下图量化展示1985–2026年间全球16次标志性房地产泡沫峰值幅度、危机回撤深度与修复周期（纵轴为对应国家泡沫顶点相对基期2010=100的实际房价指数或阶段最大回撤幅度%），下方时间轴卡片可点击查看详细历史机制。
+        </p>
+        <div class="relative h-72 w-full mb-4">
+          <canvas id="chart16BubbleTimeline"></canvas>
+        </div>
+        <div class="flex items-center justify-between text-xs text-[#857D74] mb-3 pt-2 border-t border-[#EFECE4]">
+          <span>数据来源：<a href="https://data.bis.org/topics/RPP" target="_blank" rel="noopener" class="underline text-[#5B7C99]">BIS Historical Property Price Series</a>、<a href="https://www.imf.org/external/research/housing/" target="_blank" rel="noopener" class="underline text-[#5B7C99]">IMF Systemic Banking &amp; Housing Crises Database</a></span>
+          <button onclick="toggleTablePanel('tablePanelChart16')" class="text-[#C86D51] font-medium hover:underline">展开/收起16大历史事件数据表 ▾</button>
+        </div>
+        <div id="tablePanelChart16" class="hidden mb-4 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+
+        <!-- Interactive Timeline Event Cards -->
+        <div id="timelineEventsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 max-h-80 overflow-y-auto custom-scrollbar p-1"></div>
+      </div>
+
+      </div>
+
+      <!-- 1.3 第三层：租赁市场和住房供给 -->
+      <div id="re-layer-3" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--haze-blue);">
+          <div>
+            <span class="text-xs font-bold text-[#5B7C99] uppercase">第一板块 · 第三层 (Priority Layer 3)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">租赁市场与住房供给：房价租金比、租金收益率、产权居住结构、人均面积与空置率</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">租售比与毛租金回报率 · 自有率与社会住宅比例 · 套户比与城镇化匹配表</span>
+        </div>
+
+              <div class="cream-card p-5 border-l-4 border-l-[#5B7C99]">
+        <h2 class="serif-title text-lg font-bold text-[#2C2825] mb-1">
+          住房供给、居住品质与人口结构匹配度实证分析
+        </h2>
+        <p class="text-xs sm:text-sm text-[#5C554E]">
+          全球住房供需矛盾呈现三大结构性错配：<strong>① 存量充裕但空间错配（如日本、中国大陆、意大利、西班牙）</strong>——全国总套户比已超过 1.10–1.18，日本全国空置率达 13.8%（900万套空置屋“空家”），但人口持续向东京圈或一线都市圈单极集聚，收缩型城市空置攀升而核心都市供给受限；<strong>② 规划与土地管制导致的长期刚性短缺（如英国、加拿大、澳大利亚、荷兰、中国香港）</strong>——高净移民流入叠加严苛的绿带法案（Green Belt）或分区规划限制，导致年度竣工量长期落后于新增家庭户数；<strong>③ 租购制度分流（如德国、瑞士、奥地利维也纳、新加坡）</strong>——德国(自有率47.2%)与瑞士(42.3%)依靠强租客保护与合作社住房维持成熟租赁市场，新加坡则以80%居民居住于政府组屋(HDB)实现91.2%高自有率。
+        </p>
+      </div>
+
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <!-- Chart 7: Price-to-Rent Ratio -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#5B7C99]">图表 7 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国房价租金比 (Price-to-Rent) 与毛租金回报率 (%) 比较</h3>
+            </div>
+            <select id="chart7SortSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1">
+              <option value="prr_desc">按房价租金比从高到低 (估值偏离度高)</option>
+              <option value="yield_desc">按毛租金回报率从高到低 (现金流回报高)</option>
+            </select>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            房价租金比 = 住宅价格 / 年度总租金（即毛租金回报率的倒数）。当比值超过 35–40 倍（租金回报率低于 2.5%），表明房价严重脱离租金现金流基本面，依赖资本利得预期支撑。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart7PriceToRent"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://www.numbeo.com/property-investment/rankings_by_country.jsp" target="_blank" rel="noopener" class="underline text-[#5B7C99]">Numbeo Property Investment Index 2026</a>、<a href="https://www.oecd.org/en/data/indicators/housing-prices.html" target="_blank" rel="noopener" class="underline text-[#5B7C99]">OECD Price-to-Rent</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart7')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart7" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+
+          <div class="lg:col-span-2">
+                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Chart 9: Homeownership Rate Comparison -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#6B8E78]">图表 9 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国住房自有率与租房人口比例结构比较 (%)</h3>
+            </div>
+            <select id="chart9SortSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1">
+              <option value="own_desc">按住房自有率从高到低</option>
+              <option value="rent_desc">按租房人口比例从高到低</option>
+            </select>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            注：高自有率并非富裕程度的线性函数。东欧转型国家（罗马尼亚95.6%、匈牙利89.8%）与中国大陆（城镇约89%）因历史公房私有化拥有极高自有率；而瑞士(42.3%)、德国(47.2%)以成熟租赁体系见长。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart9Homeownership"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://tradingeconomics.com/country-list/home-ownership-rate" target="_blank" rel="noopener" class="underline text-[#5B7C99]">Trading Economics / Eurostat Home Ownership</a>、<a href="https://www.oecd.org/en/data/datasets/oecd-affordable-housing-database.html" target="_blank" rel="noopener" class="underline text-[#5B7C99]">OECD HM1.3</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart9')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart9" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+
+        <!-- Chart 10: Per Capita Floor Area & Household Size -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#5B7C99]">图表 10 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国人均住房面积 (㎡/人) 与户均居住面积 (㎡/户) 比较</h3>
+            </div>
+            <select id="chart10MetricSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1">
+              <option value="both">人均面积 + 户均面积对比</option>
+              <option value="perCapita">按人均住房面积 (㎡/人) 排序</option>
+              <option value="vacancy">按住房空置率 (%) 对比</option>
+            </select>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            注：美国(68㎡/人)、澳大利亚(66㎡/人)、加拿大(61㎡/人)以郊区独栋住宅为主；欧洲核心国介于 40–54㎡/人；中国大陆城镇人均建筑面积已升至约 41㎡（套内约33㎡）；中国香港人均仅 16㎡。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart10FloorArea"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://www.oecd.org/en/data/datasets/oecd-affordable-housing-database.html" target="_blank" rel="noopener" class="underline text-[#5B7C99]">OECD HM1.1 Housing Stock</a>、各国人口普查与统计局</span>
+            <button onclick="toggleTablePanel('tablePanelChart10')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart10" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+      </div>
+          </div>
+        </div>
+
+              <!-- Supply & Demographic Matching Comprehensive Table -->
+      <div class="cream-card p-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <h3 class="serif-title text-base font-bold text-[#2C2825]">
+            全球57国住房存量、新开工/竣工、空置率与人口结构（老龄化/城镇化/净移民）供需匹配全表
+          </h3>
+          <span class="text-xs text-[#857D74]">受顶部区域筛选与搜索框联动控制</span>
+        </div>
+        <div class="overflow-x-auto max-h-96 custom-scrollbar border border-[#E3DDD1] rounded-lg">
+          <table class="w-full text-left data-table">
+            <thead class="sticky top-0 z-10">
+              <tr>
+                <th>国家/地区</th>
+                <th>全国住房存量 (万套)</th>
+                <th>千人拥有住宅套数</th>
+                <th>年度新开工/竣工 (万套)</th>
+                <th>人均/户均面积 (㎡)</th>
+                <th>住房自有率 / 租房率</th>
+                <th>空置率 (%)</th>
+                <th>城镇化率 (%)</th>
+                <th>人口增长 / 家庭户数增长</th>
+                <th>65岁+老龄化率 / 净移民率</th>
+                <th>供需匹配诊断</th>
+              </tr>
+            </thead>
+            <tbody id="supplyDemographicTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+
+      <!-- 1.4 第四层：房地产金融及系统性风险 -->
+      <div id="re-layer-4" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--ochre);">
+          <div>
+            <span class="text-xs font-bold text-[#96651B] uppercase">第一板块 · 第四层 (Priority Layer 4)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">房地产金融及系统性风险：按揭贷款/GDP、家庭部门杠杆率、土地财政依赖度与银行风险敞口</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">按揭与居民债务占GDP演变 · 房价-利率-收入耦合轨迹 · 银行涉房敞口明细表</span>
+        </div>
+
+              <div class="cream-card p-5 border-l-4 border-l-[#D49A45]">
+        <h2 class="serif-title text-lg font-bold text-[#2C2825] mb-1">
+          房地产金融、土地财政依赖度与宏观系统性风险敞口分析
+        </h2>
+        <p class="text-xs sm:text-sm text-[#5C554E]">
+          房地产并非普通消费品，而是现代商业银行信用创造的核心抵押品。本模块追踪四大系统性传导渠道：<strong>① 银行资产负债表渠道</strong>（商业银行涉房贷款集中度过高，当房价下跌击穿LTV安全垫或浮动利率飙升时引发不良率攀升，如2008美国次贷、西班牙储蓄银行危机、瑞典/加拿大浮动利率重定价风险）；<strong>② 居民财富效应与资产负债表衰退</strong>（高居民债务/GDP经济体在房价下行期被迫缩减消费、提前还贷，如1990年代日本及2022年后的中国大陆、韩国）；<strong>③ 开发商高杠杆与预售信用链条</strong>（高负债开发商依赖高周转预售资金，一旦销售回款放缓即引发流动性违约）；<strong>④ 土地财政与地方公共投资正反馈逆转</strong>（土地出让收入下滑直接压缩地方政府基建与民生支出空间）。
+        </p>
+      </div>
+
+      <!-- Charts 11 & 12: Mortgage Debt to GDP & Household Debt to GDP -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Chart 11: Mortgage Loans to GDP -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#C86D51]">图表 11 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国居民房地产按揭贷款占 GDP 比例变化 (2000 vs 2010 vs 2026, %)</h3>
+            </div>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            注：反映银行体系与家庭部门对住房抵押信贷的深度绑定。瑞士、澳大利亚、荷兰、加拿大、英国、挪威按揭贷款占GDP超65%；新兴市场整体偏低但中国大陆、韩国、马来西亚在2010–2021年间快速攀升。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart11MortgageToGdp"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://www.imf.org/external/research/housing/" target="_blank" rel="noopener" class="underline text-[#5B7C99]">IMF Global Housing Watch</a>、<a href="https://www.oecd.org/en/data/datasets/oecd-affordable-housing-database.html" target="_blank" rel="noopener" class="underline text-[#5B7C99]">OECD HM1.4 / EMF Hypostat</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart11')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart11" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+
+        <!-- Chart 12: Household Debt to GDP -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#6B8E78]">图表 12 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国居民部门总债务占 GDP 比例变化 (2000–2026, %)</h3>
+            </div>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            注：IMF与BIS研究指出，当居民部门总债务占GDP超过 60%–85% 阈值时，债务积累对长期消费和GDP增长产生显著拖累。韩国数据若计入约1,000万亿韩元“传贳(Jeonse)”租房押金债务，实际广义家庭债务占GDP超150%。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart12HouseholdDebtGdp"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://www.housingdata.gov.au/visualisations/financial-market/household-debt-to-gdp-imf" target="_blank" rel="noopener" class="underline text-[#5B7C99]">IMF Global Debt Database</a>、<a href="https://www.voronoiapp.com/debt/How-Household-Debt-Levels-have-Evolved-2917" target="_blank" rel="noopener" class="underline text-[#5B7C99]">BIS Credit Statistics</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart12')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart12" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+      </div>
+
+      <!-- Charts 13 & 14: Real Estate Investment to GDP & Price-Rate-Income Co-movement -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Chart 13: Real Estate Investment to GDP & Fiscal Reliance -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#5B7C99]">图表 13 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国住宅/房地产投资占 GDP 比例变化与财政土地依赖度 (%)</h3>
+            </div>
+            <select id="chart13ViewSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1">
+              <option value="inv_gdp">房地产开发投资占 GDP 比例 (峰值 vs 2026)</option>
+              <option value="bank_fiscal">银行涉房贷款集中度 vs 土地/物业财政依赖度</option>
+            </select>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            注：爱尔兰(2006峰值13.8%)、西班牙(2006峰值12.5%)、中国大陆(2020峰值约13.1%，2025–2026回落至约6.2%)均曾经历高房地产投资拉动期；而美英加德日长期稳定在 4.2%–6.8% 之间。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart13ReInvestmentGdp"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://www.oecd.org/en/data/datasets/oecd-affordable-housing-database.html" target="_blank" rel="noopener" class="underline text-[#5B7C99]">OECD National Accounts</a>、<a href="https://www.thepaper.cn/newsDetail_forward_33573610" target="_blank" rel="noopener" class="underline text-[#5B7C99]">国家统计局/澎湃2026半年度回顾</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart13')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart13" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+
+        <!-- Chart 14: House Prices, Interest Rates, and Income Co-movement -->
+        <div class="cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#D49A45]">图表 14 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国房价、按揭利率与居民收入的长期关联趋势 (1985–2026)</h3>
+            </div>
+            <select id="chart14CountrySelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1 font-semibold">
+              <option value="US">美国 (US) — 次贷周期与2022加息锁定效应</option>
+              <option value="JP">日本 (JP) — 1990泡沫破灭与30年超低利率</option>
+              <option value="CN">中国大陆 (CN) — 城镇化信贷扩张与2021后去杠杆</option>
+              <option value="HK">中国香港 (HK) — 联系汇率跟随美联储利率周期</option>
+              <option value="TW">中国台湾 (TW) — 长期低利率与新青安信贷助推</option>
+              <option value="DE">德国 (DE) — 2010–2021负利率繁荣与2022加息回调</option>
+              <option value="GB">英国 (GB) — 短久期固定利率重定价与供需失衡</option>
+              <option value="CA">加拿大 (CA) — 高家庭杠杆与高移民需求对冲</option>
+              <option value="KR">韩国 (KR) — 传贳金融杠杆与利率高度敏感</option>
+              <option value="ES">西班牙 (ES) — 欧元区信贷泡沫与漫长出清修复</option>
+            </select>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            左轴：实际房价指数与实际居民可支配收入指数 (2010=100)；右轴：住房按揭贷款名义利率 (%)。直观检验利率下行如何放大估值倍数、加息周期如何触发估值均值回归。
+          </p>
+          <div class="relative h-80 w-full">
+            <canvas id="chart14PriceRateIncome"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：<a href="https://data.bis.org/topics/RPP" target="_blank" rel="noopener" class="underline text-[#5B7C99]">BIS RPPI &amp; Policy Rates</a>、<a href="https://www.oecd.org/en/data/indicators/housing-prices.html" target="_blank" rel="noopener" class="underline text-[#5B7C99]">OECD Disposable Income</a></span>
+            <button onclick="toggleTablePanel('tablePanelChart14')" class="text-[#C86D51] font-medium hover:underline">展开/收起对应数据表 ▾</button>
+          </div>
+          <div id="tablePanelChart14" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+      </div>
+
+      <!-- Financial Risk & Transmission Mechanism Table -->
+      <div class="cream-card p-5">
+        <h3 class="serif-title text-base font-bold text-[#2C2825] mb-3">
+          各国房地产金融结构、银行风险敞口、土地财政依赖度与资产属性定位全表
+        </h3>
+        <div class="overflow-x-auto max-h-96 custom-scrollbar border border-[#E3DDD1] rounded-lg">
+          <table class="w-full text-left data-table">
+            <thead class="sticky top-0 z-10">
+              <tr>
+                <th>国家/地区</th>
+                <th>按揭贷款/GDP (%)</th>
+                <th>居民总债务/GDP (%)</th>
+                <th>现行按揭利率 (%)</th>
+                <th>主流利率结构</th>
+                <th>银行涉房贷款占比 (%)</th>
+                <th>涉房不良贷款率 (%)</th>
+                <th>地产投资/GDP (%)</th>
+                <th>土地/不动产税占地方财政 (%)</th>
+                <th>房地产核心属性定位</th>
+                <th>系统性风险等级</th>
+              </tr>
+            </thead>
+            <tbody id="financeRiskTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+
+      <!-- 1.5 第五层：国家及地区详细数据与补充资料 -->
+      <div id="re-layer-5" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--plum);">
+          <div>
+            <span class="text-xs font-bold text-[#8E5B66] uppercase">第一板块 · 第五层 (Priority Layer 5)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">国家及地区详细数据与补充资料：六维综合评分、十项统计专题摘要、14国历史案例与57国全量主表</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">交互式权重评分 · 14国深度历史案例 · 57国全量数据库与统计口径说明</span>
+        </div>
+
+              <div class="cream-card p-5 border-l-4 border-l-[#C86D51]">
+        <h2 class="serif-title text-lg font-bold text-[#2C2825] mb-1">
+          九、跨国对比与核心结论：透明化六维评分体系（绝不将“房价涨最多”等同于“市场发展最好”）
+        </h2>
+        <p class="text-xs sm:text-sm text-[#5C554E]">
+          为避免将高投机泡沫误判为市场成功，本研究建立<strong>“全球房地产市场健康度与居住福祉综合指数 (GHMHI)”</strong>，涵盖六大透明维度：<strong>① 住房可负担性 (默认权重25%)</strong>、<strong>② 租售均衡与租赁市场成熟度 (15%)</strong>、<strong>③ 住房供给充足度与居住品质 (20%)</strong>、<strong>④ 金融稳健性与低系统性风险 (20%)</strong>、<strong>⑤ 价格周期平稳度与抗通胀韧性 (10%)</strong>、<strong>⑥ 经济增长与居住福祉协同度 (10%)</strong>。所有指标均公开原始值、正向/逆向 Min-Max 归一化公式与缺失值处理准则，并支持您在下方实时调节权重！
+        </p>
+      </div>
+
+      <!-- Interactive Weights & Chart 15 -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Weight Sliders & Methodology Box -->
+        <div class="lg:col-span-5 cream-card p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="serif-title text-base font-bold text-[#2C2825]">多维评分权重实时调节器</h3>
+            <button id="btnResetWeights" class="btn-outline-warm px-2.5 py-1 rounded text-xs">恢复基准学术权重</button>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <div class="flex justify-between font-medium mb-0.5">
+                <span>1. 住房可负担性 (PIR、房贷/租金收入比，逆向指标)</span>
+                <span id="wVal1" class="text-[#C86D51] font-bold">25%</span>
+              </div>
+              <input id="wSlider1" type="range" min="0" max="50" step="5" value="25" class="w-full weight-slider" />
+            </div>
+            <div>
+              <div class="flex justify-between font-medium mb-0.5">
+                <span>2. 租售均衡与租赁成熟度 (房价租金比适度性、租客保障)</span>
+                <span id="wVal2" class="text-[#C86D51] font-bold">15%</span>
+              </div>
+              <input id="wSlider2" type="range" min="0" max="50" step="5" value="15" class="w-full weight-slider" />
+            </div>
+            <div>
+              <div class="flex justify-between font-medium mb-0.5">
+                <span>3. 住房供给与居住品质 (人均面积、套户比、新建弹性)</span>
+                <span id="wVal3" class="text-[#C86D51] font-bold">20%</span>
+              </div>
+              <input id="wSlider3" type="range" min="0" max="50" step="5" value="20" class="w-full weight-slider" />
+            </div>
+            <div>
+              <div class="flex justify-between font-medium mb-0.5">
+                <span>4. 金融与财政稳健性 (居民债务/GDP、银行涉房风险，逆向)</span>
+                <span id="wVal4" class="text-[#C86D51] font-bold">20%</span>
+              </div>
+              <input id="wSlider4" type="range" min="0" max="50" step="5" value="20" class="w-full weight-slider" />
+            </div>
+            <div>
+              <div class="flex justify-between font-medium mb-0.5">
+                <span>5. 价格周期平稳度 (实际CAGR适度性、回撤波动率，逆向)</span>
+                <span id="wVal5" class="text-[#C86D51] font-bold">10%</span>
+              </div>
+              <input id="wSlider5" type="range" min="0" max="50" step="5" value="10" class="w-full weight-slider" />
+            </div>
+            <div>
+              <div class="flex justify-between font-medium mb-0.5">
+                <span>6. 收入房价同步性 (实际收入增速匹配房价增速程度)</span>
+                <span id="wVal6" class="text-[#C86D51] font-bold">10%</span>
+              </div>
+              <input id="wSlider6" type="range" min="0" max="50" step="5" value="10" class="w-full weight-slider" />
+            </div>
+          </div>
+
+          <div class="bg-[#F6F3EC] p-3.5 rounded-lg border border-[#E3DDD1] text-xs space-y-1.5 text-[#5C554E]">
+            <div class="font-semibold text-[#2C2825]">公开数学方法论（指标归一化与缺失值处理）：</div>
+            <p>• <strong>正向指标归一化：</strong> <code>S_i = 100 × (X_i - X_min) / (X_max - X_min)</code>（极值按5%与95%分位Winsorize缩尾处理，防止尼日利亚PIR=93.7或土耳其名义暴涨扭曲全局分布）。</p>
+            <p>• <strong>逆向指标归一化：</strong> <code>S_i = 100 × (X_max - X_i) / (X_max - X_min)</code>（用于房价收入比、月供收入比、居民债务/GDP、不良率等越低越健康的指标）。</p>
+            <p>• <strong>缺失值处理方法：</strong> 对部分非洲/南亚经济体缺失1985–1999早期BIS序列或银行涉房不良率时，采用同区域同收入组中位数插补并标注 <code>[Imputed/Regional Proxy]</code>，且在周期平稳度子项下调有效权重15%并重归一化其余有值维度权重。</p>
+          </div>
+        </div>
+
+        <!-- Chart 15: Comprehensive Affordability & Market Health Comparison -->
+        <div class="lg:col-span-7 cream-card p-5 flex flex-col">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+            <div>
+              <span class="text-xs font-semibold text-[#6B8E78]">图表 15 / 必做核心图</span>
+              <h3 class="serif-title text-base font-bold text-[#2C2825]">各国住房可负担性与房地产市场健康度综合评分对比 (0–100分)</h3>
+            </div>
+            <select id="chart15FilterSelect" class="text-xs bg-[#F6F3EC] border border-[#E3DDD1] rounded px-2 py-1">
+              <option value="top25">综合健康度排名前25经济体</option>
+              <option value="bottom25">综合可负担性/风险压力最大25经济体</option>
+              <option value="major20">G20及东亚核心经济体对比</option>
+            </select>
+          </div>
+          <p class="text-xs text-[#857D74] mb-3">
+            堆叠条形图展示六大维度加权得分贡献。拖动左侧滑块可实时观察各国排名变化。
+          </p>
+          <div class="relative h-96 w-full">
+            <canvas id="chart15ComprehensiveScore"></canvas>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#EFECE4] flex items-center justify-between text-xs text-[#857D74]">
+            <span>数据来源：基于 BIS、OECD、IMF、World Bank、Numbeo 2026 及各国官方统计构建多维矩阵</span>
+            <button onclick="toggleTablePanel('tablePanelChart15')" class="text-[#C86D51] font-medium hover:underline">展开/收起57国完整评分表 ▾</button>
+          </div>
+          <div id="tablePanelChart15" class="hidden mt-3 overflow-x-auto max-h-60 custom-scrollbar border border-[#E3DDD1] rounded-lg"></div>
+        </div>
+      </div>
+
+      <!-- 10 Core Conclusions Grid -->
+      <div class="cream-card p-6">
+        <h3 class="serif-title text-lg font-bold text-[#2C2825] mb-4">
+          跨国房地产实证研究十项核心统计专题摘要（基于1985–2026年57国全样本数据）
+        </h3>
+        <div id="tenConclusionsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+              <!-- In-Depth Country Case Selector & Detailed Analytical View -->
+      <div class="cream-card p-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4 pb-3 border-b border-[#EFECE4]">
+          <div>
+            <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full badge-terracotta">八、重点国家和地区深度历史案例研究</span>
+            <h3 class="serif-title text-lg font-bold text-[#2C2825] mt-1">
+              6大核心必选经济体（日本、美国、中国大陆、中国香港、中国台湾、中国澳门）+ 8大典型国际参照系
+            </h3>
+          </div>
+          <span class="text-xs text-[#857D74]">点击下方国家/地区按钮切换深度专题档案</span>
+        </div>
+
+        <!-- Case Study Country Tabs -->
+        <div id="caseStudyButtons" class="flex flex-wrap gap-2 mb-5"></div>
+
+        <!-- Case Study Detail Content -->
+        <div id="caseStudyDetailPanel" class="space-y-5"></div>
+      </div>
+              <div class="cream-card p-5">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
+          <div>
+            <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full badge-blue">十一、完整数据库、数据源与统计口径说明</span>
+            <h2 class="serif-title text-lg font-bold text-[#2C2825] mt-1">
+              全球 57 个代表性国家与地区房地产全维度主数据表 (支持多条件筛选、排序与 CSV 导出)
+            </h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btnExportFullCsv" class="btn-warm px-3.5 py-1.5 rounded-lg text-xs font-semibold">
+              导出当前筛选57国完整数据 (CSV)
+            </button>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto max-h-[540px] custom-scrollbar border border-[#E3DDD1] rounded-lg">
+          <table class="w-full text-left data-table" id="masterDatabaseTable">
+            <thead class="sticky top-0 z-10">
+              <tr>
+                <th>国家/地区</th>
+                <th>大洲</th>
+                <th>起始年</th>
+                <th>2026实际指数 (2010=100)</th>
+                <th>2026名义指数 (2010=100)</th>
+                <th>40年实际涨幅 (%)</th>
+                <th>实际CAGR (%)</th>
+                <th>房价收入比 (国际/官方)</th>
+                <th>首都PIR (倍)</th>
+                <th>房价租金比 (倍)</th>
+                <th>毛租金回报率 (%)</th>
+                <th>月供收入比 (%)</th>
+                <th>住房自有率 (%)</th>
+                <th>人均面积 (㎡)</th>
+                <th>按揭/GDP (%)</th>
+                <th>居民债务/GDP (%)</th>
+                <th>综合评分</th>
+                <th>2026数据类型</th>
+                <th>核心统计机构与来源链接</th>
+              </tr>
+            </thead>
+            <tbody id="masterDatabaseBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Authoritative Data Sources & Statistical Caliber Differences -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="cream-card p-4">
+          <h4 class="serif-title font-bold text-sm text-[#2C2825] mb-2">1. 国际权威数据库与统计口径差异</h4>
+          <ul class="text-xs text-[#5C554E] space-y-1.5">
+            <li>• <a href="https://data.bis.org/topics/RPP" target="_blank" rel="noopener" class="underline text-[#5B7C99] font-medium">BIS 住宅价格数据库 (Residential Property Prices)</a>：覆盖约60个经济体，统一基期 <code>2010=100</code>，采用CPI平减计算实际房价指数。部分新兴经济体仅覆盖首都或大中城市（已在表中逐一注明）。</li>
+            <li>• <a href="https://www.oecd.org/en/data/indicators/housing-prices.html" target="_blank" rel="noopener" class="underline text-[#5B7C99] font-medium">OECD Analytical House Prices &amp; AHD</a>：采用国民账户私人消费支出平减指数计算实际房价，房价收入比基于人均名义可支配收入。</li>
+            <li>• <a href="https://www.imf.org/external/research/housing/" target="_blank" rel="noopener" class="underline text-[#5B7C99] font-medium">IMF Global Housing Watch &amp; Global Debt Database</a>：追踪全球房价租金比、房价收入比及居民部门债务占GDP比例。</li>
+            <li>• <a href="https://statranker.org/economy/top-100-countries-by-cost-of-housing-vs-income-2026/" target="_blank" rel="noopener" class="underline text-[#5B7C99] font-medium">Numbeo 2026 / StatRanker 国际公寓口径</a>：统一假设90㎡城市公寓、取市中心与非市中心单价均值，除以1.5倍平均净薪资，适合跨国都会横向比较，但高于全国中位数住宅口径。</li>
+          </ul>
+        </div>
+
+        <div class="cream-card p-4">
+          <h4 class="serif-title font-bold text-sm text-[#2C2825] mb-2">2. 中华圈四地独立统计与口径消歧</h4>
+          <ul class="text-xs text-[#5C554E] space-y-1.5">
+            <li>• <strong>中国大陆：</strong> <a href="https://www.ceicdata.com/en/indicator/china/real-residential-property-price-index" target="_blank" rel="noopener" class="underline text-[#5B7C99]">国家统计局70城房价指数 / BIS QCNR628BIS</a>（按建筑面积计价，得房率约75%–82%）。严格区分全国商品住宅均价（约9,900元/㎡）与京沪深一线均价（6.5万–8.2万元/㎡）。</li>
+            <li>• <strong>中国台湾：</strong> <a href="https://pip.moi.gov.tw/Publicize/Info/E1050" target="_blank" rel="noopener" class="underline text-[#5B7C99]">内政部不动产资讯平台</a>（实价登录中位数住宅总价/家户可支配所得中位数：2026Q1全台9.47倍、台北14.72倍）与信义房价指数（二手纯住）；计价单位为“坪”（1坪=3.3058㎡，含公设比30%–35%）。</li>
+            <li>• <strong>中国香港：</strong> <a href="https://www.ceicdata.com/en/indicator/hong-kong/real-residential-property-price-index" target="_blank" rel="noopener" class="underline text-[#5B7C99]">差饷物业估价署 (RVD)</a> 私人住宅售价指数，2013年起全面实行“实用面积 (Saleable Area)”计价；公营房屋（公屋+居屋）占全港住户约49.1%。</li>
+            <li>• <strong>中国澳门：</strong> <a href="https://www.dsec.gov.mo/zh-MO/Statistic?id=601" target="_blank" rel="noopener" class="underline text-[#5B7C99]">统计暨普查局 (DSEC)</a> 按财政局印花税成交统计每平方米实用面积均价，区分私人住宅与社屋/经屋保障体系。</li>
+          </ul>
+        </div>
+
+        <div class="cream-card p-4">
+          <h4 class="serif-title font-bold text-sm text-[#2C2825] mb-2">3. 2026年数据状态三级分类标识准则</h4>
+          <ul class="text-xs text-[#5C554E] space-y-1.5">
+            <li>• <span class="px-1.5 py-0.5 rounded badge-sage font-semibold">已公布实际数据 (Actual 2026 Q1/Q2)</span>：BIS/CEIC已正式发布的2026年第一季度或第二季度住宅价格指数（如美、中、港、英、法、加、澳、德、西、韩、新、泰、墨、巴等）及台湾内政部115Q1（2026Q1）实价统计。</li>
+            <li>• <span class="px-1.5 py-0.5 rounded badge-blue font-semibold">初步统计数据 (Preliminary 2025Q4/2026H1)</span>：截至2025Q4或2026年中已发布官方快报、待年度国民账户终审修正的数据（如日本、印度、菲律宾、比利时、葡萄牙等）。</li>
+            <li>• <span class="px-1.5 py-0.5 rounded badge-ochre font-semibold">预测/估算数据 (Forecast / Est. 2026)</span>：部分统计频率较低的非洲或南亚发展中国家（如埃塞俄比亚、加纳、尼日利亚、阿尔及利亚、孟加拉国），采用IMF/央行历史序列结合2026年高频挂牌观测值估算，严禁混同于官方交割统计。</li>
+          </ul>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================================
+         第二板块：全球综合税制与税负比较 (SECTION 2: GLOBAL COMPREHENSIVE TAX SYSTEM & BURDEN)
+         ========================================================================================= -->
+    <section id="section-tax-system" class="space-y-10 scroll-mt-28 pt-6 border-t-2 border-[#E3DDD1]">
+      <div class="major-section-banner" style="border-left-color: var(--haze-blue);">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="px-2.5 py-0.5 text-xs font-bold rounded badge-blue">第二板块 · SECTION II</span>
+              <span class="text-xs font-semibold text-[#5C554E]">覆盖 55 个国家与地区 · 2000–2026 历史序列 · 14 张核心统计图表 · 8 张专业税制明细表</span>
+            </div>
+            <h2 class="serif-title text-2xl sm:text-3xl font-bold text-[#2C2825]">
+              第二板块：全球综合税制与税负比较 — 综合税楔、税制结构、税后购买力模拟与跨国税制评估
+            </h2>
+            <p class="text-xs sm:text-sm text-[#5C554E] mt-1 max-w-5xl">
+              整合 OECD Taxing Wages、IMF 财政监测、世界银行与各国税务署法定税率及有效税负数据，按重要性由高到低依次呈现：总体综合税负与劳动税楔 → 个人所得税/社保/增值税/企业税组成结构 → 工资、税后可支配收入与8步购买力全链路模拟 → 跨国税制结构差异与5维评分 → 2000–2026历史序列与55国完整税制总表。
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 text-xs">
+            <a href="#tax-layer-1" class="btn-outline-warm px-2.5 py-1 rounded">第一层：总体综合税负比较</a>
+            <a href="#tax-layer-2" class="btn-outline-warm px-2.5 py-1 rounded">第二层：税制组成结构</a>
+            <a href="#tax-layer-3" class="btn-outline-warm px-2.5 py-1 rounded">第三层：工资、税后收入与购买力模拟</a>
+            <a href="#tax-layer-4" class="btn-outline-warm px-2.5 py-1 rounded">第四层：不同国家及地区税制差异</a>
+            <a href="#tax-layer-5" class="btn-outline-warm px-2.5 py-1 rounded">第五层：完整税制数据及统计资料</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tax System Global Filter & Caliber Toolbar -->
+      <div class="cream-card p-5">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 pb-3 mb-3 border-b border-[#E3DDD1]">
+          <div>
+            <span class="text-xs font-bold text-[#5B7C99] uppercase">全球税制工作台全局筛选与双口径切换</span>
+            <p class="text-xs text-[#5C554E]">支持按大洲筛选、切换 OECD 标准税楔与含住房公积金/强制养老金广义税楔，以及导出 CSV 全量数据</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button class="btn-outline-warm" onclick="exportFullCSV()">⬇ 导出 55 国完整税制 CSV</button>
+            <button class="btn-warm px-3 py-1.5 rounded-lg text-xs font-semibold" onclick="exportSimCSV()">⬇ 导出 8 步模拟测算 CSV</button>
+          </div>
+        </div>
+            <div class="global-bar">
+      <div class="filter-group">
+        <span class="filter-label">地理大洲筛选：</span>
+        <div class="pill-group" id="continentFilterGroup">
+          <button class="pill-btn active" data-cont="ALL" onclick="setContinent('ALL')">全部 (55)</button>
+          <button class="pill-btn" data-cont="亚洲" onclick="setContinent('亚洲')">亚洲 (19)</button>
+          <button class="pill-btn" data-cont="欧洲" onclick="setContinent('欧洲')">欧洲 (20)</button>
+          <button class="pill-btn" data-cont="美洲" onclick="setContinent('美洲')">美洲 (8)</button>
+          <button class="pill-btn" data-cont="非洲" onclick="setContinent('非洲')">非洲 (8)</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">社保与税楔统计口径：</span>
+        <div class="pill-group" id="wedgeModeGroup">
+          <button class="pill-btn active" data-mode="broad" onclick="setWedgeMode('broad')">广义强制负担口径 (含公积金/CPF/MPF/AFP)</button>
+          <button class="pill-btn" data-mode="oecd" onclick="setWedgeMode('oecd')">OECD 狭义政府社保口径</button>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">快速检索国家/地区：</span>
+        <input type="text" id="taxGlobalSearchInput" placeholder="输入国家或地区名称 (如: 台湾 / 德国 / 智利)..." oninput="handleGlobalSearch(this.value)" style="width: 240px;">
+      </div>
+    </div>
+      </div>
+
+      <!-- 2.1 第一层：总体综合税负比较 -->
+      <div id="tax-layer-1" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <span class="text-xs font-bold text-[#C86D51] uppercase">第二板块 · 第一层 (Priority Layer 1)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">总体综合税负比较：综合劳动税楔、居民全口径税负堆叠、宏观税负趋势与福利再分配效应</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">核心税负 KPI · 六大实证维度摘要 · 劳动税楔与居民综合负担对比 · 核心指标速览表</span>
+        </div>
+
+            <div class="kpi-grid" id="overviewKpiGrid"></div>
+
+    <div class="method-notice">
+      <strong>统计口径与时间范围说明（2000–2026）：</strong>
+      1. <strong>独立研究对象原则：</strong>中国大陆、中国台湾、中国香港、中国澳门严格作为四个独立司法管辖区分别统计，绝不合并。
+      2. <strong>法定税率 vs 实际有效税率：</strong>2026年法定税率统计截止时间为<strong>2026年11月</strong>现行生效税法（参考 <a href="https://taxsummaries.pwc.com/quick-charts/personal-income-tax-pit-rates" target="_blank" rel="noopener">PwC Worldwide Tax Summaries 2026</a> 与 <a href="https://www.oecd.org/en/publications/2026/04/taxing-wages-2026_d1f39986.html" target="_blank" rel="noopener">OECD Taxing Wages 2026</a>）；宏观税收占GDP历史序列覆盖 2000–2026 年（其中2000–2024/2025年为决算/核定实际值，2026年为财政预算执行基准，已在表内明确区分，部分发展中国家2000–2005年缺乏全口径数据严格标注为 <code>NA / 数据缺失</code>）。
+      3. <strong>联邦制层级还原：</strong>美国（联邦+州+地方）、加拿大（联邦+省）、瑞士（联邦+州+市镇）、德国、西班牙、巴西、印度等联邦/准联邦制国家均已计入次国家级所得税与消费税。
+    </div>
+
+    <!-- Six Core Questions Synthesis Cards -->
+    <div class="questions-grid">
+      <div class="q-card">
+        <div class="q-title">实证维度一：各国与地区个人实际有效税负水平分布</div>
+        <div class="q-body">最高法定边际税率极具误导性：例如<strong>日本(55.95%)、台湾(40%)、美国(43.5%)、智利(40%)</strong>名义最高税率虽高，但在100%当地平均工资下，实际有效个税率仅为 <strong>7.9%、3.1%、13.8%、0.5%</strong>；而<strong>丹麦(35.4%)、比利时(26.8%)、德国(17.8%)</strong>在平均工资处即承受较高直接个税。</div>
+      </div>
+      <div class="q-card">
+        <div class="q-title">实证维度二：个人所得税、社会保险与强制性缴费结构占比</div>
+        <div class="q-body">在55个经济体中，对中低及中等收入者而言，<strong>社保与强制公积金往往超过个人所得税成为第一大直接负担</strong>。例如中国大陆（五险一金雇员18.5%+雇主33.3%）、新加坡（CPF 20%+17%）、罗马尼亚（雇员35%社保 vs 6.5%有效个税）、捷克（雇主33.8%+雇员11.6%社保）。</div>
+      </div>
+      <div class="q-card">
+        <div class="q-title">实证维度三：企业税费与雇主社保的经济归宿及转嫁幅度</div>
+        <div class="q-body">法定纳税人 ≠ 最终经济负担者。实证研究表明：<strong>雇主社会保险缴费（如法国35.8%、意大利30%、中国大陆33.3%、巴西36.8%）在长期有60%–80%通过压低实际工资增速转嫁给雇员</strong>；而企业所得税约25%–45%转嫁给劳动者，消费流转税70%–90%转嫁给终端消费者。</div>
+      </div>
+      <div class="q-card">
+        <div class="q-title">实证维度四：增值税(VAT)、GST与销售税对居民消费成本的影响</div>
+        <div class="q-body">不能把法定VAT税率直接等同于居民消费税负率。<strong>英国(20% VAT)、爱尔兰(23%)、加拿大(13%)、墨西哥(16%)对基本食品实行0%零税率</strong>，缓冲了低收入温饱成本；而<strong>丹麦(25%)、智利(19%)、匈牙利(27%/食品18%)、以色列(18%)</strong>对食品普遍征税，消费税累退性显著。</div>
+      </div>
+      <div class="q-card">
+        <div class="q-title">实证维度五：不同收入层级、家庭结构与就业身份的税负差异</div>
+        <div class="q-body"><strong>家庭申报与育儿抵免</strong>带来巨大分化：德国（夫妻所得折半+每孩€255/月津贴）、法国（家庭系数分劈）、匈牙利（三/四孩母亲终身免个税）、波兰與加拿大（高额免税育儿津贴）使有孩家庭净税楔较单身下降 <strong>12–20 个百分点</strong>；自雇人士在捷克、波兰与台湾享有显著核定费用优势。</div>
+      </div>
+      <div class="q-card">
+        <div class="q-title">实证维度六：全球税制累进性、税负梯度与基尼系数再分配效应</div>
+        <div class="q-body"><strong>低税负高自主型：</strong>中国澳门、中国香港、阿联酋、新加坡、瑞士；<strong>高累进亲家庭型：</strong>爱尔兰、韩国、以色列、加拿大；<strong>高税收高福利再分配型：</strong>丹麦、芬兰、法国、比利时、瑞典（财政税收与现金转移将基尼系数降低 <strong>11–14 个百分点</strong>）。</div>
+      </div>
+    </div>
+
+
+        <div class="card">
+                <div class="card-header">
+        <div>
+          <h2 class="card-title">10大核心比较图表工作台（与当前筛选大洲及统计口径实时联动）</h2>
+          <p class="card-desc">支持按数值高低排序、切换收入水平档位、筛选2000–2026历史年份，所有图表均配备精确悬停提示框及下方对应数据明细表。</p>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">图表排序方式：</span>
+          <select id="chartSortOrder" onchange="renderAllOverviewCharts()">
+            <option value="desc">按主指标从高到低排序</option>
+            <option value="asc">按主指标从低到高排序</option>
+            <option value="continent">按大洲默认分组排序</option>
+          </select>
+        </div>
+      </div>
+          <div class="grid-2">
+                    <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">图表 5：各国与地区综合劳动税楔 (Labor Tax Wedge) 比较</h3>
+              <p class="card-desc">(个人所得税 + 雇员社保 + 雇主社保) ÷ 雇主总用工成本，衡量劳动要素总税负</p>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="chart5Wedge"></canvas></div>
+        </div>
+                    <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">图表 8：个人所得税、社保缴费、消费间接税的居民综合负担堆叠对比</h3>
+              <p class="card-desc">以雇主总用工成本为100%，还原单身平均工资居民被“直接税+社保+消费间接税”切走的总比例</p>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="chart8CombinedStack"></canvas></div>
+        </div>
+          </div>
+          <div class="grid-2" style="margin-top:22px;">
+                    <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">图表 6：税收收入占 GDP 比例历史变化趋势 (2000–2026)</h3>
+              <p class="card-desc">追踪近25年宏观税负演进（2026年数据截至2026年11月预算执行基准，不混同预测值）</p>
+            </div>
+            <div class="filter-group">
+              <select id="chart6StartYear" onchange="renderChart6()">
+                <option value="2000" selected>起始: 2000年</option>
+                <option value="2005">起始: 2005年</option>
+                <option value="2010">起始: 2010年</option>
+                <option value="2015">起始: 2015年</option>
+              </select>
+              <select id="chart6EndYear" onchange="renderChart6()">
+                <option value="2024">截止: 2024年 (决算)</option>
+                <option value="2025">截止: 2025年 (初步)</option>
+                <option value="2026" selected>截止: 2026年 (最新)</option>
+              </select>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="chart6Trend"></canvas></div>
+        </div>
+                    <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">图表 7：各国与地区宏观税收结构堆叠图 (% GDP)</h3>
+              <p class="card-desc">拆解个人所得税、企业所得税、社会保障缴款、商品与服务消费税、财产税占GDP比重</p>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="chart7MacroStack"></canvas></div>
+        </div>
+          </div>
+          <div style="margin-top:22px;">
+                    <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">图表 10：各国宏观税负与公共社会福利支出及基尼系数再分配效应关系</h3>
+              <p class="card-desc">X轴：宏观税负(% GDP)；Y轴：公共社会福利与医疗教育支出(% GDP)；气泡大小：基尼系数改善幅度</p>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="chart10Scatter"></canvas></div>
+        </div>
+          </div>
+        </div>
+
+            <!-- Quick Summary Table synchronized with Overview -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">图表对应核心指标速览明细表（点击表头可排序，点击国家可跳转模拟）</h3>
+          <p class="card-desc">展示当前筛选大洲国家的个税、社保、VAT、综合劳动税楔、消费税负及宏观税负结构</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="overviewSummaryTable">
+          <thead>
+            <tr>
+              <th onclick="sortOverviewTable('name')">国家/地区 ↕</th>
+              <th onclick="sortOverviewTable('continent')">大洲 ↕</th>
+              <th class="num-col" onclick="sortOverviewTable('pitTop')">个税最高边际 ↕</th>
+              <th class="num-col" onclick="sortOverviewTable('pitEffMed')">100%AW有效个税 ↕</th>
+              <th class="num-col" onclick="sortOverviewTable('sscEmp')">雇员社保/公积金 ↕</th>
+              <th class="num-col" onclick="sortOverviewTable('sscEr')">雇主社保/公积金 ↕</th>
+              <th class="num-col" onclick="sortOverviewTable('taxWedge')">综合劳动税楔 ↕</th>
+              <th class="num-col" onclick="sortOverviewTable('vatStd')">标准VAT/GST ↕</th>
+              <th class="num-col" onclick="sortOverviewTable('effConsRate')">实际消费税负 ↕</th>
+              <th class="num-col" onclick="sortOverviewTable('citRate')">企业所得税 ↕</th>
+              <th class="num-col" onclick="sortOverviewTable('taxToGdp')">税收/GDP (2024/25) ↕</th>
+              <th class="num-col" onclick="sortOverviewTable('socialExpGdp')">社会福利支出/GDP ↕</th>
+            </tr>
+          </thead>
+          <tbody id="overviewSummaryTbody"></tbody>
+        </table>
+      </div>
+    </div>
+      </div>
+
+      <!-- 2.2 第二层：税制组成结构 -->
+      <div id="tax-layer-2" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--sage);">
+          <div>
+            <span class="text-xs font-bold text-[#6B8E78] uppercase">第二板块 · 第二层 (Priority Layer 2)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">税制组成结构：个人所得税阶梯、雇员与雇主社保缴费、增值税/GST、企业税归宿与财产税矩阵</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">个税法定vs实际税率 · 5档收入税率曲线 · 五险一金全拆解 · 企业税转嫁与7大消费场景税负</span>
+        </div>
+
+        <div class="card">
+                <!-- Row 1: Chart 1 & Chart 2 -->
+      <div class="grid-2">
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">图表 1：各国与地区个人所得税最高法定边际税率 vs 平均工资实际税率</h3>
+              <p class="card-desc">揭示“最高法定税率”与“普通中等收入(100% AW)实际有效个税率”之间的巨大剪刀差</p>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="chart1PitTop"></canvas></div>
+        </div>
+
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">图表 2：不同收入水平下的个人实际所得税率比较 (5档收入曲线)</h3>
+              <p class="card-desc">模拟低收入(50% AW)、中低(67%)、中等(100%)、中高(167%)、高收入(300% AW)五档有效个税率</p>
+            </div>
+            <select id="chart2TierSelect" onchange="renderChart2()">
+              <option value="ALL">展示5档收入完整对比 (代表国/当前筛选)</option>
+              <option value="0">仅对比：低收入 (50% 平均工资)</option>
+              <option value="1">仅对比：中低收入 (67% 平均工资)</option>
+              <option value="2">仅对比：中等收入 (100% 平均工资)</option>
+              <option value="3">仅对比：中高收入 (167% 平均工资)</option>
+              <option value="4">仅对比：高收入 (300% 平均工资)</option>
+            </select>
+          </div>
+          <div class="chart-box"><canvas id="chart2PitTiers"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Row 2: Chart 3 & Chart 4 -->
+      <div class="grid-2" style="margin-top:20px;">
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">图表 3：雇员与雇主社会保障及强制性缴费比例比较 (% 税前工资)</h3>
+              <p class="card-desc">区分雇员个人扣款与雇主用工缴费（可通过顶部按钮切换“含公积金/CPF广义口径”与“OECD狭义口径”）</p>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="chart3Ssc"></canvas></div>
+        </div>
+
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">图表 4：VAT/GST/销售税标准税率 vs 居民消费实际有效税负率</h3>
+              <p class="card-desc">对比法定标准税率与计入食品/医疗/教育豁免及消费倾向后的居民实际消费间接税负率</p>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="chart4Vat"></canvas></div>
+        </div>
+      </div>
+        </div>
+
+            <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">企业税负结构与经济归宿（税负转嫁）实证分析</h2>
+            <p class="card-desc">严格区分<strong>法定纳税人（Statutory Taxpayer）</strong>与<strong>最终经济负担者（Economic Incidence）</strong>：企业缴纳的企业所得税、雇主社保与流转税如何通过压低工资、推高物价或降低资本回报分摊。</p>
+          </div>
+        </div>
+        <div class="chart-box"><canvas id="chartCorpIncidence"></canvas></div>
+        <div class="method-notice" style="margin-top:14px; margin-bottom:0;">
+          <strong>税负转嫁核心经济学机制说明：</strong>
+          1. <strong>雇主社保与薪资税转嫁给雇员（占比50%–80%）：</strong>当劳动力供给缺乏弹性而企业资本可跨国流动时，高额雇主社保（如法国35.8%、中国大陆33.3%、意大利30%、巴西36.8%）在长期主要通过抑制税前工资涨幅由劳动者实际承担（但当遇到法定最低工资刚性约束时，无法向下转嫁，转而造成低技能岗位减少或非正规就业扩张，如哥伦比亚、巴西与南非）。<br>
+          2. <strong>间接税（VAT/GST/消费税）转嫁给消费者（占比70%–95%）：</strong>生活必需品（食品、燃油、水电）需求价格弹性极低，间接税几乎完全由终端居民通过更高物价承担；高弹性可选消费品与激烈竞争服务业则由商家与消费者分担。<br>
+          3. <strong>企业所得税（CIT）在资本与劳动间分摊：</strong>在开放小型经济体（如爱尔兰、新加坡、香港）中，过高企业税会引发资本外流从而降低本国劳动生产率与工资；而在拥有庞大内需或自然资源租金的经济体中，超额利润税主要由资本所有者承担。
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">7大日常消费场景的实际间接税负热力对比</h2>
+            <p class="card-desc">对比普通食品、日用品、住房、交通燃油、医疗、教育、娱乐7大类目下的综合税率（含VAT/GST与专项消费税）</p>
+          </div>
+        </div>
+        <div class="chart-box"><canvas id="chartConsCategories"></canvas></div>
+        <div class="method-notice" style="margin-top:14px; margin-bottom:0;">
+          <strong>法定VAT标准税率与居民消费实际有效税负率的统计差异说明：</strong><br>
+          ① <strong>消费倾向（MPC）差异：</strong>低收入家庭将90%–95%税后收入用于消费，而高收入家庭仅消费50%–60%（其余转为储蓄与资产投资），导致消费税天然具有累退性；<br>
+          ② <strong>住房租金、公立医疗与教育普遍免征VAT：</strong>这三项占居民总消费的35%–50%，大多适用免税或零税率；<br>
+          ③ <strong>基本食品税率分化巨大：</strong>英国、爱尔兰、加拿大、墨西哥、南非、中国香港/澳门对基本生鲜食品实行0%税率，德国(7%)、法国(5.5%)、中国大陆(9%/免税)、日本(8%)实行低税率，而丹麦(25%)、智利(19%)、沙特(15%)全额征税。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">企业税负、转嫁归宿与7大生活消费场景税率全表</h3>
+          <p class="card-desc">完整呈现55个国家与地区的企业所得税、企业综合税率、三方经济转嫁比例及7大生活消费场景税率</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>国家/地区</th>
+              <th class="num-col">企业所得税(CIT)</th>
+              <th class="num-col">企业综合税负率</th>
+              <th class="num-col">转嫁：劳动者/消费者/资本</th>
+              <th>间接税制类型</th>
+              <th class="num-col">标准税率</th>
+              <th class="num-col">普通食品</th>
+              <th class="num-col">日用品</th>
+              <th class="num-col">住房水电</th>
+              <th class="num-col">交通燃油</th>
+              <th class="num-col">医疗健康</th>
+              <th class="num-col">教育服务</th>
+              <th class="num-col">餐饮娱乐</th>
+              <th class="num-col">居民实际消费税负率</th>
+            </tr>
+          </thead>
+          <tbody id="corpVatTbody"></tbody>
+        </table>
+      </div>
+    </div>
+            <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">社会保障与强制性缴费五险一金全拆解明细表（雇员 vs 雇主）</h3>
+          <p class="card-desc">详细区分养老、医疗、失业、工伤、生育及住房公积金/强积金/中央公积金比例，并列明缴费基数上下限封顶与豁免规则。</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>国家/地区</th>
+              <th class="num-col">雇员养老</th>
+              <th class="num-col">雇主养老</th>
+              <th class="num-col">雇员医疗</th>
+              <th class="num-col">雇主医疗</th>
+              <th class="num-col">雇员失业</th>
+              <th class="num-col">雇主失业</th>
+              <th class="num-col">工伤/生育(雇主)</th>
+              <th class="num-col">公积金/二支柱(雇员/雇主)</th>
+              <th class="num-col">雇员广义合计</th>
+              <th class="num-col">雇主广义合计</th>
+              <th>缴费基数上下限、封顶与豁免制度说明</th>
+            </tr>
+          </thead>
+          <tbody id="sscDetailTbody"></tbody>
+        </table>
+      </div>
+    </div>
+            <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">财产税、遗产赠与税、净财富税与代际财富传递影响矩阵</h2>
+          <p class="card-desc">全面梳理房产持有税、房地产交易税、遗产与赠与税、年度净财富税、资本利得税与证券/产权印花税，剖析各国对存量财富的态度。</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>国家/地区</th>
+              <th>房产持有税与土地税</th>
+              <th>房地产交易环节税费</th>
+              <th>遗产税与赠与税</th>
+              <th>年度净财富税</th>
+              <th>资本利得税 (CGT)</th>
+              <th>印花税与金融交易税</th>
+              <th>对居民财富积累与代际传递的综合影响</th>
+            </tr>
+          </thead>
+          <tbody id="propertyTaxTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+      </div>
+
+      <!-- 2.3 第三层：工资、税后收入及购买力比较 -->
+      <div id="tax-layer-3" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--haze-blue);">
+          <div>
+            <span class="text-xs font-bold text-[#5B7C99] uppercase">第二板块 · 第三层 (Priority Layer 3)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">工资、税后收入及购买力比较：不同家庭结构可支配收入率与居民综合税负8步全链路精算模拟器</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">6类家庭与就业身份对比 · 8步全链路税负传导瀑布图 · 多国购买力留存率对比与55国精算全表</span>
+        </div>
+
+        <div class="card">
+                  <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">图表 9：不同家庭结构与就业身份下的税后可支配收入率比较 (% 税前收入)</h3>
+              <p class="card-desc">对比单身雇员、双职工无孩家庭、双职工育儿(2孩)家庭、高收入雇员(300% AW)与自雇人士</p>
+            </div>
+            <select id="chart9FamilySelect" onchange="renderChart9()">
+              <option value="compare">对比：单身雇员 vs 有2孩家庭 vs 高收入雇员</option>
+              <option value="single">单身雇员 (100% AW)</option>
+              <option value="dual">双职工家庭 (100% + 67% AW)</option>
+              <option value="kids">有2孩家庭 (100% + 67% AW 含育儿抵免/津贴)</option>
+              <option value="high">高收入雇员 (300% AW)</option>
+              <option value="self">自雇人士 (100% AW)</option>
+            </select>
+          </div>
+          <div class="chart-box"><canvas id="chart9Household"></canvas></div>
+        </div>
+        </div>
+
+            <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">居民综合税负8步全链路模拟器（支持单国精算与多国并排对比）</h2>
+          <p class="card-desc">
+            严格按照8步法测算：<strong>① 税前劳动收入 → ② 雇员个人所得税 → ③ 雇员社保及强制缴费 → ④ 雇主社保及薪资税 → ⑤ 雇主总用工成本 → ⑥ 税后可支配劳动收入 → ⑦ 消费环节承担的间接税估算（基于收入边际消费倾向MPC与7类消费品有效税率，绝不直接套用法定VAT税率） → ⑧ 最终实际可支配购买力</strong>。
+          </p>
+        </div>
+      </div>
+
+      <div class="sim-controls">
+        <div class="control-item">
+          <label for="simCountrySelect">1. 选择主模拟国家/地区：</label>
+          <select id="taxSimCountrySelect" onchange="runSimulation()"></select>
+        </div>
+        <div class="control-item">
+          <label for="simHouseholdSelect">2. 家庭结构与就业身份 (5类)：</label>
+          <select id="simHouseholdSelect" onchange="runSimulation()">
+            <option value="single" selected>单身雇员 (Single Employee)</option>
+            <option value="dual">双职工无孩家庭 (Dual-Earner 100%+67%)</option>
+            <option value="kids">有子女家庭 (Married/Dual + 2名孩童，含津贴抵免)</option>
+            <option value="high">高收入企业高管/专业雇员 (High-Income)</option>
+            <option value="self">自雇人士 / 独立自由职业者 (Self-Employed)</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="simIncomeTierSelect">3. 收入水平档位 (相对当地平均工资 AW)：</label>
+          <select id="simIncomeTierSelect" onchange="runSimulation()">
+            <option value="0">低收入水平 (50% 当地平均工资)</option>
+            <option value="1">中低收入水平 (67% 当地平均工资)</option>
+            <option value="2" selected>中等基准收入 (100% 当地平均工资)</option>
+            <option value="3">中高收入水平 (167% 当地平均工资)</option>
+            <option value="4">高收入水平 (300% 当地平均工资)</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="simCurrencyMode">4. 计价货币基准：</label>
+          <select id="simCurrencyMode" onchange="runSimulation()">
+            <option value="ppp" selected>购买力平价国际元 (PPP USD $，消除汇率与物价扭曲)</option>
+            <option value="local">当地法定本币 (Local Currency)</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="simCompCountries">5. 同屏横向对比地区预设：</label>
+          <select id="simCompCountries" onchange="runSimulation()">
+            <option value="greater_china" selected>两岸四地对比：中国大陆 / 台湾 / 香港 / 澳门 + 新加坡 / 日本</option>
+            <option value="g7">主要发达经济体：美国 / 德国 / 法国 / 英国 / 日本 / 加拿大 / 瑞士</option>
+            <option value="nordic_eu">欧洲福利模式对比：丹麦 / 瑞典 / 比利时 / 爱尔兰 / 波兰 / 匈牙利</option>
+            <option value="emerging">新兴市场代表：中国大陆 / 印度 / 越南 / 沙特 / 南非 / 巴西 / 墨西哥</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 8-Step Output Cards for Primary Country -->
+      <div id="sim8StepsContainer" class="sim-steps-grid"></div>
+
+      <!-- Simulator Charts: Waterfall & Multi-country Comparison -->
+      <div class="grid-2">
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title" id="simWaterfallTitle">主选国家8步税负传导与购买力留存分解</h3>
+              <p class="card-desc">清晰展示从雇主总用工成本(100%+雇主社保)到最终居民实际购买力的每一步扣减</p>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="chartSimWaterfall"></canvas></div>
+        </div>
+
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">同假设下多国/地区“综合总税楔 vs 最终实际购买力留存率”横向对比</h3>
+              <p class="card-desc">对比雇主社保、雇员社保、个人所得税、消费环节间接税与最终净购买力占比</p>
+            </div>
+          </div>
+          <div class="chart-box"><canvas id="chartSimMultiComp"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Detailed 55-Country Simulation Table under Selected Profile -->
+      <div style="margin-top:20px;">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">当前模拟设定下全部国家和地区8步测算全表</h3>
+            <p class="card-desc" id="simAssumptionsNote"></p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="simFullTable">
+            <thead>
+              <tr>
+                <th>国家/地区</th>
+                <th>大洲</th>
+                <th class="num-col">① 税前劳动收入</th>
+                <th class="num-col">② 雇员个税 (PIT)</th>
+                <th class="num-col">③ 雇员社保/公积金</th>
+                <th class="num-col">④ 雇主社保/薪资税</th>
+                <th class="num-col">⑤ 雇主总用工成本</th>
+                <th class="num-col">⑥ 税后可支配收入</th>
+                <th class="num-col">⑦ 消费间接税估算</th>
+                <th class="num-col">⑧ 最终实际购买力</th>
+                <th class="num-col">全链路综合总税负率</th>
+              </tr>
+            </thead>
+            <tbody id="simFullTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+      </div>
+
+      <!-- 2.4 第四层：不同国家及地区的税制差异 -->
+      <div id="tax-layer-4" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--ochre);">
+          <div>
+            <span class="text-xs font-bold text-[#96651B] uppercase">第二板块 · 第四层 (Priority Layer 4)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">不同国家及地区的税制差异：多国并排税制档案对比卡、八类税制结构实证特征与五维评价体系</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">多国并排税制制度档案卡 · 八大跨国税制分类特征 · 交互式5维税制评分与聚类表</span>
+        </div>
+
+            <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">个人所得税制深度比较与多国并排档案卡</h2>
+          <p class="card-desc">涵盖起征点/免税额、各级税率档位、5档收入有效税率、夫妻合并/独立申报、家庭育儿住房教育抵扣、股息/利息/资本利得税制及雇员/雇主五险一金明细。</p>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">添加/切换并排深度对比国家：</span>
+          <select id="profileAddSelect" onchange="addProfileCountry(this.value)">
+            <option value="">+ 选择国家加入上方对比卡...</option>
+          </select>
+          <button class="btn" onclick="resetDefaultProfiles()">重置为两岸四地+美德日新</button>
+        </div>
+      </div>
+
+      <div class="comp-cards-grid" id="profileCardsContainer"></div>
+    </div>
+            <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">全球税制多维度综合评价体系与八类税制结构实证特征</h2>
+          <p class="card-desc">
+            摒弃“低税率=税制优越”或“高税率=负担沉重”的单维偏见，建立包含<strong>① 直接税友好度、② 综合劳动税楔轻便度、③ 消费税亲贫度、④ 企业用工成本竞争力、⑤ 税制累进性指数、⑥ 公共服务与社会福利回报匹配度、⑦ 低收入群体保护度、⑧ 居民实际可支配购买力指数</strong>八大维度的透明可调权重评价模型。
+          </p>
+        </div>
+      </div>
+
+      <!-- 8 Thematic Answers Grid -->
+      <div class="questions-grid" id="eval8AnswersGrid"></div>
+
+      <!-- Interactive Weight Sliders -->
+      <div class="sim-controls" style="margin-top:16px;">
+        <div class="control-item">
+          <label>权重 1：居民直接税与社保轻便度 (<span id="w1Val">25</span>%)</label>
+          <input type="range" id="w1Slider" min="0" max="50" value="25" oninput="updateEvalScores()">
+        </div>
+        <div class="control-item">
+          <label>权重 2：消费端间接税亲贫度 (<span id="w2Val">15</span>%)</label>
+          <input type="range" id="w2Slider" min="0" max="50" value="15" oninput="updateEvalScores()">
+        </div>
+        <div class="control-item">
+          <label>权重 3：税制累进性与低收入保护 (<span id="w3Val">20</span>%)</label>
+          <input type="range" id="w3Slider" min="0" max="50" value="20" oninput="updateEvalScores()">
+        </div>
+        <div class="control-item">
+          <label>权重 4：公共服务福利与税负匹配度 (<span id="w4Val">20</span>%)</label>
+          <input type="range" id="w4Slider" min="0" max="50" value="20" oninput="updateEvalScores()">
+        </div>
+        <div class="control-item">
+          <label>权重 5：税后实际购买力与企业活力 (<span id="w5Val">20</span>%)</label>
+          <input type="range" id="w5Slider" min="0" max="50" value="20" oninput="updateEvalScores()">
+        </div>
+      </div>
+
+      <div class="method-notice">
+        <strong>综合评分计算公式与方法论局限性公开声明：</strong><br>
+        • <strong>子维度标准化公式：</strong>各正向指标采用极差标准化 $S_i = 100 \times (X_i - X_{\min}) / (X_{\max} - X_{\min})$，逆向负担指标采用 $S_i = 100 \times (X_{\max} - X_i) / (X_{\max} - X_{\min})$：<br>
+        &nbsp;&nbsp;1) <strong>税制累进性指数 (Progressivity Index)</strong> = $(300\%\text{AW有效个税及社保率} - 50\%\text{AW有效个税及社保率})$，差值越大代表高收入承担比例越高、对低收入越温和；<br>
+        &nbsp;&nbsp;2) <strong>公共服务与税负匹配度 (Fiscal Return Ratio)</strong> = $(\text{公共社会福利、医疗与教育支出占GDP比例} \div \text{宏观税负占GDP比例}) \times 0.6 + \text{基尼系数再分配改善幅度} \times 0.4$（剔除纯粹行政消耗与利息支出）；<br>
+        • <strong>方法论局限性：</strong>① 部分高福利国家（如北欧）的免费大学、普惠托育与公立医疗在现金可支配收入之外提供了高额实物转移支付(In-kind Benefits)；② 部分低税率地区（如中国香港、新加坡、阿联酋）的高昂居住成本或外籍自付商业医疗/国际学校学费未计入法定税收，但在居民真实生活成本中占据重要比重；③ 发展中国家庞大的非正规经济（占就业40%–70%）导致法定税制仅覆盖城市正规部门受薪群体。
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>综合排名</th>
+              <th>国家/地区</th>
+              <th>大洲</th>
+              <th class="num-col">综合加权得分 (0-100)</th>
+              <th class="num-col">直接税轻便度</th>
+              <th class="num-col">消费税亲贫度</th>
+              <th class="num-col">税制累进性得分</th>
+              <th class="num-col">公共福利匹配度</th>
+              <th class="num-col">实际购买力与企业活力</th>
+              <th>税制模式分类标签</th>
+            </tr>
+          </thead>
+          <tbody id="evalScoreTbody"></tbody>
+        </table>
+      </div>
+    </div>
+      </div>
+
+      <!-- 2.5 第五层：完整税制数据及统计资料 -->
+      <div id="tax-layer-5" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--plum);">
+          <div>
+            <span class="text-xs font-bold text-[#8E5B66] uppercase">第二板块 · 第五层 (Priority Layer 5)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">完整税制数据及统计资料：2000–2026年税收/GDP历史时间序列、55国可核查主表与官方溯源链接</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">2000–2026宏观税负历史序列 · 55个国家与地区全量税制主数据库 · 权威国际组织与税务署链接</span>
+        </div>
+
+            <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">2000–2026年各国与地区税收占 GDP 比例完整历史时间序列与财政支出结构</h2>
+          <p class="card-desc">对于早期缺少标准化统计的国家明确标记为 <code>NA (数据缺失)</code>；2026年数据基于截至2026年11月财政预算案与税法执行基准，严格区分历史决算与当期基准。</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>国家/地区</th>
+              <th class="num-col">2000</th>
+              <th class="num-col">2005</th>
+              <th class="num-col">2010</th>
+              <th class="num-col">2015</th>
+              <th class="num-col">2020</th>
+              <th class="num-col">2022</th>
+              <th class="num-col">2023</th>
+              <th class="num-col">2024 (决算)</th>
+              <th class="num-col">2025 (初步)</th>
+              <th class="num-col">2026 (截至11月)</th>
+              <th class="num-col">2000-2024变化</th>
+              <th class="num-col">政府总支出/GDP</th>
+              <th class="num-col">社会福利支出/GDP</th>
+              <th class="num-col">基尼改善(百分点)</th>
+              <th>历史序列口径与财政特征说明</th>
+            </tr>
+          </thead>
+          <tbody id="macroHistTbody"></tbody>
+        </table>
+      </div>
+    </div>
+            <div class="card">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">55个国家与地区全量可核查数据总表与官方溯源链接</h2>
+          <p class="card-desc">支持按任意关键词搜索、按大洲筛选、一键导出CSV，每条记录均附带国际组织（OECD / IMF / World Bank / Eurostat）或当地税务机关可点击溯源链接。</p>
+        </div>
+        <div class="filter-group">
+          <input type="text" id="dbSearchInput" placeholder="在全量数据库中搜索国家、税种或规则关键词..." oninput="renderFullDatabaseTable()" style="width:280px;">
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>代码</th>
+              <th>国家/地区</th>
+              <th>大洲/次区域</th>
+              <th>国家结构與层级</th>
+              <th class="num-col">平均年薪(PPP$)</th>
+              <th class="num-col">个税最低/最高</th>
+              <th class="num-col">50%/100%/300%AW个税</th>
+              <th class="num-col">雇员/雇主社保(广义)</th>
+              <th class="num-col">劳动税楔(OECD/广义)</th>
+              <th class="num-col">标准VAT/实际消费税</th>
+              <th class="num-col">企业税/综合税率</th>
+              <th class="num-col">宏观税负/GDP</th>
+              <th>数据来源与可核查链接</th>
+            </tr>
+          </thead>
+          <tbody id="fullDbTbody"></tbody>
+        </table>
+      </div>
+    </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================================
+         第三板块：全球经济发展轨迹 (SECTION 3: GLOBAL ECONOMIC DEVELOPMENT TRAJECTORY)
+         ========================================================================================= -->
+    <section id="section-economic-trajectory" class="space-y-10 scroll-mt-28 pt-6 border-t-2 border-[#E3DDD1]">
+      <div class="major-section-banner" style="border-left-color: var(--sage);">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="px-2.5 py-0.5 text-xs font-bold rounded badge-sage">第三板块 · SECTION III</span>
+              <span class="text-xs font-semibold text-[#5C554E]">覆盖 55 个代表性经济体 · 1985–2026 四十年完整年度序列 · 16 张核心统计图表 · 7 张全景诊断表</span>
+            </div>
+            <h2 class="serif-title text-2xl sm:text-3xl font-bold text-[#2C2825]">
+              第三板块：全球经济发展轨迹 — 四十年增长倍数、收入与生产率、产业结构升级、宏观债务与人口转型
+            </h2>
+            <p class="text-xs sm:text-sm text-[#5C554E] mt-1 max-w-5xl">
+              整合世界银行 WDI、IMF WEO、联合国国民账户 (UN SNA)、Penn World Table 10.01 与 ILO 统计数据，按重要性由高到低依次呈现：核心宏观经济指标与40年时间序列 → 居民收入、劳动生产率与生活水平 → 三次产业结构与制造业转型 → 宏观杠杆率、通胀与人口老龄化风险 → 历史阶段冲击与15国专题案例 → 13维经济实力评价与完整数据源。
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 text-xs">
+            <a href="#econ-layer-1" class="btn-outline-warm px-2.5 py-1 rounded">第一层：核心宏观经济发展指标</a>
+            <a href="#econ-layer-2" class="btn-outline-warm px-2.5 py-1 rounded">第二层：居民收入、劳动生产率与生活水平</a>
+            <a href="#econ-layer-3" class="btn-outline-warm px-2.5 py-1 rounded">第三层：经济结构与产业发展</a>
+            <a href="#econ-layer-4" class="btn-outline-warm px-2.5 py-1 rounded">第四层：财政、金融及宏观经济风险</a>
+            <a href="#econ-layer-5" class="btn-outline-warm px-2.5 py-1 rounded">第五层：历史发展轨迹与国家案例</a>
+            <a href="#econ-layer-6" class="btn-outline-warm px-2.5 py-1 rounded">第六层：完整经济数据及来源</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Economic Trajectory Global Dual-Economy Selector & Controls -->
+      <div class="cream-card p-5 space-y-4">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 pb-3 border-b border-[#E3DDD1]">
+          <div>
+            <span class="text-xs font-bold text-[#6B8E78] uppercase">双经济体实时对标工作台与区域筛选器</span>
+            <p class="text-xs text-[#5C554E]">切换主研究经济体与对照经济体后，下方双经济体对比栏、产业结构面积图、通胀轨迹与13维雷达图将实时联动更新</p>
+          </div>
+                  <div class="flex flex-wrap items-center gap-2 text-xs sm:text-sm bg-[#EFECE4] p-2 rounded-xl border border-[#E3DDD1]">
+          <div class="flex items-center gap-1.5">
+            <label for="globalPrimarySelect" class="text-[#5C554E] font-medium">主研究对象:</label>
+            <select id="globalPrimarySelect" onchange="handleGlobalControlChange()" class="bg-[#2C2825] text-white border border-[#E3DDD1] rounded-lg px-2.5 py-1.5 font-semibold focus:outline-none focus:border-[#C86D51]"></select>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <label for="globalCompareSelect" class="text-[#5C554E] font-medium">对标经济体:</label>
+            <select id="globalCompareSelect" onchange="handleGlobalControlChange()" class="bg-[#2C2825] text-white border border-[#E3DDD1] rounded-lg px-2.5 py-1.5 font-semibold focus:outline-none focus:border-[#D49A45]"></select>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <label for="globalRegionFilter" class="text-[#5C554E] font-medium">区域筛选:</label>
+            <select id="globalRegionFilter" onchange="handleGlobalControlChange()" class="bg-[#2C2825] text-white border border-[#E3DDD1] rounded-lg px-2 py-1.5 focus:outline-none focus:border-[#C86D51]">
+              <option value="ALL">全球全部 (55)</option>
+              <option value="亚洲">亚洲 (19)</option>
+              <option value="欧洲">欧洲 (20)</option>
+              <option value="美洲">美洲 (8)</option>
+              <option value="非洲">非洲 (8)</option>
+              <option value="发达经济体">发达经济体 (25)</option>
+              <option value="新兴与发展中经济体">新兴与发展中经济体 (30)</option>
+            </select>
+          </div>
+          <button id="btnExportCsv" onclick="exportFullDatasetCSV()" class="btn-warm font-semibold px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm">
+            <span>导出55国CSV</span>
+          </button>
+        </div>
+        </div>
+            <section class="cream-card p-4 bg-[#EFECE4] text-[#2C2825] border-2 border-[#E3DDD1]">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+        <div class="lg:col-span-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-[#FFFDF9] p-3 rounded-xl border border-[#E4C3B8]">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#5B7C99] inline-block"></span>
+              <span class="text-xs text-[#C86D51] font-semibold uppercase" id="barPrimaryRegion">亚洲 · 新兴经济体</span>
+              <span class="text-xs px-2 py-0.5 rounded badge-ochre" id="barPrimaryStatus">2026预测</span>
+            </div>
+            <h2 class="text-lg font-bold mt-0.5" id="barPrimaryName">中国大陆 (China Mainland)</h2>
+            <p class="text-xs text-[#5C554E] mt-0.5" id="barPrimaryType">超大规模工业化与产业升级型</p>
+          </div>
+          <div class="text-left sm:text-right">
+            <div class="text-xs text-[#857D74]">2026 名义GDP / 人均(PPP)</div>
+            <div class="text-base font-extrabold text-[#C86D51]" id="barPrimaryGdp">$20,150B / $27,169</div>
+            <div class="text-xs text-[#6B8E78] font-medium" id="barPrimaryGrowth">40年实际增长: 33.8x (CAGR 8.95%)</div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2 text-center flex flex-col items-center justify-center">
+          <span class="text-xs uppercase tracking-widest text-[#857D74] font-semibold">40年多维实时对标</span>
+          <div class="text-sm font-bold text-[#D49A45] mt-0.5" id="barRatioReadout">名义规模比: 0.64x</div>
+          <button onclick="swapPrimaryAndCompare()" class="mt-1.5 text-xs bg-[#EFECE4] hover:bg-[#6E6A64] px-2.5 py-1 rounded text-[#2C2825] transition">
+            ⇄ 互换主客体
+          </button>
+        </div>
+
+        <div class="lg:col-span-5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-[#FFFDF9] p-3 rounded-xl border border-[#E6D0AE]">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#D49A45] inline-block"></span>
+              <span class="text-xs text-[#96651B] font-semibold uppercase" id="barCompareRegion">美洲 · 发达经济体</span>
+              <span class="text-xs px-2 py-0.5 rounded badge-ochre" id="barCompareStatus">2026预测</span>
+            </div>
+            <h2 class="text-lg font-bold mt-0.5" id="barCompareName">美国 (United States)</h2>
+            <p class="text-xs text-[#5C554E] mt-0.5" id="barCompareType">全球科技金融霸权与消费驱动型</p>
+          </div>
+          <div class="text-left sm:text-right">
+            <div class="text-xs text-[#857D74]">2026 名义GDP / 人均(PPP)</div>
+            <div class="text-base font-extrabold text-[#D49A45]" id="barCompareGdp">$31,450B / $92,554</div>
+            <div class="text-xs text-[#6B8E78] font-medium" id="barCompareGrowth">40年实际增长: 2.86x (CAGR 2.60%)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+      </div>
+
+      <!-- 3.1 第一层：核心宏观经济发展指标 -->
+      <div id="econ-layer-1" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <span class="text-xs font-bold text-[#C86D51] uppercase">第三板块 · 第一层 (Priority Layer 1)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">核心宏观经济发展指标：1985–2026年名义/实际/PPP经济规模、人均GDP、增长倍数与全球排名跃迁</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">5口径40年时间序列 · 全球GDP份额重塑 · 人口与人均产出分解 · 1985vs2026排名跃迁榜</span>
+        </div>
+
+              <!-- Top Macro KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="cream-card p-4 border-l-4 border-l-[#C86D51]">
+          <div class="text-xs font-semibold text-[#857D74] uppercase">2026年全球GDP总量 (IMF WEO口径)</div>
+          <div class="text-2xl font-extrabold text-[#2C2825] mt-1">$128.00 万亿 <span class="text-xs font-normal text-[#857D74]">(1985年: $12.85万亿)</span></div>
+          <p class="text-xs text-[#5C554E] mt-1.5">41年间全球名义美元经济总量扩张约 <strong>9.96倍</strong>；按购买力平价(PPP)衡量，新兴市场与发展中经济体占比已从1985年的36.2%跃升至 <strong>59.4%</strong>。</p>
+        </div>
+        <div class="cream-card p-4 border-l-4 border-l-[#6B8E78]">
+          <div class="text-xs font-semibold text-[#857D74] uppercase">40年实际GDP累计增长领跑者</div>
+          <div class="text-2xl font-extrabold text-[#466652] mt-1">中国大陆 33.8x <span class="text-xs font-normal text-[#857D74]">(CAGR 8.95%)</span></div>
+          <p class="text-xs text-[#5C554E] mt-1.5">紧随其后为越南 (<strong>13.6x</strong>)、印度 (<strong>11.4x</strong>)、新加坡 (<strong>9.85x</strong>)、孟加拉国 (<strong>8.95x</strong>)、爱尔兰 (<strong>8.85x</strong>)、韩国 (<strong>7.62x</strong>) 与中国台湾 (<strong>7.45x</strong>)。</p>
+        </div>
+        <div class="cream-card p-4 border-l-4 border-l-[#D49A45]">
+          <div class="text-xs font-semibold text-[#857D74] uppercase">总量扩张 vs 人口膨胀反差警示</div>
+          <div class="text-2xl font-extrabold text-[#96651B] mt-1">尼日利亚 4.35x <span class="text-xs font-normal text-[#857D74]">→ 人均仅 1.52x</span></div>
+          <p class="text-xs text-[#5C554E] mt-1.5">巴基斯坦40年实际GDP增4.82倍但人均仅增<strong>1.80倍</strong>；沙特实际GDP增3.85倍但人均仅<strong>1.36倍</strong>，证明人口激增造成的GDP扩张绝不等于生活水平提高。</p>
+        </div>
+        <div class="cream-card p-4 border-l-4 border-l-[#8E5B66]">
+          <div class="text-xs font-semibold text-[#857D74] uppercase">停滞、去工业化与高债务脆弱案例</div>
+          <div class="text-2xl font-extrabold text-[#9E4B32] mt-1">意大利 1.41x <span class="text-xs font-normal text-[#857D74]">/ 南非 1.20x (人均40年)</span></div>
+          <p class="text-xs text-[#5C554E] mt-1.5">希腊、意大利、阿根廷、南非、巴西深陷全要素生产率停滞或过早去工业化；2026年全球主权与企业债券发行达创纪录的 <strong>$29万亿</strong> (OECD)。</p>
+        </div>
+      </div>
+
+      <!-- Data Integrity & Methodological Notice -->
+      <div class="cream-card p-4 bg-[#F6F3EC] border border-[#E3DDD1] text-xs text-[#5C554E] space-y-1.5">
+        <div class="font-bold text-[#2C2825] flex items-center gap-2">
+          <span class="px-2 py-0.5 bg-[#2C2825] text-white rounded text-[11px]">数据准则与方法论说明</span>
+          <span>严格区分名义/实际口径、四个独立统计区、历史缺失标记与2026预测口径</span>
+        </div>
+        <p>1. <strong>独立研究对象准则</strong>：中国大陆（数据源：<a href="https://www.stats.gov.cn/english/" target="_blank" class="text-[#C86D51] underline" rel="noopener noreferrer">中国国家统计局 NBS</a>）、中国台湾（数据源：<a href="https://eng.stat.gov.tw/" target="_blank" class="text-[#C86D51] underline" rel="noopener noreferrer">台湾主计总处 DGBAS</a>）、中国香港（数据源：<a href="https://www.censtatd.gov.hk/" target="_blank" class="text-[#C86D51] underline" rel="noopener noreferrer">香港特区政府统计处 C&SD</a>）、中国澳门（数据源：<a href="https://www.dsec.gov.mo/en-US/Statistic?id=901" target="_blank" class="text-[#C86D51] underline" rel="noopener noreferrer">澳门特区统计暨普查局 DSEC</a>）作为四个完全独立的研究对象呈现，绝不简单合并。</p>
+        <p>2. <strong>缺失年份与2026年数据规范</strong>：对于波兰、捷克、匈牙利、罗马尼亚等东欧转型国家（1985–1989年处于计划经济物质产品平衡表MPS体系，缺乏可比市场价格SNA美元序列）及埃塞俄比亚（1985–1989）、澳门（1985–1988早期分项），图表与表格明确显示为 <code>缺失 (Missing)</code>，不虚构数据或做简单线性外推；2025年为已公布/初步核算数据，2026年明确区分各统计局已公布前三季/半年初步数据与 <a href="https://www.imf.org/external/datamapper/NGDPD@WEO" target="_blank" class="text-[#C86D51] underline" rel="noopener noreferrer">IMF WEO (2026年10月刊)</a> 年度预测数据。</p>
+      </div>
+
+              <div class="cream-card p-5">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-4 border-b border-[#E3DDD1]">
+          <div>
+            <h2 class="text-lg font-bold text-[#2C2825]">1985–2026 长期经济增长轨迹与多口径时间序列对比</h2>
+            <p class="text-xs text-[#857D74] mt-0.5">支持名义GDP、实际GDP指数(1985=100)、实际GDP增长率(%)、名义人均GDP与PPP人均GDP切换；缺失年份真实留空不插值</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="tsMetricSelect" onchange="renderTimeSeriesCharts()" class="text-xs sm:text-sm border border-[#E3DDD1] rounded-lg px-3 py-1.5 bg-white font-semibold text-[#2C2825]">
+              <option value="gdpNom">名义 GDP 总量 (十亿美元 Current US$)</option>
+              <option value="realIdx">实际 GDP 长期增长指数 (基期 1985/首年 = 100)</option>
+              <option value="realGrowth">实际 GDP 年度增长率 (Real GDP Growth %)</option>
+              <option value="pcNom">名义人均 GDP (美元 Current US$)</option>
+              <option value="pcPpp">PPP 购买力平价人均 GDP (国际元 Current Intl$)</option>
+              <option value="pop">总人口变化轨迹 (百万人口 Millions)</option>
+            </select>
+            <select id="tsPresetSelect" onchange="applyTsPreset()" class="text-xs border border-[#E3DDD1] rounded-lg px-2.5 py-1.5 bg-[#F6F3EC] font-medium text-[#5C554E]">
+              <option value="CUSTOM">当前主选+对标+精选对比组</option>
+              <option value="GREATER_CHINA">中国大陆 / 台湾 / 香港 / 澳门 四地独立对照</option>
+              <option value="G7_BRICS">美 / 中 / 德 / 日 / 印 / 英 / 法 / 巴 大国博弈</option>
+              <option value="ASIAN_TIGERS">东亚与东南亚追赶梯队 (中/韩/台/新/越/印/马/泰)</option>
+              <option value="EAST_EUROPE">东欧转型四国 vs 南欧债务国 (波/捷/匈/罗 vs 意/希/西)</option>
+              <option value="AFRICA_LATAM">非洲与拉美代表国 (南非/尼/埃/摩 vs 巴/墨/阿/智)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Multi-country check pills for time series -->
+        <div class="mt-3">
+          <div class="text-xs font-semibold text-[#857D74] mb-1.5">勾选加入时间序列对比的经济体（点击切换，最多同时展示 10 条曲线以保持清晰）：</div>
+          <div id="tsCountryCheckboxes" class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto custom-scroll p-2 bg-[#F6F3EC] rounded-lg border border-[#E3DDD1]"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-5">
+          <div class="lg:col-span-2">
+            <div class="relative h-96">
+              <canvas id="chartMainTimeSeries"></canvas>
+            </div>
+          </div>
+          <div class="flex flex-col justify-between bg-[#F6F3EC] p-4 rounded-xl border border-[#E3DDD1]">
+            <div>
+              <h3 class="text-sm font-bold text-[#2C2825]">时间序列核心诊断与缺失年份说明</h3>
+              <div id="tsDiagnosticBox" class="mt-3 space-y-2.5 text-xs text-[#5C554E]"></div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-[#E3DDD1]">
+              <div class="text-xs font-bold text-[#2C2825] mb-1">名义GDP、实际GDP增长率与PPP购买力平价的统计口径区分：</div>
+              <ul class="text-xs text-[#5C554E] space-y-1">
+                <li>• <strong>名义GDP vs 实际GDP</strong>：日本1995年名义GDP达$5.55万亿峰值，2026年为$4.39万亿（名义缩水因日元贬值与通缩），但实际GDP较1985年增长了1.72倍。</li>
+                <li>• <strong>汇率法 vs PPP法</strong>：印度2026名义GDP为$4.58万亿（全球第4），但PPP口径达$16.85万亿（全球第3）。</li>
+                <li>• <strong>总量扩张 vs 人均产出</strong>：阿联酋人口从138万增至1060万（外籍劳工涌入），实际GDP增5.92倍但人均实际产出为0.85倍。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+              <!-- Global Overview Charts Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">四大洲及发达/新兴经济体全球GDP份额演变 (1985 vs 2026)</h3>
+              <p class="text-xs text-[#857D74]">对比名义美元汇率口径与购买力平价 (PPP) 口径下的全球经济重心东移</p>
+            </div>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartGlobalShares"></canvas>
+          </div>
+        </div>
+
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">40年实际GDP累计增长倍数 vs 人均实际GDP增长倍数 (Top & 典型对照)</h3>
+              <p class="text-xs text-[#857D74]">直观揭示哪些国家靠生产率跃升富裕，哪些国家被高速人口增长稀释</p>
+            </div>
+            <select id="overviewGroupSelect" onchange="renderOverviewMultChart()" class="text-xs border border-[#E3DDD1] rounded-lg px-2.5 py-1 bg-white font-medium">
+              <option value="REPRESENTATIVE">全球18个代表性增长/转型/停滞样本</option>
+              <option value="TOP_GROWTH">实际GDP增长最快 Top 15</option>
+              <option value="DIVERGENCE">人口稀释效应最显著 15 国</option>
+              <option value="STAGNANT">增长停滞或低增长 15 国</option>
+            </select>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartOverviewMultipliers"></canvas>
+          </div>
+        </div>
+      </div>
+              <!-- Decomposition & Ranking Shift Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">经济总量增长 vs 人口增长 vs 人均实际产出分解 (1985–2026)</h3>
+              <p class="text-xs text-[#857D74]">横轴：40年人口增长倍数 | 纵轴：40年实际人均GDP增长倍数 | 气泡大小：2026名义GDP</p>
+            </div>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartPopVsPcScatter"></canvas>
+          </div>
+        </div>
+
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">全球经济地位与排名跃迁榜 (1985 vs 2026 名义 & PPP 双口径)</h3>
+              <p class="text-xs text-[#857D74]">展示在55个研究对象中的相对位次升降与全球份额变化</p>
+            </div>
+            <select id="rankSortSelect" onchange="renderRankTable()" class="text-xs border border-[#E3DDD1] rounded-lg px-2 py-1 bg-white">
+              <option value="rankNom2026">按2026名义GDP排名</option>
+              <option value="rankPpp2026">按2026 PPP GDP排名</option>
+              <option value="rankChangeDesc">按40年位次跃升幅度</option>
+              <option value="realCagrDesc">按40年实际CAGR增速</option>
+            </select>
+          </div>
+          <div class="overflow-y-auto custom-scroll max-h-80 border border-[#E3DDD1] rounded-lg">
+            <table class="w-full text-left border-collapse text-xs data-table">
+              <thead class="bg-[#EFECE4] text-[#5C554E] sticky top-0">
+                <tr>
+                  <th class="p-2 font-bold">经济体</th>
+                  <th class="p-2 font-bold text-right">1985名义($B)</th>
+                  <th class="p-2 font-bold text-right">2026名义($B)</th>
+                  <th class="p-2 font-bold text-right">2026 PPP($B)</th>
+                  <th class="p-2 font-bold text-center">名义排名变化</th>
+                  <th class="p-2 font-bold text-right">实际增长倍数</th>
+                  <th class="p-2 font-bold text-right">人均增长倍数</th>
+                </tr>
+              </thead>
+              <tbody id="rankTableBody" class="divide-y divide-[#EFECE4]"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- 3.2 第二层：居民收入、劳动生产率和生活水平 -->
+      <div id="econ-layer-2" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--sage);">
+          <div>
+            <span class="text-xs font-bold text-[#6B8E78] uppercase">第三板块 · 第二层 (Priority Layer 2)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">居民收入、劳动生产率和生活水平：平均/中位数工资、人均可支配收入、基尼系数与每小时产出效率</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">工资与可支配收入梯度 · GDP向工资转化效率气泡图 · 劳动生产率vs失业率 · 收入与就业两大全景表</span>
+        </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="cream-card p-4 bg-[#F5E6E1]/55 border-[#E4C3B8]">
+          <div class="text-xs font-bold text-[#9E4B32] uppercase">核心法则一：平均工资 ≠ 中位数工资</div>
+          <p class="text-xs text-[#5C554E] mt-1">在收入偏态分布显著的经济体（如美国、南非、香港、巴西），顶层高薪拉高<strong>平均工资</strong>，而普通劳动者体感取决于<strong>中位数工资</strong>。例如美国2026平均工资约$79,800，而中位数工资约$61,200（中位数/均值比76.7%）；南非中位数仅为均值的42.9%。</p>
+        </div>
+        <div class="cream-card p-4 bg-[#E6EFE9]/60 border-[#C2D6C9]">
+          <div class="text-xs font-bold text-[#466652] uppercase">核心法则二：GDP增长 ≠ 居民可支配收入等幅增长</div>
+          <p class="text-xs text-[#5C554E] mt-1">跨国公司利润汇出（如爱尔兰劳动报酬占GDP仅28.4%）、高资本折旧与政府税收生产税份额，会导致人均GDP远高于人均可支配收入。衡量民生福祉必须同看<strong>人均可支配收入、劳动报酬份额与实际工资CAGR</strong>。</p>
+        </div>
+        <div class="cream-card p-4 bg-[#F7EFE0]/60 border-[#E6D0AE]">
+          <div class="text-xs font-bold text-[#96651B] uppercase">核心法则三：经济增长与贫富分化 (基尼系数)</div>
+          <p class="text-xs text-[#5C554E] mt-1">北欧与中欧（捷克25.4、挪威26.2、比利时26.8）实现了高增长质量与低基尼系数兼容；而拉美与南部非洲（南非63.0、哥伦比亚53.9、巴西51.6）长期受困于高分配不平等与高贫困率。</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">平均工资 vs 中位数工资 vs 人均可支配收入对比 (2026 USD)</h3>
+              <p class="text-xs text-[#857D74]">揭示均值掩盖下的中位数差距以及GDP向居民钱包的真实转化率</p>
+            </div>
+            <select id="wageRegionSelect" onchange="renderIncomeCharts()" class="text-xs border border-[#E3DDD1] rounded-lg px-2 py-1 bg-white">
+              <option value="TOP20">全球20个主要代表性经济体</option>
+              <option value="亚洲">亚洲 (19)</option>
+              <option value="欧洲">欧洲 (20)</option>
+              <option value="美洲">美洲 (8)</option>
+              <option value="非洲">非洲 (8)</option>
+            </select>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartWagesComparison"></canvas>
+          </div>
+        </div>
+
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">40年实际GDP年均增速 vs 实际工资年均增速 & 基尼系数气泡图</h3>
+              <p class="text-xs text-[#857D74]">横轴：实际GDP CAGR(%) | 纵轴：实际工资 CAGR(%) | 气泡大小：基尼系数(Gini)</p>
+            </div>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartIncomeVsGdpScatter"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Household Income & Distribution Full Table -->
+      <div class="cream-card p-5">
+        <h3 class="text-base font-bold text-[#2C2825] mb-3">各国居民收入、消费储蓄、财富分配与社会保障完整明细表</h3>
+        <div class="overflow-x-auto custom-scroll max-h-96 border border-[#E3DDD1] rounded-lg">
+          <table class="w-full text-left border-collapse text-xs data-table">
+            <thead class="bg-[#EFECE4] text-[#5C554E] sticky top-0">
+              <tr>
+                <th class="p-2.5 font-bold">经济体</th>
+                <th class="p-2.5 font-bold text-right">人均GDP($)</th>
+                <th class="p-2.5 font-bold text-right">人均可支配收入($)</th>
+                <th class="p-2.5 font-bold text-right">平均工资($)</th>
+                <th class="p-2.5 font-bold text-right">中位数工资($)</th>
+                <th class="p-2.5 font-bold text-right">中位/均值比</th>
+                <th class="p-2.5 font-bold text-right">实际工资CAGR</th>
+                <th class="p-2.5 font-bold text-right">劳动报酬%GDP</th>
+                <th class="p-2.5 font-bold text-right">消费率%GDP</th>
+                <th class="p-2.5 font-bold text-right">储蓄率%</th>
+                <th class="p-2.5 font-bold text-right">基尼系数</th>
+                <th class="p-2.5 font-bold text-right">社保覆盖率%</th>
+              </tr>
+            </thead>
+            <tbody id="incomeTableBody" class="divide-y divide-[#EFECE4]"></tbody>
+          </table>
+        </div>
+      </div>
+              <!-- Four Archetypes Classification Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="cream-card p-4 border-t-4 border-t-[#C86D51]">
+          <div class="text-xs font-bold text-[#9E4B32] uppercase">类型一：高收入、高生产率经济体</div>
+          <div class="text-sm font-bold text-[#2C2825] mt-1">美 / 瑞 / 挪 / 爱 / 新 / 丹 / 荷 / 德</div>
+          <p class="text-xs text-[#5C554E] mt-1">每小时劳动产出普遍超 <strong>$75–$140 PPP</strong>，依托前沿科技、资本深化、高素质工程师与金融医药高附加值产业支撑高薪酬与短工时。</p>
+        </div>
+        <div class="cream-card p-4 border-t-4 border-t-[#6B8E78]">
+          <div class="text-xs font-bold text-[#466652] uppercase">类型二：高增长、追赶型工业化经济体</div>
+          <div class="text-sm font-bold text-[#2C2825] mt-1">中国大陆 / 越南 / 印度 / 波兰 / 马来西亚</div>
+          <p class="text-xs text-[#5C554E] mt-1">劳动力持续从低生产率农业向制造业与现代服务业转移，全员劳动生产率年均增速达 <strong>4%–7%</strong>，处于快速追赶阶段。</p>
+        </div>
+        <div class="cream-card p-4 border-t-4 border-t-[#D49A45]">
+          <div class="text-xs font-bold text-[#96651B] uppercase">类型三：低官方失业率但低生产率经济体</div>
+          <div class="text-sm font-bold text-[#2C2825] mt-1">泰国 / 墨西哥 / 秘鲁 / 尼日利亚 / 孟加拉</div>
+          <p class="text-xs text-[#5C554E] mt-1">缺乏完善失业保险迫使劳动者从事零工、小摊贩或糊口农业，统计失业率仅1%–5%，但<strong>非正规就业占比达55%–85%</strong>，每小时产出偏低。</p>
+        </div>
+        <div class="cream-card p-4 border-t-4 border-t-[#8E5B66]">
+          <div class="text-xs font-bold text-[#8E5B66] uppercase">类型四：深度老龄化与劳动力萎缩经济体</div>
+          <div class="text-sm font-bold text-[#2C2825] mt-1">日本 / 韩国 / 台湾 / 德国 / 意大利 / 东欧</div>
+          <p class="text-xs text-[#5C554E] mt-1">劳动年龄人口占比见顶回落，推动用工紧缺与极低失业率（日2.5%、韩2.8%、捷2.7%），倒逼工业机器人自动化与延迟退休。</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">每小时劳动生产率 (USD PPP) vs 失业率与青年失业率</h3>
+              <p class="text-xs text-[#857D74]">对比各国每小时劳动产出效率与劳动力市场吸纳能力 (ILO / OECD 2026口径)</p>
+            </div>
+            <select id="prodRegionSelect" onchange="renderLaborCharts()" class="text-xs border border-[#E3DDD1] rounded-lg px-2 py-1 bg-white">
+              <option value="TOP22">全球22个代表性经济体对比</option>
+              <option value="亚洲">亚洲 (19)</option>
+              <option value="欧洲">欧洲 (20)</option>
+              <option value="美洲">美洲 (8)</option>
+              <option value="非洲">非洲 (8)</option>
+            </select>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartProductivityBar"></canvas>
+          </div>
+        </div>
+
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">就业结构（制造业 vs 服务业就业占比）与人均产出关系</h3>
+              <p class="text-xs text-[#857D74]">横轴：服务业就业占比(%) | 纵轴：劳均年度产出(USD PPP) | 气泡：制造业就业占比(%)</p>
+            </div>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartLaborScatter"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="cream-card p-5">
+        <h3 class="text-base font-bold text-[#2C2825] mb-3">55个经济体就业质量、劳动参与率与生产率诊断表</h3>
+        <div class="overflow-x-auto custom-scroll max-h-96 border border-[#E3DDD1] rounded-lg">
+          <table class="w-full text-left border-collapse text-xs data-table">
+            <thead class="bg-[#EFECE4] text-[#5C554E] sticky top-0">
+              <tr>
+                <th class="p-2.5 font-bold">经济体</th>
+                <th class="p-2.5 font-bold text-right">每小时产出($PPP)</th>
+                <th class="p-2.5 font-bold text-right">劳均年产出($PPP)</th>
+                <th class="p-2.5 font-bold text-right">总失业率%</th>
+                <th class="p-2.5 font-bold text-right">青年失业率%</th>
+                <th class="p-2.5 font-bold text-right">劳动参与率%</th>
+                <th class="p-2.5 font-bold text-right">就业人口比%</th>
+                <th class="p-2.5 font-bold text-right">制造业就业%</th>
+                <th class="p-2.5 font-bold text-right">服务业就业%</th>
+                <th class="p-2.5 font-bold">劳动力市场特征归类</th>
+              </tr>
+            </thead>
+            <tbody id="laborTableBody" class="divide-y divide-[#EFECE4]"></tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+
+      <!-- 3.3 第三层：经济结构与产业发展 -->
+      <div id="econ-layer-3" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--haze-blue);">
+          <div>
+            <span class="text-xs font-bold text-[#5B7C99] uppercase">第三板块 · 第三层 (Priority Layer 3)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">经济结构与产业发展：1985–2026三次产业结构演变、制造业占GDP比重与高技术产业竞争力</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">主选与对照经济体40年产业面积图 · 工业化与去工业化对比 · 支柱产业与结构转型实证诊断表</span>
+        </div>
+
+              <!-- Stacked Area Charts for Primary vs Compare Economy -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <span class="text-xs font-bold text-[#C86D51] uppercase">主研究对象 · 1985–2026 三大产业结构堆叠面积图</span>
+              <h3 class="text-base font-bold text-[#2C2825]" id="secTitlePrimary">中国大陆：三大产业占GDP比例演变与制造业轨迹</h3>
+            </div>
+            <span class="badge-pill badge-terracotta" id="secBadgePrimary">2026制造业占比: 26.2%</span>
+          </div>
+          <div class="relative h-72">
+            <canvas id="chartSectorAreaPrimary"></canvas>
+          </div>
+          <div class="mt-3 p-3 bg-[#F6F3EC] rounded-lg border border-[#E3DDD1] text-xs text-[#5C554E]" id="secDiagPrimary"></div>
+        </div>
+
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <span class="text-xs font-bold text-[#D49A45] uppercase">对标经济体 · 1985–2026 三大产业结构堆叠面积图</span>
+              <h3 class="text-base font-bold text-[#2C2825]" id="secTitleCompare">美国：三大产业占GDP比例演变与制造业轨迹</h3>
+            </div>
+            <span class="badge-pill badge-ochre" id="secBadgeCompare">2026制造业占比: 10.3%</span>
+          </div>
+          <div class="relative h-72">
+            <canvas id="chartSectorAreaCompare"></canvas>
+          </div>
+          <div class="mt-3 p-3 bg-[#F6F3EC] rounded-lg border border-[#E3DDD1] text-xs text-[#5C554E]" id="secDiagCompare"></div>
+        </div>
+      </div>
+
+      <!-- Industrialization vs Deindustrialization & High-Tech Export Analysis -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">工业化、去工业化与高技术制造竞争力 (1985 vs 2026)</h3>
+              <p class="text-xs text-[#857D74]">对比各国1985与2026年制造业增加值占GDP比重(%)及高技术制成品占出口比重(%)</p>
+            </div>
+            <select id="mfgFilterSelect" onchange="renderMfgComparisonChart()" class="text-xs border border-[#E3DDD1] rounded-lg px-2 py-1 bg-white">
+              <option value="KEY_20">全球20个工业与去工业化典型经济体</option>
+              <option value="ASIA">亚洲经济体 (19)</option>
+              <option value="EUROPE">欧洲经济体 (20)</option>
+              <option value="AMERICAS_AFRICA">美洲与非洲经济体 (16)</option>
+            </select>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartMfgComparison"></canvas>
+          </div>
+        </div>
+
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">高附加值支柱产业分布与六大产业结构转型实证诊断</h3>
+              <p class="text-xs text-[#857D74]">评估是否实现产业升级、是否过度依赖地产/资源/低成本劳工及是否存在产业空心化</p>
+            </div>
+          </div>
+          <div class="overflow-y-auto custom-scroll max-h-80 border border-[#E3DDD1] rounded-lg">
+            <table class="w-full text-left border-collapse text-xs data-table">
+              <thead class="bg-[#EFECE4] text-[#5C554E] sticky top-0">
+                <tr>
+                  <th class="p-2.5 font-bold">经济体</th>
+                  <th class="p-2.5 font-bold text-right">制造业%GDP (85→26)</th>
+                  <th class="p-2.5 font-bold text-right">高技术出口占比</th>
+                  <th class="p-2.5 font-bold">核心支柱与高附加值产业</th>
+                  <th class="p-2.5 font-bold">转型质量与空心化/依赖症诊断</th>
+                </tr>
+              </thead>
+              <tbody id="industrialTableBody" class="divide-y divide-[#EFECE4]"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- 3.4 第四层：财政、金融及宏观经济风险 -->
+      <div id="econ-layer-4" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--ochre);">
+          <div>
+            <span class="text-xs font-bold text-[#96651B] uppercase">第三板块 · 第四层 (Priority Layer 4)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">财政、金融及宏观经济风险：政府/居民/企业三部门杠杆率、长期通胀轨迹、生育率与人口老龄化冲击</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">三部门总债务/GDP堆叠对比 · 40年CPI通胀轨迹 · 生育率vs老龄化分化 · 财政可持续性与人口传导表</span>
+        </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">宏观部门总杠杆率分解：政府债务 + 居民债务 + 企业债务 (% of GDP)</h3>
+              <p class="text-xs text-[#857D74]">基于 BIS 与 IMF 2026 数据，剖析哪些经济体依赖公共举债、房地产居民加杠杆或企业信贷</p>
+            </div>
+            <select id="debtFilterSelect" onchange="renderMacroCharts()" class="text-xs border border-[#E3DDD1] rounded-lg px-2 py-1 bg-white">
+              <option value="TOP22">全球22个高杠杆与典型对照经济体</option>
+              <option value="亚洲">亚洲 (19)</option>
+              <option value="欧洲">欧洲 (20)</option>
+              <option value="美洲">美洲 (8)</option>
+              <option value="非洲">非洲 (8)</option>
+            </select>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartDebtStacked"></canvas>
+          </div>
+        </div>
+
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">1985–2026 通货膨胀 (CPI %) 长期轨迹与重大通胀/通缩事件</h3>
+              <p class="text-xs text-[#857D74]">展示主研究对象与对标经济体42年通胀演变（含1990s转型通胀、日本香港通缩、2022全球高通胀）</p>
+            </div>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartInflationHistory"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fiscal Sustainability & Balance of Payments Table -->
+      <div class="cream-card p-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <div>
+            <h3 class="text-base font-bold text-[#2C2825]">政府财政可持续性、利息负担、国际收支与汇率长期变化全景表</h3>
+            <p class="text-xs text-[#857D74]">涵盖财政赤字、利息占财政收入比、经常账户、外汇储备、外债占比及40年本币兑美元累计变化</p>
+          </div>
+        </div>
+        <div class="overflow-x-auto custom-scroll max-h-96 border border-[#E3DDD1] rounded-lg">
+          <table class="w-full text-left border-collapse text-xs data-table">
+            <thead class="bg-[#EFECE4] text-[#5C554E] sticky top-0">
+              <tr>
+                <th class="p-2 font-bold">经济体</th>
+                <th class="p-2 font-bold text-right">政府债务%GDP</th>
+                <th class="p-2 font-bold text-right">居民债务%GDP</th>
+                <th class="p-2 font-bold text-right">企业债务%GDP</th>
+                <th class="p-2 font-bold text-right">财政差额%GDP</th>
+                <th class="p-2 font-bold text-right">利息/财政收入%</th>
+                <th class="p-2 font-bold text-right">2026 CPI%</th>
+                <th class="p-2 font-bold text-right">经常账户%GDP</th>
+                <th class="p-2 font-bold text-right">外储($B)</th>
+                <th class="p-2 font-bold text-right">出口依赖度%</th>
+                <th class="p-2 font-bold">财政与金融稳定风险诊断</th>
+              </tr>
+            </thead>
+            <tbody id="macroTableBody" class="divide-y divide-[#EFECE4]"></tbody>
+          </table>
+        </div>
+      </div>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">2026年总生育率 (TFR) vs 65岁以上老龄化率 (%) 全球分化图</h3>
+              <p class="text-xs text-[#857D74]">人口世代更替水平线 TFR = 2.1 | 深度老龄化警戒线 65岁+占比 = 14% / 超老龄社会 = 20%</p>
+            </div>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartDemoScatter"></canvas>
+          </div>
+        </div>
+
+        <div class="cream-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h3 class="text-base font-bold text-[#2C2825]">劳动年龄人口比例变化 (1985 vs 2026) 与长期潜在GDP增长率 (%)</h3>
+              <p class="text-xs text-[#857D74]">分析人口红利窗口期开启（南亚/非洲）与人口负债期到来（东亚/欧洲）对潜在增速的硬约束</p>
+            </div>
+            <select id="demoRegionSelect" onchange="renderDemoCharts()" class="text-xs border border-[#E3DDD1] rounded-lg px-2 py-1 bg-white">
+              <option value="KEY20">全球20个典型人口结构样本</option>
+              <option value="亚洲">亚洲 (19)</option>
+              <option value="欧洲">欧洲 (20)</option>
+              <option value="美洲">美洲 (8)</option>
+              <option value="非洲">非洲 (8)</option>
+            </select>
+          </div>
+          <div class="relative h-80">
+            <canvas id="chartDemoPotential"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seven Transmission Channels of Demographics -->
+      <div class="cream-card p-5">
+        <h3 class="text-base font-bold text-[#2C2825] mb-3">人口结构对宏观经济七大维度的传导机制与跨国实证表</h3>
+        <div class="overflow-x-auto custom-scroll max-h-96 border border-[#E3DDD1] rounded-lg">
+          <table class="w-full text-left border-collapse text-xs data-table">
+            <thead class="bg-[#EFECE4] text-[#5C554E] sticky top-0">
+              <tr>
+                <th class="p-2.5 font-bold">经济体</th>
+                <th class="p-2.5 font-bold text-right">总人口(百万, 85→26)</th>
+                <th class="p-2.5 font-bold text-right">生育率TFR (85→26)</th>
+                <th class="p-2.5 font-bold text-right">65岁+老龄化% (85→26)</th>
+                <th class="p-2.5 font-bold text-right">劳动年龄占比% (85→26)</th>
+                <th class="p-2.5 font-bold text-right">城镇化率%</th>
+                <th class="p-2.5 font-bold text-right">净移民率‰</th>
+                <th class="p-2.5 font-bold text-right">潜在GDP增速%</th>
+                <th class="p-2.5 font-bold">对消费、养老财政与房地产需求影响评估</th>
+              </tr>
+            </thead>
+            <tbody id="demoTableBody" class="divide-y divide-[#EFECE4]"></tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+
+      <!-- 3.5 第五层：历史发展轨迹与国家案例 -->
+      <div id="econ-layer-5" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--plum);">
+          <div>
+            <span class="text-xs font-bold text-[#8E5B66] uppercase">第三板块 · 第五层 (Priority Layer 5)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">历史发展轨迹与国家案例：十项宏观发展实证专题摘要、九大全球历史冲击阶段与15国发展模式案例库</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">十项跨国实证统计摘要 · 1985–2026九大全球宏观冲击波 · 15个代表性经济体40年深度案例</span>
+        </div>
+
+              <!-- The 10 Core Questions Interactive Explorer -->
+      <div class="cream-card p-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-[#E3DDD1]">
+          <div>
+            <h2 class="text-lg font-bold text-[#2C2825]">全球经济发展轨迹十项跨国实证统计专题摘要（1985–2026年55个经济体全样本）</h2>
+            <p class="text-xs text-[#857D74] mt-0.5">点击下方任意实证统计专题卡片，可展开详细跨国定量对比数据与结构性实证分析</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="expandAllQuestions(true)" class="text-xs px-2.5 py-1 rounded bg-[#EFECE4] hover:bg-[#E3DDD1] text-[#5C554E] font-medium">全部展开</button>
+            <button onclick="expandAllQuestions(false)" class="text-xs px-2.5 py-1 rounded bg-[#EFECE4] hover:bg-[#E3DDD1] text-[#5C554E] font-medium">全部收起</button>
+          </div>
+        </div>
+        <div id="tenQuestionsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"></div>
+      </div>
+
+              <!-- Part A: 9 Global Historical Shocks -->
+      <div class="cream-card p-5">
+        <h2 class="text-lg font-bold text-[#2C2825]">1985–2026 九大全球性历史阶段与宏观冲击波解析</h2>
+        <p class="text-xs text-[#857D74] mt-0.5">超越单纯折线图描述，深度复盘每一次全球制度变迁、金融危机与产业链重组的内在机理与分化结果</p>
+        <div id="historicalEventsTimeline" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4"></div>
+      </div>
+
+      <!-- Part B: 15 Country & Regional Deep-Dive Case Studies -->
+      <div class="cream-card p-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#E3DDD1]">
+          <div>
+            <h2 class="text-lg font-bold text-[#2C2825]">15个重点国家与地区40年发展模式专题案例库</h2>
+            <p class="text-xs text-[#857D74]">涵盖中国大陆、日本、韩国、新加坡、印度、中国台湾、中国香港、中国澳门、美国、德国、英国、法意西、东欧、非洲、拉美</p>
+          </div>
+          <select id="caseStudySelect" onchange="renderCaseStudyDetail()" class="text-xs sm:text-sm border border-[#E3DDD1] rounded-lg px-3 py-1.5 bg-[#2C2825] text-white font-semibold"></select>
+        </div>
+        <div id="caseStudyContent" class="mt-4"></div>
+      </div>
+
+      </div>
+
+      <!-- 3.6 第六层：完整经济数据及来源 -->
+      <div id="econ-layer-6" class="space-y-6 scroll-mt-32">
+        <div class="layer-divider-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" style="border-left-color: var(--slate-warm);">
+          <div>
+            <span class="text-xs font-bold text-[#6E6A64] uppercase">第三板块 · 第六层 (Priority Layer 6)</span>
+            <h3 class="serif-title text-xl font-bold text-[#2C2825]">完整经济数据及来源：跨国13维度综合经济实力交互式权重模型、55国总榜与权威统计来源说明</h3>
+          </div>
+          <span class="text-xs text-[#5C554E]">13维权重实时调节与双经济体雷达图 · 55个经济体综合评价总榜 · 国际统计数据库来源说明</span>
+        </div>
+
+              <!-- Part C: 13-Dimension Comprehensive Evaluation System -->
+      <div class="cream-card p-5">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-4 border-b border-[#E3DDD1]">
+          <div>
+            <h2 class="text-lg font-bold text-[#2C2825]">跨国13维度综合经济实力与发展质量评价体系 (交互式权重模型)</h2>
+            <p class="text-xs text-[#857D74] mt-0.5">不仅衡量GDP总量，综合纳入经济规模、人均产出、长期增长、居民收入增长、生产率、产业升级、高技术、就业、分配、宏观稳定、财政可持续、国际竞争力、人口潜力13个维度</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="applyWeightPreset('BALANCED')" class="text-xs px-3 py-1.5 rounded-lg bg-[#2C2825] text-white font-semibold hover:bg-[#EFECE4]">均衡综合权重(默认)</button>
+            <button onclick="applyWeightPreset('QUALITY_WELFARE')" class="text-xs px-3 py-1.5 rounded-lg bg-[#6B8E78] text-white font-semibold hover:bg-[#6B8E78]">民生与增长质量优先</button>
+            <button onclick="applyWeightPreset('TECH_UPGRADING')" class="text-xs px-3 py-1.5 rounded-lg bg-[#C86D51] text-white font-semibold hover:bg-[#5B7C99]">科技升级与竞争力优先</button>
+            <button onclick="applyWeightPreset('MACRO_SAFETY')" class="text-xs px-3 py-1.5 rounded-lg bg-[#D49A45] text-white font-semibold hover:bg-[#D49A45]">宏观财政稳健优先</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5">
+          <!-- Sliders for 13 dimensions -->
+          <div class="lg:col-span-5 bg-[#F6F3EC] p-4 rounded-xl border border-[#E3DDD1]">
+            <div class="text-xs font-bold text-[#2C2825] mb-2.5 flex justify-between">
+              <span>自定义调节 13 个评价维度权重 (0–10)</span>
+              <span id="totalWeightReadout" class="text-[#C86D51]">总权重: 100%</span>
+            </div>
+            <div id="weightSlidersContainer" class="space-y-2 max-h-96 overflow-y-auto custom-scroll pr-1"></div>
+          </div>
+
+          <!-- Radar Chart comparing Primary vs Compare vs Top Benchmark -->
+          <div class="lg:col-span-7 flex flex-col justify-between">
+            <div class="relative h-96">
+              <canvas id="chartRadar13"></canvas>
+            </div>
+            <div class="text-center text-xs text-[#857D74] mt-2">
+              雷达图实时映射顶部所选“主研究对象”与“对标经济体”在13个维度的标准化得分（0–100分）
+            </div>
+          </div>
+        </div>
+
+        <!-- 55 Economies Comprehensive Scorecard Ranking Table -->
+        <div class="mt-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+            <h3 class="text-base font-bold text-[#2C2825]">全球 55 个代表性国家与地区 13 维度综合评价总榜</h3>
+            <input type="text" id="scoreSearchInput" oninput="renderScorecardTable()" placeholder="搜索国家/地区名称或代码..." class="text-xs border border-[#E3DDD1] rounded-lg px-3 py-1.5 w-full sm:w-64 focus:outline-none focus:border-[#C86D51]" />
+          </div>
+          <div class="overflow-x-auto custom-scroll max-h-[500px] border border-[#E3DDD1] rounded-lg">
+            <table class="w-full text-left border-collapse text-xs data-table">
+              <thead class="bg-[#2C2825] text-white sticky top-0">
+                <tr>
+                  <th class="p-2 font-bold">综合排名</th>
+                  <th class="p-2 font-bold">经济体</th>
+                  <th class="p-2 font-bold">区域/分组</th>
+                  <th class="p-2 font-bold text-right bg-[#C86D51]">加权总分</th>
+                  <th class="p-2 font-bold text-center">评级</th>
+                  <th class="p-2 font-bold text-right" title="1.经济规模">1.规模</th>
+                  <th class="p-2 font-bold text-right" title="2.人均经济产出">2.人均</th>
+                  <th class="p-2 font-bold text-right" title="3.长期实际经济增长">3.增长</th>
+                  <th class="p-2 font-bold text-right" title="4.居民实际收入增长">4.收入</th>
+                  <th class="p-2 font-bold text-right" title="5.劳动生产率">5.生产率</th>
+                  <th class="p-2 font-bold text-right" title="6.产业升级能力">6.升级</th>
+                  <th class="p-2 font-bold text-right" title="7.高技术产业发展">7.高技</th>
+                  <th class="p-2 font-bold text-right" title="8.就业质量">8.就业</th>
+                  <th class="p-2 font-bold text-right" title="9.收入分配">9.分配</th>
+                  <th class="p-2 font-bold text-right" title="10.宏观经济稳定性">10.稳定</th>
+                  <th class="p-2 font-bold text-right" title="11.财政可持续性">11.财政</th>
+                  <th class="p-2 font-bold text-right" title="12.国际竞争力">12.竞争</th>
+                  <th class="p-2 font-bold text-right" title="13.人口结构与长期潜力">13.人口</th>
+                </tr>
+              </thead>
+              <tbody id="scorecardTableBody" class="divide-y divide-[#EFECE4]"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+        <div class="cream-card p-6">
+          <h3 class="serif-title text-lg font-bold text-[#2C2825] mb-4">全球经济发展轨迹板块：权威数据源、历史缺失处理规范与统计口径说明</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <span class="text-[#5C554E] font-semibold">国际多边统计数据库：</span>
+          <ul class="mt-1 space-y-1">
+            <li>• <a href="https://www.imf.org/external/datamapper/NGDPD@WEO" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">IMF World Economic Outlook (October 2026 Database)</a> (名义GDP、PPP、增长率及2026预测)</li>
+            <li>• <a href="https://data.worldbank.org/indicator/NV.IND.MANF.ZS" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">World Bank World Development Indicators (WDI)</a> & <a href="https://pip.worldbank.org/" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">PIP</a> (三次产业结构、制造业增加值、基尼系数与贫困率)</li>
+          </ul>
+        </div>
+        <div>
+          <span class="text-[#5C554E] font-semibold">四个独立统计区官方机构：</span>
+          <ul class="mt-1 space-y-1">
+            <li>• 中国大陆：<a href="https://www.stats.gov.cn/english/" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">国家统计局 (NBS)</a> | 中国台湾：<a href="https://eng.stat.gov.tw/" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">主计总处 (DGBAS)</a></li>
+            <li>• 中国香港：<a href="https://www.censtatd.gov.hk/" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">政府统计处 (C&SD)</a> | 中国澳门：<a href="https://www.dsec.gov.mo/en-US/Statistic?id=901" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">统计暨普查局 (DSEC)</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="text-[#5C554E] font-semibold">劳动、债务与人口专门数据库：</span>
+          <ul class="mt-1 space-y-1">
+            <li>• 就业与生产率：<a href="https://ilostat.ilo.org/" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">ILOSTAT</a> & <a href="https://www.oecd.org/en/publications/2026/07/oecd-employment-outlook-2026_a41e8b9f/full-report/component-5.html" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">OECD Employment & Productivity Outlook 2026</a></li>
+            <li>• 部门信贷与人口：<a href="https://data.bis.org/topics/TOTAL_CREDIT" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">BIS Total Credit Statistics</a> & <a href="https://population.un.org/wpp/" target="_blank" class="text-[#C86D51] hover:underline" rel="noopener noreferrer">UN World Population Prospects</a></li>
+          </ul>
+        </div>
+      </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== METHODOLOGY MODAL & UNIFIED FOOTER ==================== -->
+    <!-- Methodology & Statistical Caliber Modal -->
+  <div id="methodologyModal" class="fixed inset-0 bg-black/40 z-50 hidden items-center justify-center p-4">
+    <div class="cream-card max-w-3xl w-full p-6 max-h-[85vh] overflow-y-auto custom-scrollbar">
+      <div class="flex items-center justify-between pb-3 border-b border-[#EFECE4] mb-4">
+        <h3 class="serif-title text-lg font-bold text-[#2C2825]">全球房地产统计口径、建筑面积折算与2026年数据分级规范</h3>
+        <button id="btnCloseMethodologyModal" class="text-sm font-bold text-[#857D74] hover:text-[#2C2825] px-2 py-1">✕ 关闭</button>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm text-[#5C554E]">
+        <p><strong>1. 建筑面积 vs 实用/套内面积校准：</strong> 中国大陆按“建筑面积”计价（含公摊18%–25%），中国台湾按“坪”计价（含公设比30%–35%），而中国香港（2013年后）、中国澳门、日本（专有面积）、欧洲、美国（Living Area平方英尺）均按“套内/实用面积”计价。本平台在跨国单价对比中提供明确口径注释。</p>
+        <p><strong>2. 全国房价 vs 核心都市房价分离：</strong> 严禁将东京23区当作日本全国、将曼哈顿/旧金山当作美国全国、或将京沪深当作中国全国。本平台对所有57个经济体同时提供“全国平均水平”、“首都/第一核心城市”与“主要经济城市”三套坐标。</p>
+        <p><strong>3. 物业类型细分：</strong> 欧美加澳市场以独栋住宅（Single-Family Detached）与公寓（Condo/Apartment）并重，而东亚及新兴大都市以集合式公寓为主。图1提供综合、新建、二手、公寓、独栋五类子序列切换。</p>
+        <p><strong>4. 2026年数据状态严格区分：</strong> 所有2026年数据均标注 <code>[已公布实际 Actual 2026Q1/Q2]</code>、<code>[初步统计 Preliminary]</code> 或 <code>[预测估算 Forecast]</code>，绝不将预测值当作实际交割成交数据。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-[#EFECE4] border-t border-[#E3DDD1] py-5 mt-10 text-xs text-[#5C554E]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>
+        <strong>全球主要国家与地区房地产市场发展、房价周期与住房可负担性研究 (1985–2026)</strong> · 覆盖亚、欧、美、非及大洋洲 57 个经济体
+      </div>
+      <div>
+        数据基准：BIS Residential Property Prices (2010=100) · OECD Housing Database · IMF Global Housing Watch · 各国统计局与央行
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Toast Notification -->
+  <div id="toastMsg" class="fixed bottom-5 right-5 bg-[#2C2825] text-[#FFFDF9] px-4 py-2.5 rounded-xl shadow-lg border border-[#E3DDD1] text-xs font-medium hidden z-50"></div>
+
+  <!-- ==================== MODULE 1 SCRIPT: GLOBAL REAL ESTATE MARKET ==================== -->
+  <!-- 模块化前端入口 (Vite ES Modules) -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

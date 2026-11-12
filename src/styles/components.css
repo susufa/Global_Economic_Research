@@ -1,0 +1,391 @@
+/* ==========================================================================
+   components.css — 统一组件样式库
+   管理：卡片、按钮、导航胶囊、数据表格、标签徽章、筛选器、模拟器卡片、国别档案卡、方法论提示框与弹窗
+   ========================================================================== */
+
+/* 统一卡片容器 */
+.cream-card,
+.card,
+.card-panel {
+  background-color: var(--card-cream);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.cream-card:hover,
+.card:hover,
+.card-panel:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.card {
+  padding: 22px 24px;
+  margin-bottom: 22px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.card-title {
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+
+.card-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-family: var(--font-sans);
+}
+
+/* 徽章与胶囊标签 (Badges & Pills) */
+.badge-terracotta {
+  background-color: var(--terracotta-light);
+  color: #9E4B32;
+  border: 1px solid #E4C3B8;
+}
+
+.badge-sage {
+  background-color: var(--sage-light);
+  color: #466652;
+  border: 1px solid #C2D6C9;
+}
+
+.badge-blue {
+  background-color: var(--haze-blue-light);
+  color: #3A5873;
+  border: 1px solid #BFD0DF;
+}
+
+.badge-ochre {
+  background-color: var(--ochre-light);
+  color: #96651B;
+  border: 1px solid #E6D0AE;
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* 按钮组件 */
+.btn-warm,
+.btn-primary {
+  background-color: var(--terracotta);
+  color: #FFFDF9;
+  border: 1px solid var(--terracotta);
+  transition: background-color 0.15s ease;
+  cursor: pointer;
+}
+
+.btn-warm:hover,
+.btn-primary:hover {
+  background-color: var(--terracotta-hover);
+  color: #FFFDF9;
+}
+
+.btn-sage {
+  background-color: var(--sage);
+  color: #FFFDF9;
+  border: 1px solid var(--sage);
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn-sage:hover {
+  background-color: var(--sage-hover);
+}
+
+.btn-outline-warm,
+.btn {
+  background-color: #FFFDF9;
+  color: var(--text-primary);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-outline-warm:hover,
+.btn-outline-warm.active,
+.btn:hover {
+  background-color: var(--terracotta-light);
+  border-color: var(--terracotta);
+  color: #8F422B;
+  font-weight: 600;
+}
+
+/* 筛选器胶囊组 */
+.filter-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.pill-group {
+  display: inline-flex;
+  background: var(--bg-warm-alt);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-warm);
+  flex-wrap: wrap;
+}
+
+.pill-btn {
+  border: none;
+  background: transparent;
+  padding: 5px 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pill-btn.active {
+  background: var(--card-cream);
+  color: var(--terracotta);
+  font-weight: 600;
+  box-shadow: var(--shadow-pill-active);
+}
+
+/* KPI 指标卡与实证问题卡 */
+.kpi-card {
+  background: var(--card-cream);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-card);
+}
+
+.kpi-title {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.kpi-val {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-serif);
+}
+
+.kpi-sub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.q-card {
+  background: #FAF7F0;
+  border: 1px solid var(--border-warm);
+  border-left: 4px solid var(--terracotta);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.q-card:nth-child(2) { border-left-color: var(--sage); }
+.q-card:nth-child(3) { border-left-color: var(--haze-blue); }
+.q-card:nth-child(4) { border-left-color: var(--ochre); }
+.q-card:nth-child(5) { border-left-color: var(--plum); }
+.q-card:nth-child(6) { border-left-color: var(--slate-warm); }
+
+.q-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  font-family: var(--font-serif);
+}
+
+.q-body {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* 统一数据表格 */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-warm);
+  border-radius: 10px;
+  background: var(--card-cream);
+}
+
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.data-table th {
+  background-color: #F2EFE7;
+  color: #3D3833;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid var(--border-warm);
+  padding: 0.7rem 0.85rem;
+  white-space: nowrap;
+}
+
+table.data-table td {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid #EFECE4;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+table.data-table tr:hover td {
+  background-color: #FAF7F0;
+}
+
+/* 区域标签与迷你进度条 */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.tag-asia { background: var(--terracotta-light); color: #9E4B32; }
+.tag-europe { background: var(--haze-blue-light); color: #3A5873; }
+.tag-americas { background: var(--ochre-light); color: #96651B; }
+.tag-africa { background: var(--sage-light); color: #466652; }
+.tag-na { background: #EFECE4; color: #857D74; font-style: italic; }
+
+/* 模拟器控件项与步骤框 */
+.control-item label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+}
+
+.control-item select,
+.control-item input {
+  width: 100%;
+}
+
+.step-box {
+  background: #FAF7F0;
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+}
+
+.step-box.highlight {
+  background: var(--terracotta-light);
+  border-color: var(--terracotta);
+}
+
+.step-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--terracotta);
+  text-transform: uppercase;
+}
+
+.step-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  margin: 2px 0 4px;
+}
+
+.step-val {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--font-serif);
+}
+
+.step-pct {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+/* 国别税制档案卡片 */
+.country-profile-card {
+  background: var(--card-cream);
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-card);
+}
+
+.cp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-warm);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.cp-name {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: var(--font-serif);
+}
+
+.cp-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  padding: 5px 0;
+  border-bottom: 1px dashed #E3DDD1;
+}
+
+.cp-detail-block {
+  margin-top: 10px;
+  background: #FAF7F0;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.cp-detail-block strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* 方法论说明提示框 */
+.method-notice {
+  background: var(--bg-warm-alt);
+  border: 1px solid var(--border-warm);
+  border-left: 4px solid var(--haze-blue);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.method-notice strong {
+  color: var(--text-primary);
+}

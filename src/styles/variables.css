@@ -1,0 +1,88 @@
+/* ==========================================================================
+   variables.css — 全局设计变量与主题色系统
+   集中管理：页面背景色、卡片背景色、主/辅文字色、边框色、强调色、字体、圆角、阴影、间距及图表主题色
+   ========================================================================== */
+
+:root {
+  /* 页面与卡片背景色 */
+  --bg-warm: #F6F3EC;
+  --bg-warm-alt: #EFECE4;
+  --card-cream: #FFFDF9;
+  --bg-card-hover: #FAF7F0;
+
+  /* 边框颜色 */
+  --border-warm: #E3DDD1;
+  --border-strong: #D4CCC0;
+
+  /* 主文字与辅助文字颜色 */
+  --text-primary: #2C2825;
+  --text-secondary: #5C554E;
+  --text-muted: #857D74;
+
+  /* 核心强调色与语义色 */
+  --terracotta: #C86D51;
+  --terracotta-hover: #B25B40;
+  --terracotta-light: #F5E6E1;
+  --sage: #6B8E78;
+  --sage-hover: #577863;
+  --sage-light: #E6EFE9;
+  --haze-blue: #5B7C99;
+  --haze-blue-light: #E5EDF3;
+  --ochre: #D49A45;
+  --ochre-light: #F7EFE0;
+  --plum: #8E5B66;
+  --slate-warm: #6E6A64;
+
+  /* 税制与经济轨迹模块兼容变量（严格映射至统一暖色调色板） */
+  --bg-page: #F6F3EC;
+  --bg-sub: #EFECE4;
+  --bg-card: #FFFDF9;
+  --bg-card-alt: #FAF7F0;
+  --border-soft: #E3DDD1;
+  --text-main: #2C2825;
+  --dusty-blue: #5B7C99;
+  --dusty-blue-light: #E5EDF3;
+  --mauve: #8E5B66;
+  --slate: #6E6A64;
+
+  /* 字体家族 */
+  --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Noto Serif SC', Georgia, 'Times New Roman', serif;
+
+  /* 圆角规范 */
+  --radius-xl: 14px;
+  --radius-lg: 12px;
+  --radius-md: 8px;
+  --radius-sm: 6px;
+  --radius-pill: 9999px;
+
+  /* 阴影规范 */
+  --shadow-card: 0 2px 10px rgba(44, 40, 37, 0.035);
+  --shadow-card-hover: 0 6px 18px rgba(44, 40, 37, 0.06);
+  --shadow-banner: 0 4px 14px rgba(44, 40, 37, 0.045);
+  --shadow-pill-active: 0 1px 3px rgba(44, 40, 37, 0.08);
+
+  /* 间距规范 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 14px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+
+  /* 图表主题色序列（15色暖调科研色板） */
+  --chart-color-1: #C86D51;
+  --chart-color-2: #6B8E78;
+  --chart-color-3: #5B7C99;
+  --chart-color-4: #D49A45;
+  --chart-color-5: #8E5B66;
+  --chart-color-6: #4F7563;
+  --chart-color-7: #A8583B;
+  --chart-color-8: #3E627A;
+  --chart-color-9: #B58338;
+  --chart-color-10: #7A6F64;
+  --chart-color-11: #C2847A;
+  --chart-color-12: #79998A;
+  --chart-color-13: #6B8CA6;
+  --chart-color-14: #C9A45C;
+  --chart-color-15: #996B75;
+}

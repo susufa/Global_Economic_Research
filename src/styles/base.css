@@ -1,0 +1,88 @@
+/* ==========================================================================
+   base.css — 全局基础样式、排版、表单基础元素与滚动条样式
+   管理：全局字体、页面基础样式、标题/段落/链接文字、表单基础控件、默认间距与自定义滚动条
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-warm);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.65;
+  font-variant-numeric: tabular-nums;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .serif-title, .card-title {
+  font-family: var(--font-serif);
+  color: var(--text-primary);
+}
+
+a {
+  color: var(--haze-blue);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--terracotta);
+  text-decoration: underline;
+}
+
+/* 基础表单元素 */
+select,
+input[type="text"],
+input[type="number"] {
+  padding: 6px 10px;
+  font-size: 12.5px;
+  border: 1px solid var(--border-warm);
+  border-radius: var(--radius-sm);
+  background-color: var(--card-cream);
+  color: var(--text-primary);
+  outline: none;
+}
+
+select:focus,
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 2px rgba(200, 109, 81, 0.15);
+}
+
+input[type="range"] {
+  accent-color: var(--terracotta);
+}
+
+/* 数值列对齐与等宽数字 */
+.num-col {
+  text-align: right !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 自定义滚动条 */
+.custom-scrollbar::-webkit-scrollbar,
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track,
+.custom-scroll::-webkit-scrollbar-track {
+  background: var(--bg-warm-alt);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb,
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #C7BFB1;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover,
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #A69D8E;
+}

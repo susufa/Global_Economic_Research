@@ -1,0 +1,99 @@
+/* ==========================================================================
+   layout.css — 页面整体布局、栅格系统、三大研究板块容器与响应式布局
+   管理：页面整体布局、三个研究板块的横幅与分层头部、栅格与弹性布局、响应式断点
+   ========================================================================== */
+
+/* 板块横幅与分层标题容器 */
+.major-section-banner {
+  background: linear-gradient(135deg, #EFECE4 0%, #FFFDF9 100%);
+  border: 2px solid var(--border-warm);
+  border-left: 6px solid var(--terracotta);
+  border-radius: var(--radius-xl);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-banner);
+}
+
+.layer-divider-header {
+  background-color: var(--bg-warm-alt);
+  border: 1px solid var(--border-warm);
+  border-left: 4px solid var(--terracotta);
+  border-radius: 10px;
+  padding: 14px 20px;
+}
+
+/* 双列与三列栅格布局 */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1080px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* KPI 指标栅格与核心实证问题栅格 */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.questions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+/* 顶部全局筛选工具栏布局 */
+.global-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 模拟器控件与结果分步栅格布局 */
+.sim-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  background: var(--bg-warm-alt);
+  padding: 16px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--border-warm);
+  margin-bottom: 18px;
+}
+
+.sim-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+/* 国别档案对照卡片栅格 */
+.comp-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 16px;
+}

@@ -1,138 +1,138 @@
-# 全球宏观经济研究平台 (Global Economic Research Platform)
+# Global Economic Research Platform
 
-本项目是由原单体 `综合.html` 改造而成的规范化前端工程项目，整合了**全球房地产市场（1985–2026）**、**全球综合税制体系（2000–2026）**与**全球经济发展轨迹（1985–2026）**三大深度实证研究板块。工程化改造实现了 HTML、CSS、JavaScript 与 JSON 数据的职责分离，为后续接入动态数据获取系统、缓存管理、历史版本管理和复杂数据分析奠定了坚实的架构基础。
+This project is a standardized frontend engineering project refactored from the original monolithic `综合.html`. It integrates three in-depth empirical research sections: **Global Real Estate Market (1985–2026)**, **Global Comprehensive Taxation System (2000–2026)**, and **Global Economic Development Trajectory (1985–2026)**. The engineering refactor separates the responsibilities of HTML, CSS, JavaScript, and JSON data, laying a solid architectural foundation for subsequent integration of a dynamic data acquisition system, cache management, historical version management, and complex data analysis.
 
 ---
 
-## 一、项目目录结构
+## I. Project Directory Structure
 
 ```text
 Global-Economic-Research/
-├── index.html                        # 主页面入口（纯 HTML5 结构，不含内联大段 CSS/JS）
-├── package.json                      # 项目依赖与 NPM 脚本配置
-├── vite.config.js                    # Vite 开发服务器与生产构建配置
-├── public/                           # 静态公共资源目录
+├── index.html                        # Main page entry (pure HTML5 structure, no large inline CSS/JS)
+├── package.json                      # Project dependencies and NPM script configuration
+├── vite.config.js                    # Vite dev server and production build configuration
+├── public/                           # Static public assets directory
 │   └── assets/
-│       ├── images/                   # 静态图片与图标资源目录
-│       └── fonts/                    # 本地字体扩展目录
-├── src/                              # 源代码目录
-│   ├── main.js                       # 前端工程主入口（加载 CSS 与启动核心控制器）
+│       ├── images/                   # Static images and icon assets
+│       └── fonts/                    # Local font extension directory
+├── src/                              # Source code directory
+│   ├── main.js                       # Main frontend entry (loads CSS and starts core controller)
 │   │
-│   ├── styles/                       # 模块化 CSS 样式体系
-│   │   ├── variables.css             # 全局 CSS 变量（背景色、文字色、强调色、字体、圆角、阴影、图表主题色）
-│   │   ├── base.css                  # 基础重置、全局字体排版、基础表单控件与自定义滚动条
-│   │   ├── layout.css                # 页面主框架、三大板块横幅、栅格系统与响应式断点
-│   │   ├── components.css            # 统一卡片、按钮、筛选胶囊、数据表格、模拟器组件、国别档案卡与提示框
-│   │   └── charts.css                # 图表画布容器尺寸、响应式高度与表格内嵌迷你条形图样式
+│   ├── styles/                       # Modular CSS style system
+│   │   ├── variables.css             # Global CSS variables (background, text, accent colors, fonts, radii, shadows, chart theme colors)
+│   │   ├── base.css                  # Base reset, global typography, basic form controls, custom scrollbars
+│   │   ├── layout.css                # Main page framework, three section banners, grid system, responsive breakpoints
+│   │   ├── components.css            # Unified cards, buttons, filter pills, data tables, simulator components, country profile cards, tooltips
+│   │   └── charts.css                # Chart canvas container sizes, responsive heights, inline mini bar chart styles in tables
 │   │
-│   ├── js/                           # 模块化 JavaScript (ES Modules)
-│   │   ├── core/                     # 核心协调层
-│   │   │   ├── app.js                # 应用启动引导、数据校验调用与跨板块全局搜索联动
-│   │   │   ├── navigation.js         # 板块锚点导航、专题跳转、表格折叠面板与方法论弹窗控制
-│   │   │   └── event-manager.js      # 跨模块发布/订阅事件总线、防重复 DOM 监听绑定与全局 Toast 通知
+│   ├── js/                           # Modular JavaScript (ES Modules)
+│   │   ├── core/                     # Core coordination layer
+│   │   │   ├── app.js                # App startup bootstrap, data validation invocation, cross-section global search linkage
+│   │   │   ├── navigation.js         # Section anchor navigation, topic jumps, collapsible table panels, methodology modal control
+│   │   │   └── event-manager.js      # Cross-module pub/sub event bus, duplicate-safe DOM listener binding, global Toast notifications
 │   │   │
-│   │   ├── data/                     # 数据管理与校验层
-│   │   │   ├── data-manager.js       # 统一数据访问、区域/关键词检索过滤与动态数据源适配器扩展接口
-│   │   │   └── data-validator.js     # 国家/地区数量、四大独立统计实体（中国大陆/台湾/香港/澳门）及序列完整性校验
+│   │   ├── data/                     # Data management and validation layer
+│   │   │   ├── data-manager.js       # Unified data access, region/keyword search filtering, dynamic data source adapter extension interface
+│   │   │   └── data-validator.js     # Validation of country/region counts, four independent statistical entities (mainland China/Taiwan/Hong Kong/Macau), and series completeness
 │   │   │
-│   │   ├── charts/                   # 图表生命周期管理层
-│   │   │   ├── chart-manager.js      # 统一管理 46 个 Chart.js 实例的创建、增量复用更新、自适应缩放与安全销毁
-│   │   │   └── chart-utils.js        # 15 色暖调科研色板、大洲颜色映射、标签生成与全局 Chart.js 默认配置
+│   │   ├── charts/                   # Chart lifecycle management layer
+│   │   │   ├── chart-manager.js      # Unified management of 46 Chart.js instances: creation, incremental reuse updates, responsive resizing, safe destruction
+│   │   │   └── chart-utils.js        # 15-color warm research palette, continent color mapping, tag generation, global Chart.js defaults
 │   │   │
-│   │   ├── calculations/             # 独立纯函数指标计算引擎
-│   │   │   └── index-calculator.js   # 时间序列插值、YoY/QoQ/CAGR、定基换算、房地产6维评分与房贷模拟、税制8步模拟与5维评估、经济13维加权评分
+│   │   ├── calculations/             # Independent pure-function indicator calculation engine
+│   │   │   └── index-calculator.js   # Time-series interpolation, YoY/QoQ/CAGR, rebasing, real-estate 6-dimension scoring and mortgage simulation, tax 8-step simulation and 5-dimension evaluation, economy 13-dimension weighted scoring
 │   │   │
-│   │   └── modules/                  # 三大研究板块业务逻辑层
-│   │       ├── real-estate.js        # 板块一：全球房地产市场（57个国家/地区、16个图表、房贷模拟器、泡沫史与案例）
-│   │       ├── taxation.js           # 板块二：全球综合税制比较（55个管辖区、14个图表、8步税负传导模拟、国别档案卡）
-│   │       └── economy.js            # 板块三：全球经济发展轨迹（55个经济体、42年序列、16个图表、10大问题、9大历史冲击、15个案例、13维评分）
+│   │   └── modules/                  # Business logic layer for the three research sections
+│   │       ├── real-estate.js        # Section 1: Global real estate market (57 countries/regions, 16 charts, mortgage simulator, bubble history and cases)
+│   │       ├── taxation.js           # Section 2: Global comprehensive taxation comparison (55 jurisdictions, 14 charts, 8-step tax burden pass-through simulation, country profile cards)
+│   │       └── economy.js            # Section 3: Global economic development trajectory (55 economies, 42-year series, 16 charts, 10 major questions, 9 historical shocks, 15 cases, 13-dimension scoring)
 │   │
-│   └── data/                         # 独立 JSON 原始数据仓库
-│       ├── real-estate.json          # 房地产板块完整数据集（57个国家/地区、16个泡沫事件、14个案例、10个结论）
-│       ├── taxation.json             # 综合税制板块完整数据集（55个管辖区税率、税楔、宏观税负与溯源链接）
-│       └── economy.json              # 经济发展轨迹完整数据集（55个经济体 1985–2026 年度序列、10大问题、9大历史事件、15个案例）
-└── README.md                         # 项目架构与工程说明文档
+│   └── data/                         # Independent JSON raw data repository
+│       ├── real-estate.json          # Complete real estate dataset (57 countries/regions, 16 bubble events, 14 cases, 10 conclusions)
+│       ├── taxation.json             # Complete taxation dataset (55 jurisdictions' tax rates, tax wedges, macro tax burdens, provenance links)
+│       └── economy.json              # Complete economic development dataset (55 economies' 1985–2026 annual series, 10 major questions, 9 historical events, 15 cases)
+└── README.md                         # Project architecture and engineering documentation
 ```
 
 ---
 
-## 二、使用的技术栈
+## II. Technology Stack
 
-| 技术 | 版本 / 规范 | 用途说明 |
-| :--- | :--- | :--- |
-| **Vite** | `^5.4.0` | 前端本地开发服务器（HMR）、ES Modules 模块解析与生产环境打包构建 |
-| **HTML5** | 语义化标准 | 页面骨架、三大研究板块容器、数据表格与交互控件结构 |
-| **CSS3** | 模块化 CSS + Custom Properties | 统一暖色调科研视觉体系、栅格与弹性布局、组件化样式管理 |
-| **JavaScript** | ES2020+ ES Modules (`import`/`export`) | 业务逻辑解耦、数据访问抽象、独立指标计算与图表生命周期管理 |
-| **JSON** | 标准独立数据文件 | 存储三大板块全部国家/地区、时间序列、指标、统计口径说明及权威数据来源链接 |
-| **Chart.js** | `4.4.3` | 完整保留原有 46 个交互式动态统计图表（折线图、分组柱状图、堆叠图、散点图、雷达图、环形图） |
-| **Tailwind CSS** | `3.4.17` | 保留原有工具类布局支持，与模块化 CSS 协同保持 100% 视觉一致性 |
+| Technology       | Version / Specification                | Purpose                                                      |
+| :--------------- | :------------------------------------- | :----------------------------------------------------------- |
+| **Vite**         | `^5.4.0`                               | Frontend local development server (HMR), ES Modules module resolution, and production build bundling |
+| **HTML5**        | Semantic standard                      | Page skeleton, three research section containers, data tables, and interactive control structure |
+| **CSS3**         | Modular CSS + Custom Properties        | Unified warm-toned research visual system, grid and flex layouts, componentized style management |
+| **JavaScript**   | ES2020+ ES Modules (`import`/`export`) | Decoupled business logic, data access abstraction, independent indicator calculations, and chart lifecycle management |
+| **JSON**         | Standard independent data files        | Stores all countries/regions, time series, indicators, statistical scope notes, and authoritative data source links for the three sections |
+| **Chart.js**     | `4.4.3`                                | Fully preserves the original 46 interactive dynamic statistical charts (line, grouped bar, stacked, scatter, radar, doughnut) |
+| **Tailwind CSS** | `3.4.17`                               | Retains original utility-class layout support and works with modular CSS to maintain 100% visual consistency |
 
 ---
 
-## 三、依赖安装、本地启动与生产构建方法
+## III. Dependency Installation, Local Startup, and Production Build
 
-### 1. 环境要求
+### 1. Environment Requirements
 - **Node.js**: `>= 18.0.0`
 - **npm**: `>= 9.0.0`
 
-### 2. 安装项目依赖
-在项目根目录下执行：
+### 2. Install Project Dependencies
+Run in the project root directory:
 ```bash
 npm install
 ```
 
-### 3. 启动本地开发服务器
+### 3. Start Local Development Server
 ```bash
 npm run dev
 ```
-启动后默认监听 `http://localhost:5173`，支持热更新（HMR）与 ES Module 按需加载。
+After startup, it listens on `http://localhost:5173` by default and supports hot module replacement (HMR) and ES Module on-demand loading.
 
-### 4. 执行生产环境构建
+### 4. Build for Production
 ```bash
 npm run build
 ```
-构建产物将输出至 `dist/` 目录（包含压缩合并后的 `index.html`、`assets/*.css` 及 `assets/*.js`）。
+The build output will be placed in the `dist/` directory (including minified and bundled `index.html`, `assets/*.css`, and `assets/*.js`).
 
-### 5. 预览生产环境构建结果
+### 5. Preview Production Build
 ```bash
 npm run preview
 ```
 
 ---
 
-## 四、各模块的职责划分
+## IV. Responsibilities of Each Module
 
-1. **入口与核心协调层 (`src/main.js`, `src/js/core/`)**
-   - `main.js`：引入 `variables.css`、`base.css`、`layout.css`、`components.css`、`charts.css`，并在 DOM 就绪时调用 `initApp()`。
-   - `app.js`：执行启动期数据完整性校验，配置图表全局参数，初始化三大研究板块，并负责顶部全局搜索框 (`handleMasterPlatformSearch`) 的跨板块同步联动。
-   - `navigation.js`：管理板块平滑滚动定位、表格折叠面板切换 (`toggleTablePanel`)、方法论说明弹窗 (`#methodologyModal`) 及窗口缩放时的图表自适应重绘。
-   - `event-manager.js`：提供跨模块事件发布/订阅总线（Pub/Sub）、防重复绑定的 DOM 事件注册器与全局浮动提示框 (`showToast`)。
+1. **Entry and Core Coordination Layer (`src/main.js`, `src/js/core/`)**
+   - `main.js`: Imports `variables.css`, `base.css`, `layout.css`, `components.css`, and `charts.css`, and calls `initApp()` when the DOM is ready.
+   - `app.js`: Performs startup data integrity validation, configures global chart parameters, initializes the three research sections, and handles the top global search box (`handleMasterPlatformSearch`) for cross-section synchronization.
+   - `navigation.js`: Manages smooth scrolling section positioning, collapsible table panel toggling (`toggleTablePanel`), methodology modal (`#methodologyModal`), and responsive chart redraw on window resize.
+   - `event-manager.js`: Provides a cross-module publish/subscribe event bus (Pub/Sub), duplicate-safe DOM event registration, and global floating toast notifications (`showToast`).
 
-2. **数据管理与校验层 (`src/js/data/`)**
-   - `data-manager.js`：封装对 `src/data/*.json` 的读取、按地区/关键词过滤查询及实体字典缓存；同时预留 `registerDataSourceAdapter(moduleKey, adapterFn)` 与 `fetchModuleSnapshot(moduleKey, params)` 异步接口，供下一阶段无缝对接后端 API、IndexedDB 缓存或历史版本管理。
-   - `data-validator.js`：校验房地产（57国）、综合税制（55管辖区）、经济轨迹（55经济体 × 42年）的数量、缺失值标记（`null`/`"NA"`）及中国大陆、中国台湾、中国香港、中国澳门四个独立统计实体的完整性。
+2. **Data Management and Validation Layer (`src/js/data/`)**
+   - `data-manager.js`: Wraps reading `src/data/*.json`, filtering/querying by region/keyword, and entity dictionary caching; also reserves the `registerDataSourceAdapter(moduleKey, adapterFn)` and `fetchModuleSnapshot(moduleKey, params)` async interfaces for seamless future integration with backend APIs, IndexedDB cache, or historical version management.
+   - `data-validator.js`: Validates the counts for real estate (57 countries), comprehensive taxation (55 jurisdictions), and economic trajectory (55 economies × 42 years), missing value markers (`null`/`"NA"`), and the completeness of the four independent statistical entities: mainland China, Taiwan, Hong Kong, and Macau.
 
-3. **图表管理层 (`src/js/charts/`)**
-   - `chart-manager.js`：按命名空间（`re:*`、`tax:*`、`econ:*`）集中管理全部 46 个 Chart.js 实例。更新数据时若画布与图表类型未变，优先复用已有实例执行无动画增量更新 (`existing.update('none')`)；若需重建则安全调用 `.destroy()`，彻底消除重复初始化与内存泄漏。
-   - `chart-utils.js`：集中维护 15 色暖调科研色板 (`WARM_PALETTE`)、区域色彩映射函数 (`getContinentColor`) 与区域徽章生成器 (`getContinentTag`)。
+3. **Chart Management Layer (`src/js/charts/`)**
+   - `chart-manager.js`: Centrally manages all 46 Chart.js instances by namespace (`re:*`, `tax:*`, `econ:*`). When updating data, if the canvas and chart type are unchanged, it prioritizes reusing existing instances for animation-free incremental updates (`existing.update('none')`); if reconstruction is needed, it safely calls `.destroy()`, completely eliminating duplicate initialization and memory leaks.
+   - `chart-utils.js`: Centrally maintains the 15-color warm research palette (`WARM_PALETTE`), continent color mapping function (`getContinentColor`), and continent badge generator (`getContinentTag`).
 
-4. **独立指标计算层 (`src/js/calculations/index-calculator.js`)**
-   - 纯函数实现，零 DOM 与图表耦合，涵盖：时间序列线性插值 (`getSeriesValue`)、同比/环比增长率 (`computeYoYGrowth`/`computeQoQGrowth`)、结构占比 (`computeSharePct`)、定基换算 (`rebaseIndexSeries`)、房地产区间涨幅与复合年均增长率 (`computePeriodGrowth`/`computeCAGR`)、房地产 6 维健康度评分 (`computeMultiDimensionalScores`)、按揭负担模拟 (`calculateMortgageSimulation`)、税制 8 步收入传导模型 (`calculate8StepSim`)、税制 5 维评估与聚类 (`computeTaxEvalScores`) 以及经济轨迹 13 维加权评分 (`computeEconomyWeightedScore`)。
+4. **Independent Indicator Calculation Layer (`src/js/calculations/index-calculator.js`)**
+   - Pure-function implementation with zero DOM and chart coupling, covering: time-series linear interpolation (`getSeriesValue`), year-over-year/quarter-over-quarter growth (`computeYoYGrowth`/`computeQoQGrowth`), structural share (`computeSharePct`), rebasing (`rebaseIndexSeries`), real estate period growth and compound annual growth rate (`computePeriodGrowth`/`computeCAGR`), real estate 6-dimension health scoring (`computeMultiDimensionalScores`), mortgage burden simulation (`calculateMortgageSimulation`), tax 8-step income pass-through model (`calculate8StepSim`), tax 5-dimension evaluation and clustering (`computeTaxEvalScores`), and economic trajectory 13-dimension weighted scoring (`computeEconomyWeightedScore`).
 
-5. **三大研究板块业务模块 (`src/js/modules/`)**
-   - `real-estate.js`：管理房地产板块 6 大专题视图、16 个图表、按揭模拟器、16 大历史泡沫事件、14 个国别案例与 CSV 导出。
-   - `taxation.js`：管理综合税制板块 KPI 概览、14 个图表、8 步税负模拟器、国别税制档案对照卡、社保明细表、5 维权重评估与 CSV 导出。
-   - `economy.js`：管理经济发展轨迹板块主/对标经济体双擎对比、16 个图表、10 大核心实证问题、9 大历史冲击、15 个国别深度案例、13 维权重滑块评分榜与 CSV 导出。
+5. **Business Modules for the Three Research Sections (`src/js/modules/`)**
+   - `real-estate.js`: Manages the 6 topic views, 16 charts, mortgage simulator, 16 historical bubble events, 14 country cases, and CSV export in the real estate section.
+   - `taxation.js`: Manages the KPI overview, 14 charts, 8-step tax burden simulator, country tax profile comparison cards, social security detail tables, 5-dimension weighted evaluation, and CSV export in the comprehensive taxation section.
+   - `economy.js`: Manages primary/benchmark economy dual comparison, 16 charts, 10 core empirical questions, 9 historical shocks, 15 in-depth country cases, 13-dimension weighted slider score ranking, and CSV export in the economic development trajectory section.
 
 ---
 
-## 五、后续如何增加新的研究板块（扩展指南）
+## V. How to Add a New Research Section (Extension Guide)
 
-当需要新增第四个研究板块（例如“全球货币政策与通胀周期” `monetary-policy`）时，仅需遵循以下 5 个标准步骤，无需改动现有三个板块的代码：
+When adding a fourth research section (for example, "Global Monetary Policy and Inflation Cycles" `monetary-policy`), simply follow these 5 standard steps without modifying the code of the existing three sections:
 
-1. **新增独立数据文件**：在 `src/data/` 下创建 `monetary-policy.json`，遵循相同的 `{ meta, entities/series, ... }` 结构存储原始数据与溯源链接。
-2. **注册数据访问与校验方法**：在 `src/js/data/data-validator.js` 中添加 `validateMonetaryData()`，并在 `src/js/data/data-manager.js` 中导入该 JSON 并暴露 `getMonetaryData()` 查询接口。
-3. **扩展纯计算函数**：若有专属领域公式（如泰勒规则利率缺口、实际利率计算），在 `src/js/calculations/index-calculator.js` 中导出纯计算函数。
-4. **创建业务模块**：在 `src/js/modules/` 下新建 `monetary-policy.js`，通过 `dataManager` 获取数据、调用 `index-calculator` 计算指标、使用 `chartManager.createOrUpdate('monetary', key, canvasId, config)` 渲染图表，并导出 `initMonetaryModule()`。
-5. **在入口挂载**：在 `index.html` 中添加对应 `<section id="section-monetary-policy">` 容器与顶部导航链接，并在 `src/js/core/app.js` 的 `initApp()` 中调用 `initMonetaryModule()`，以及在 `handleMasterPlatformSearch()` 中订阅全局搜索事件即可。
+1. **Add an independent data file**: Create `monetary-policy.json` under `src/data/`, following the same `{ meta, entities/series, ... }` structure to store raw data and provenance links.
+2. **Register data access and validation methods**: Add `validateMonetaryData()` in `src/js/data/data-validator.js`, and import the JSON in `src/js/data/data-manager.js` and expose a `getMonetaryData()` query interface.
+3. **Extend pure calculation functions**: If there are domain-specific formulas (e.g., Taylor rule interest rate gap, real interest rate calculation), export pure calculation functions in `src/js/calculations/index-calculator.js`.
+4. **Create a business module**: Create `monetary-policy.js` under `src/js/modules/`, obtain data via `dataManager`, call `index-calculator` to compute indicators, use `chartManager.createOrUpdate('monetary', key, canvasId, config)` to render charts, and export `initMonetaryModule()`.
+5. **Mount at the entry**: Add the corresponding `<section id="section-monetary-policy">` container and top navigation link in `index.html`, call `initMonetaryModule()` in `initApp()` of `src/js/core/app.js`, and subscribe to global search events in `handleMasterPlatformSearch()`.

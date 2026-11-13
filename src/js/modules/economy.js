@@ -1203,14 +1203,11 @@ function computeWeightedScore(econ) {
     }
 
     function renderScorecardTable() {
-      const q = (document.getElementById('scoreSearchInput').value || '').trim().toLowerCase();
-      let list = getFilteredEconomies().map(e => ({
+      const q = (document.getElementById('scoreSearchInput')?.value || '').trim();
+      let list = dataManager.filterEconomies(state.regionFilter, q).map(e => ({
         ...e,
         weightedScore: computeWeightedScore(e)
       }));
-      if (q) {
-        list = list.filter(e => e.name.toLowerCase().includes(q) || e.en.toLowerCase().includes(q) || e.id.toLowerCase().includes(q));
-      }
       list.sort((a, b) => b.weightedScore - a.weightedScore);
 
       const tbody = document.getElementById('scorecardTableBody');

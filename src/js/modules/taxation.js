@@ -1128,11 +1128,9 @@ function updateEvalScores() {
 }
 
 function renderFullDatabaseTable() {
-  const q = (document.getElementById('dbSearchInput')?.value || '').trim().toLowerCase();
-  const data = getFilteredData().filter(d => {
-    if (!q) return true;
-    return JSON.stringify(d).toLowerCase().includes(q);
-  });
+  const dbInputVal = (document.getElementById('dbSearchInput')?.value || '').trim();
+  const effectiveQuery = dbInputVal || state.searchQuery || '';
+  const data = dataManager.filterTaxJurisdictions(state.continent, effectiveQuery);
 
   document.getElementById('fullDbTbody').innerHTML = data.map(d => `
     <tr>

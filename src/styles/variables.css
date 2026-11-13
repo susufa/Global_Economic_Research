@@ -1,9 +1,10 @@
 /* ==========================================================================
-   variables.css — 全局设计变量与主题色系统
-   集中管理：页面背景色、卡片背景色、主/辅文字色、边框色、强调色、字体、圆角、阴影、间距及图表主题色
+   variables.css — 全局设计变量、主题色与三语字体工程体系
+   集中管理：页面背景色、卡片背景色、主/辅文字色、边框色、强调色、三语字体栈、圆角、阴影、间距及图表主题色
    ========================================================================== */
 
-:root {
+:root,
+html[lang="zh-CN"] {
   /* 页面与卡片背景色 */
   --bg-warm: #F6F3EC;
   --bg-warm-alt: #EFECE4;
@@ -45,9 +46,10 @@
   --mauve: #8E5B66;
   --slate: #6E6A64;
 
-  /* 字体家族 */
-  --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-serif: 'Noto Serif SC', Georgia, 'Times New Roman', serif;
+  /* 简体中文模式：英文/数字采用 IBM Plex 量化工程字体，中文采用《艾尔登法环》/《黑夜君临》同款思源宋体 SC (Source Han Serif SC / Noto Serif SC) */
+  --font-sans: 'IBM Plex Sans', 'CustomEn', 'EldenSerifSC', 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif SC', 'FZXiaoBiaoSong-B05S', 'FZShuSong-Z01S', 'Songti SC', 'SimSun', serif;
+  --font-serif: 'Source Serif 4', 'CustomEnSerif', 'EldenSerifSC', 'Source Han Serif SC', 'Source Han Serif CN', 'Noto Serif SC', 'FZXiaoBiaoSong-B05S', 'Songti SC', 'SimSun', serif;
+  --font-mono: 'IBM Plex Mono', 'CustomEnMono', 'EldenSerifSC', 'Source Han Serif SC', 'Noto Serif SC', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* 圆角规范 */
   --radius-xl: 14px;
@@ -85,4 +87,18 @@
   --chart-color-13: #6B8CA6;
   --chart-color-14: #C9A45C;
   --chart-color-15: #996B75;
+}
+
+/* 繁體中文模式：英文/数字采用 IBM Plex 量化工程字体，繁體中文采用《艾爾登法環》/《黑夜君臨》同款思源宋體 TC / 華康明體 (Source Han Serif TC / Noto Serif TC / DFMing) */
+html[lang="zh-TW"] {
+  --font-sans: 'IBM Plex Sans', 'CustomEn', 'EldenSerifTC', 'Source Han Serif TC', 'Source Han Serif TW', 'Noto Serif TC', 'DFMing-W5-WIN-BF', 'DFMingStd-W5', 'Songti TC', 'PMingLiU', serif;
+  --font-serif: 'Source Serif 4', 'CustomEnSerif', 'EldenSerifTC', 'Source Han Serif TC', 'Source Han Serif TW', 'Noto Serif TC', 'DFMing-W5-WIN-BF', 'DFMingStd-W5', 'Songti TC', 'PMingLiU', serif;
+  --font-mono: 'IBM Plex Mono', 'CustomEnMono', 'EldenSerifTC', 'Source Han Serif TC', 'Noto Serif TC', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* 纯英文模式：全面启用 IBM Plex 量化工程字体体系 (IBM Plex Sans + Source Serif 4 + IBM Plex Mono) */
+html[lang="en"] {
+  --font-sans: 'IBM Plex Sans', 'CustomEn', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Source Serif 4', 'CustomEnSerif', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', 'CustomEnMono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }

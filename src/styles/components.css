@@ -389,3 +389,62 @@ table.data-table tr:hover td {
 .method-notice strong {
   color: var(--text-primary);
 }
+
+
+/* 左上角简/繁/En三语等宽方框切换器 */
+.lang-switcher-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.lang-box-btn {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background-color: var(--card-cream);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(44, 40, 37, 0.05);
+}
+
+.lang-box-btn[data-lang="zh-CN"] {
+  font-family: 'EldenSerifSC', 'Source Han Serif SC', 'Noto Serif SC', serif !important;
+}
+
+.lang-box-btn[data-lang="zh-TW"] {
+  font-family: 'EldenSerifTC', 'Source Han Serif TC', 'Noto Serif TC', serif !important;
+}
+
+.lang-box-btn[data-lang="en"] {
+  font-family: 'IBM Plex Sans', 'CustomEn', sans-serif !important;
+  font-size: 11.5px;
+  letter-spacing: -0.01em;
+}
+
+.lang-box-btn:hover {
+  border-color: var(--terracotta);
+  color: var(--terracotta);
+  background-color: var(--terracotta-light);
+}
+
+.lang-box-btn.active {
+  background-color: var(--terracotta);
+  border-color: var(--terracotta);
+  color: #FFFDF9;
+  box-shadow: 0 2px 5px rgba(200, 109, 81, 0.28);
+}

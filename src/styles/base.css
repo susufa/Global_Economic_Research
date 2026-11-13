@@ -1,7 +1,66 @@
 /* ==========================================================================
-   base.css — 全局基础样式、排版、表单基础元素与滚动条样式
-   管理：全局字体、页面基础样式、标题/段落/链接文字、表单基础控件、默认间距与自定义滚动条
+   base.css — 全局基础样式、本地字体声明、排版、表单基础元素与滚动条样式
+   管理：《艾尔登法环》同款思源宋体简繁子集 @font-face、IBM Plex 本地字体、全局排版与滚动条
    ========================================================================== */
+
+/* 《艾尔登法环》/《黑夜君临》同款简体中文思源宋体 (Source Han Serif SC / Noto Serif CJK SC) */
+@font-face {
+  font-family: 'EldenSerifSC';
+  src: url('/assets/fonts/EldenSerifSC-Regular.otf') format('opentype');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EldenSerifSC';
+  src: url('/assets/fonts/EldenSerifSC-Bold.otf') format('opentype');
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 《艾爾登法環》/《黑夜君臨》同款繁體中文思源宋體 (Source Han Serif TC / Noto Serif CJK TC) */
+@font-face {
+  font-family: 'EldenSerifTC';
+  src: url('/assets/fonts/EldenSerifTC-Regular.otf') format('opentype');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EldenSerifTC';
+  src: url('/assets/fonts/EldenSerifTC-Bold.otf') format('opentype');
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 本地英文与数字兜底字体 (En.ttf) */
+@font-face {
+  font-family: 'CustomEn';
+  src: url('/assets/fonts/En.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CustomEnSerif';
+  src: url('/assets/fonts/En-Serif-Bold.ttf') format('truetype');
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CustomEnMono';
+  src: url('/assets/fonts/En-Mono.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 * {
   box-sizing: border-box;
@@ -10,7 +69,7 @@
 body {
   background-color: var(--bg-warm);
   color: var(--text-primary);
-  font-family: var(--font-sans);
+  font-family: var(--font-sans) !important;
   line-height: 1.65;
   font-variant-numeric: tabular-nums;
   overflow-x: hidden;
@@ -18,8 +77,17 @@ body {
 }
 
 h1, h2, h3, .serif-title, .card-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-serif) !important;
   color: var(--text-primary);
+}
+
+.card-desc, p, span, td, th, li, label, button, select, input {
+  font-family: var(--font-sans);
+}
+
+code, pre, .font-mono {
+  font-family: var(--font-mono) !important;
+  font-variant-numeric: tabular-nums;
 }
 
 a {
@@ -39,6 +107,7 @@ input[type="text"],
 input[type="number"] {
   padding: 6px 10px;
   font-size: 12.5px;
+  font-family: var(--font-sans);
   border: 1px solid var(--border-warm);
   border-radius: var(--radius-sm);
   background-color: var(--card-cream);
@@ -60,6 +129,7 @@ input[type="range"] {
 /* 数值列对齐与等宽数字 */
 .num-col {
   text-align: right !important;
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
 

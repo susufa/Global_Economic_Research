@@ -132,7 +132,7 @@ function ensureChartEngineAvailable() {
     color: '#5C554E',
     borderColor: '#E3DDD1',
     font: {
-      family: "'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif"
+      family: "'IBM Plex Sans', 'CustomEn', 'IBM Plex Sans SC', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif"
     }
   };
 
@@ -148,7 +148,7 @@ export function applyChartGlobalDefaults() {
     window.Chart.defaults.color = '#5C554E';
     window.Chart.defaults.borderColor = '#E3DDD1';
     if (window.Chart.defaults.font) {
-      window.Chart.defaults.font.family = "'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif";
+      window.Chart.defaults.font.family = "'IBM Plex Sans', 'CustomEn', 'IBM Plex Sans SC', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif";
     }
   }
 }

@@ -25,6 +25,7 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: false,
     target: 'es2020',
+    chunkSizeWarningLimit: 2000,
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html')
